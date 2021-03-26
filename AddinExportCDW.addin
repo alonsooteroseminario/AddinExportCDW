@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<RevitAddIns>
+	<AddIn Type="Application">
+		<Name>ExportCDW</Name>
+		<Assembly>AddinExportCDW.dll</Assembly>
+		<AddInId>13aff48a-a95d-4d8c-b354-1d49aca7eb43</AddInId>
+		<FullClassName>AddinExportCDW.App</FullClassName>
+		<Text>LAOS Addin</Text>
+		<VendorId>LAOS</VendorId>
+		<VendorDescription>www.dynoscript.com</VendorDescription>
+	</AddIn>
+</RevitAddIns>
