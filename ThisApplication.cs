@@ -86,7 +86,7 @@ namespace AddinExportCDW
 			// 10 elementos
 			#region Dictionarios
 			Dictionary<string, string> data_forjado = new Dictionary<string, string>(){
-				{"Structural element", "Forjado - 30 cm"},
+				{"Structural element", "Concrete waffle slab "},
 				{"Código", "05WCH80110N"},
 				{"07 07 01 - aqueous washing liquids", "0,000008"},
 				{"15 01 02 - plastic packaging", "0,000554"},//
@@ -101,7 +101,7 @@ namespace AddinExportCDW
 			};
 			lista_Dictionarios.Add(data_forjado);
 			Dictionary<string, string> data_pilar_hormigon = new Dictionary<string, string>(){
-				{"Structural element", "300 x 300 mm"},
+				{"Structural element", "Concrete column"},
 				{"Código", "05HRP80020"},
 				{"07 07 01 - aqueous washing liquids", "0,000344"},
 				{"15 01 02 - plastic packaging", "0"},//
@@ -236,7 +236,6 @@ namespace AddinExportCDW
             };
 			lista_Dictionarios.Add(data_walls);
 
-
 			#endregion
 
 			#region relacionar el nombre familia con el codigo del material para Filtrarlo
@@ -253,6 +252,19 @@ namespace AddinExportCDW
 			List<Element> floors_ConcreteInclinedSlab = new List<Element>();
 			List<Element> walls_Concrete = new List<Element>();
 
+			string nombre_floors_Forjados = "";
+			string nombre_structuralColumns_PilarHormigon = "";
+			string nombre_floors_Concreto = "";
+			string nombre_strfoundation_Cimentaciones = "";
+			string nombre_floors_ConcretoDeck = "";
+			string nombre_strFramming_Droppedbeam = "";
+			string nombre_floors_ConcreteSlab = "";
+			string nombre_strFramming_Beamembbededm = "";
+			string nombre_floors_ConcreteInclinedSla = "";
+			string nombre_walls_Concrete = "";
+
+			List<string> lista_nombres_elementos = new List<string>();
+
 			// 10 elementos : Aquí se filtran los Elementos con el Código
 			foreach (Element sc in floors)
 			{
@@ -262,6 +274,8 @@ namespace AddinExportCDW
 					(pamType.AsValueString() == data_forjado["Código"]) )
 				{
 					floors_Forjados.Add(sc);
+					nombre_floors_Forjados = sc.Name.ToString();
+					lista_nombres_elementos.Add(nombre_floors_Forjados);
 				}
 			}
 			foreach (Element sc in structuralColumns)
@@ -270,6 +284,8 @@ namespace AddinExportCDW
 					(sc.LookupParameter("Material estructural").AsValueString() == data_pilar_hormigon["Código"]) )
 				{
 					structuralColumns_PilarHormigon.Add(sc);
+					nombre_structuralColumns_PilarHormigon = sc.Name.ToString();
+					lista_nombres_elementos.Add(nombre_structuralColumns_PilarHormigon);
 				}
 			}
 			foreach (Element sc in floors)
@@ -280,6 +296,8 @@ namespace AddinExportCDW
 					(pamType.AsValueString() == data_floors_concreto["Código"]))
 				{
 					floors_Concreto.Add(sc);
+					nombre_floors_Concreto = sc.Name.ToString();
+					lista_nombres_elementos.Add(nombre_floors_Concreto);
 				}
 			}
             foreach (Element sc in strFoundation)
@@ -290,6 +308,8 @@ namespace AddinExportCDW
 					(pamType.AsValueString() == data_Cimentaciones["Código"]))
 				{
 					strfoundation_Cimentaciones.Add(sc);
+					nombre_strfoundation_Cimentaciones = sc.Name.ToString();
+					lista_nombres_elementos.Add(nombre_strfoundation_Cimentaciones);
 				}
 			}
             foreach (Element sc in floors)
@@ -300,6 +320,8 @@ namespace AddinExportCDW
 					(pamType.AsValueString() == data_ConcretoDeck["Código"]))
 				{
 					floors_ConcretoDeck.Add(sc);
+					nombre_floors_ConcretoDeck = sc.Name.ToString();
+					lista_nombres_elementos.Add(nombre_floors_ConcretoDeck);
 				}
 			}
             foreach (Element sc in strFramming)
@@ -308,6 +330,8 @@ namespace AddinExportCDW
 					(sc.LookupParameter("Material estructural").AsValueString() == data_Droppedbeam["Código"]))
 				{
 					strFramming_Droppedbeam.Add(sc);
+					nombre_strFramming_Droppedbeam = sc.Name.ToString();
+					lista_nombres_elementos.Add(nombre_strFramming_Droppedbeam);
 				}
 			}
 			foreach (Element sc in floors)
@@ -318,6 +342,8 @@ namespace AddinExportCDW
 					(pamType.AsValueString() == data_ConcreteSlab["Código"]))
 				{
 					floors_ConcreteSlab.Add(sc);
+					nombre_floors_ConcreteSlab = sc.Name.ToString();
+					lista_nombres_elementos.Add(nombre_floors_ConcreteSlab);
 				}
 			}
 			foreach (Element sc in strFramming)
@@ -326,6 +352,8 @@ namespace AddinExportCDW
 					(sc.LookupParameter("Material estructural").AsValueString() == data_Beamembbeded["Código"]))
 				{
 					strFramming_Beamembbededm.Add(sc);
+					nombre_strFramming_Beamembbededm = sc.Name.ToString();
+					lista_nombres_elementos.Add(nombre_strFramming_Beamembbededm);
 				}
 			}
 			foreach (Element sc in floors)
@@ -336,6 +364,8 @@ namespace AddinExportCDW
 					(pamType.AsValueString() == data_ConcreteInclinedSlab["Código"]))
 				{
 					floors_ConcreteInclinedSlab.Add(sc);
+					nombre_floors_ConcreteInclinedSla = sc.Name.ToString();
+					lista_nombres_elementos.Add(nombre_floors_ConcreteInclinedSla);
 				}
 			}
 			foreach (Element sc in walls)
@@ -346,6 +376,8 @@ namespace AddinExportCDW
 					(pamType.AsValueString() == data_walls["Código"]))
 				{
 					walls_Concrete.Add(sc);
+					nombre_walls_Concrete = sc.Name.ToString();
+					lista_nombres_elementos.Add(nombre_walls_Concrete);
 				}
 			}
 
@@ -381,7 +413,6 @@ namespace AddinExportCDW
 			double volumenAcumulado_Beamembbededm = 0;
 			double areaAcumulada_ConcreteInclinedSla = 0;
 			double volumenAcumulado_walls_Concrete = 0;
-
 
 			foreach (Element f in floors_Forjados)
 			{
@@ -446,7 +477,6 @@ namespace AddinExportCDW
 			List<double> lista_sumaTotal_valor_porArea_Beamembbededm = new List<double>();
 			List<double> lista_sumaTotal_valor_porArea_ConcreteInclinedSlab = new List<double>();
 			List<double> lista_sumaTotal_valor_porArea_walls_Concrete = new List<double>();
-
 
 			#region keys
 			string key0 = "";
@@ -1071,7 +1101,7 @@ namespace AddinExportCDW
             {
 				Account cuenta = new Account
 				{
-					ID = lista_Dictionarios[i]["Structural element"],
+					ID = lista_Dictionarios[i]["Structural element"] + " / " + lista_nombres_elementos[i],
 					Balance = lista_desperdicios[i]
 
 				};
