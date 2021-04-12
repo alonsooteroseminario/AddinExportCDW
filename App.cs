@@ -22,15 +22,15 @@ namespace AddinExportCDW
         {
             //Aqui va los botones
             // Todo el código para crear los botones en la Ribbon
-            string tabName = "ExportCDW";
+            string tabName = "CDW Estimación";
             application.CreateRibbonTab(tabName);
 
             // Crear Panel 1
             RibbonPanel panel1 = application.CreateRibbonPanel(tabName, "ExportCDW");
 
             // Agregar un botón a Panel 1
-            PushButton button = panel1.AddItem(new PushButtonData("button", "Start", ExecutingAssemblyPath, "AddinExportCDW.ThisApplication")) as PushButton;
-
+            PushButton button = panel1.AddItem(new PushButtonData("button", "Calcular", ExecutingAssemblyPath, "AddinExportCDW.ThisApplication")) as PushButton;
+            PushButton button2 = panel1.AddItem(new PushButtonData("button2", "Seleccionar", ExecutingAssemblyPath, "AddinExportCDW.SelectionElement")) as PushButton;
 
             return Result.Succeeded;
         }
