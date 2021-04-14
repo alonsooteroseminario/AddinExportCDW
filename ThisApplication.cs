@@ -34,238 +34,36 @@ namespace AddinExportCDW
 
 			#region Macro Code
 
-			#region Colectores de Elementos
+			// llamada a Class Collectora de Elementos.
 
-			ElementClassFilter elemFilter_floor = new ElementClassFilter(typeof(Floor));
-			ElementClassFilter elemFilter_familyInstance = new ElementClassFilter(typeof(FamilyInstance));
-			ElementClassFilter elemFilter_walls = new ElementClassFilter(typeof(Wall));
-			//Forjado y Concreto
-			ElementCategoryFilter Categoryfilter_floors = new ElementCategoryFilter(BuiltInCategory.OST_Floors);
-			//Pilar Hormigon
-			ElementCategoryFilter Categoryfilter_strColumns = new ElementCategoryFilter(BuiltInCategory.OST_StructuralColumns);
-			//Cimentaciones
-			ElementCategoryFilter Categoryfilter_strFoundation = new ElementCategoryFilter(BuiltInCategory.OST_StructuralFoundation);
-			// Structural framing
-			ElementCategoryFilter Categoryfilter_strFramming = new ElementCategoryFilter(BuiltInCategory.OST_StructuralFraming);
-			// walls
-			ElementCategoryFilter Categoryfilter_walls = new ElementCategoryFilter(BuiltInCategory.OST_Walls);
-
-			LogicalAndFilter DUInstancesFilter_floors = new LogicalAndFilter(elemFilter_floor, Categoryfilter_floors);
-			LogicalAndFilter DUInstancesFilter_strColumns = new LogicalAndFilter(elemFilter_familyInstance, Categoryfilter_strColumns);
-			LogicalAndFilter DUInstancesFilter_strFoundation = new LogicalAndFilter(elemFilter_floor, Categoryfilter_strFoundation);
-			LogicalAndFilter DUInstancesFilter_strFramming = new LogicalAndFilter(elemFilter_familyInstance, Categoryfilter_strFramming);
-			LogicalAndFilter DUInstancesFilter_walls = new LogicalAndFilter(elemFilter_walls, Categoryfilter_walls);
-
-			//Forjado y Concreto
-			FilteredElementCollector DUcoll = new FilteredElementCollector(doc, activeView.Id);
-			IList<Element> floors = DUcoll.WherePasses(DUInstancesFilter_floors).ToElements();
-			//Pilar Hormigon
-			FilteredElementCollector DUcoll2 = new FilteredElementCollector(doc, activeView.Id);
-			IList<Element> structuralColumns = DUcoll2.WherePasses(DUInstancesFilter_strColumns).ToElements();
-			//Cimentaciones
-			FilteredElementCollector DUcoll3 = new FilteredElementCollector(doc, activeView.Id);
-			IList<Element> strFoundation = DUcoll3.WherePasses(DUInstancesFilter_strFoundation).ToElements();
-			// Structural framming
-			FilteredElementCollector DUcoll4 = new FilteredElementCollector(doc, activeView.Id);
-			IList<Element> strFramming = DUcoll4.WherePasses(DUInstancesFilter_strFramming).ToElements();
-			//  walls
-			FilteredElementCollector DUcoll5 = new FilteredElementCollector(doc, activeView.Id);
-			IList<Element> walls = DUcoll5.WherePasses(DUInstancesFilter_walls).ToElements();
+			IList<Element> floors = CollectorElement.Get(doc, activeView, "floors");
+			IList<Element> structuralColumns = CollectorElement.Get(doc, activeView, "structuralColumns");
+			IList<Element> strFoundation = CollectorElement.Get(doc, activeView, "strFoundation");
+			IList<Element> strFramming = CollectorElement.Get(doc, activeView, "strFramming");
+			IList<Element> walls = CollectorElement.Get(doc, activeView, "walls");
 
 
-			// Todos los Elementos del Modelo
-			IEnumerable<Element> elementosProyecto = GetAllModelElements(doc);
-			// Todos las Familias de instacia del proyecto
-			IEnumerable<Element> familiasInstanciaProyecto = GetFamilyInstanceModelElements(doc);
+			// llamada a Class Dictionario
 
-			#endregion
-
-
-
-			// 10 elementos
 			#region Dictionarios
 
 			List<Dictionary<string, string>> lista_Dictionarios = new List<Dictionary<string, string>>();
 
-			Dictionary<string, string> data_forjado = new Dictionary<string, string>(){
-				{"Structural element", "Concrete waffle slab "},
-				{"Código", "05WCH80110N"},
-				{"07 07 01 - aqueous washing liquids", "0,000008"},
-				{"15 01 02 - plastic packaging", "0,000554"},//
-				{"15 01 03 - wooden packaging", "0,004619"},//
-				{"15 01 04 - metallic packaging", "0,000468"},
-				{"15 01 06 - mixed packaging", "0,000056"},
-				{"17 01 01 - concrete", "0,004070"},
-				{"17 02 01 - wood", "0,001020"},//
-				{"17 02 03 - plastic", "0,004385"},//
-				{"17 04 05 - iron and steel", "0,000055"},
-				{"17 09 04 - mixed", "0,000095"},
-			};
-			Dictionary<string, string> data_pilar_hormigon = new Dictionary<string, string>(){
-				{"Structural element", "Concrete column"},
-				{"Código", "05HRP80020"},
-				{"07 07 01 - aqueous washing liquids", "0,000344"},
-				{"15 01 02 - plastic packaging", "0"},//
-				{"15 01 03 - wooden packaging", "0"},//
-				{"15 01 04 - metallic packaging", "0,019147"},
-				{"15 01 06 - mixed packaging", "0,000191"},
-				{"17 01 01 - concrete", "0,022000"},
-				{"17 02 01 - wood", "0"},//
-				{"17 02 03 - plastic", "0"},//
-				{"17 04 05 - iron and steel", "0,000990"},
-				{"17 09 04 - mixed", "0,000233"},
-			};
-			Dictionary<string, string> data_floors_concreto = new Dictionary<string, string>(){
-				{"Structural element", "Concrete ground slab"},
-				{"Código", "03HRL80090"},//
-                {"07 07 01 - aqueous washing liquids", "0"},
-				{"15 01 02 - plastic packaging", "0"},
-				{"15 01 03 - wooden packaging", "0"},
-				{"15 01 04 - metallic packaging", "0"},
-				{"15 01 06 - mixed packaging", "0"},
-				{"17 01 01 - concrete", "0,022"},//
-                {"17 02 01 - wood", "0"},
-				{"17 02 03 - plastic", "0"},
-				{"17 04 05 - iron and steel", "0,000050"},//
-                {"17 09 04 - mixed", "0,000221"},//
-            };
-			Dictionary<string, string> data_Cimentaciones = new Dictionary<string, string>(){
-				{"Structural element", "Losa de cimentación 650 mm"},
-				{"Código", "03HRM80080"},//
-                {"07 07 01 - aqueous washing liquids", "0,000017"},//
-				{"15 01 02 - plastic packaging", "0"},
-				{"15 01 03 - wooden packaging", "0"},
-				{"15 01 04 - metallic packaging", "0,001018"},//
-				{"15 01 06 - mixed packaging", "0,000010"},//
-				{"17 01 01 - concrete", "0,022000"},//
-                {"17 02 01 - wood", "0,003944"},//
-				{"17 02 03 - plastic", "0"},
-				{"17 04 05 - iron and steel", "0,000193"},//
-                {"17 09 04 - mixed", "0,000262"},//
-            };
-			Dictionary<string, string> data_ConcretoDeck = new Dictionary<string, string>(){
-				{"Structural element", "Concrete deck "},//
-				{"Código", "05HRL80020"},//
-                {"07 07 01 - aqueous washing liquids", "0,000049"},//
-				{"15 01 02 - plastic packaging", "0"},
-				{"15 01 03 - wooden packaging", "0"},
-				{"15 01 04 - metallic packaging", "0,002867"},//
-				{"15 01 06 - mixed packaging", "0,000029"},//
-				{"17 01 01 - concrete", "0,022000"},//
-                {"17 02 01 - wood", "0,008330"},//
-				{"17 02 03 - plastic", "0"},
-				{"17 04 05 - iron and steel", "0,000378"},//
-                {"17 09 04 - mixed", "0,000308"},//
-            };
-			Dictionary<string, string> data_Droppedbeam = new Dictionary<string, string>(){
-				{"Structural element", "Dropped beam"},//
-				{"Código", "05HRJ80110"},//
-                {"07 07 01 - aqueous washing liquids", "0,000041"},//
-				{"15 01 02 - plastic packaging", "0"},
-				{"15 01 03 - wooden packaging", "0"},
-				{"15 01 04 - metallic packaging", "0,003045"},//
-				{"15 01 06 - mixed packaging", "0,000030"},//
-				{"17 01 01 - concrete", "0,022000"},//
-                {"17 02 01 - wood", "0,008893"},//
-				{"17 02 03 - plastic", "0"},
-				{"17 04 05 - iron and steel", "0,000078"},//
-                {"17 09 04 - mixed", "0,000310"},//
-            };
-			Dictionary<string, string> data_ConcreteSlab = new Dictionary<string, string>(){
-				{"Structural element", "Concrete waffle slab"},//
-				{"Código", "05HRJ80110"},
-				{"07 07 01 - aqueous washing liquids", "0,000009"},//
-				{"15 01 02 - plastic packaging", "0,000609"},//
-				{"15 01 03 - wooden packaging", "0,005081"},//
-				{"15 01 04 - metallic packaging", "0,000515"},//
-				{"15 01 06 - mixed packaging", "0,000062"},//
-				{"17 01 01 - concrete", "0,004477"},//
-                {"17 02 01 - wood", "0,001122"},//
-				{"17 02 03 - plastic", "0,004824"},//
-				{"17 04 05 - iron and steel", "0,000061"},//
-                {"17 09 04 - mixed", "0,000105"},//
-            };
-			Dictionary<string, string> data_Beamembbeded = new Dictionary<string, string>(){
-				{"Structural element", "Beam embbeded floor"},//
-				{"Código", "05HRJ80020"},//
-				{"07 07 01 - aqueous washing liquids", "0,000039"},//
-				{"15 01 02 - plastic packaging", "0"},
-				{"15 01 03 - wooden packaging", "0"},
-				{"15 01 04 - metallic packaging", "0,002907"},//
-				{"15 01 06 - mixed packaging", "0,000029"},//
-				{"17 01 01 - concrete", "0,022000"},//
-                {"17 02 01 - wood", "0,008488"},//
-				{"17 02 03 - plastic", "0"},
-				{"17 04 05 - iron and steel", "0,000078"},//
-                {"17 09 04 - mixed", "0,000306"},//
-            };
-			Dictionary<string, string> data_ConcreteInclinedSlab = new Dictionary<string, string>(){
-				{"Structural element", "Concrete inclined slab"},//
-				{"Código", "05HRL80080"},//
-				{"07 07 01 - aqueous washing liquids", "0,000066"},//
-				{"15 01 02 - plastic packaging", "0"},
-				{"15 01 03 - wooden packaging", "0"},
-				{"15 01 04 - metallic packaging", "0,000001"},//
-				{"15 01 06 - mixed packaging", "0,000000"},//
-				{"17 01 01 - concrete", "0,022000"},//
-                {"17 02 01 - wood", "0,011390"},//
-				{"17 02 03 - plastic", "0"},
-				{"17 04 05 - iron and steel", "0,000403"},//
-                {"17 09 04 - mixed", "0,000339"},//
-            };
-			Dictionary<string, string> data_walls = new Dictionary<string, string>(){
-				{"Structural element", "Concrete wall"},//
-				{"Código", "05HRM80050"},//
-				{"07 07 01 - aqueous washing liquids", "0,000344"},//
-				{"15 01 02 - plastic packaging", "0"},
-				{"15 01 03 - wooden packaging", "0"},
-				{"15 01 04 - metallic packaging", "0,019147"},//
-				{"15 01 06 - mixed packaging", "0,000191"},//
-				{"17 01 01 - concrete", "0,022000"},//
-                {"17 02 01 - wood", "0"},
-				{"17 02 03 - plastic", "0"},
-				{"17 04 05 - iron and steel", "0,000146"},//
-                {"17 09 04 - mixed", "0,000225"},//
-            };
+			Dictionary<string, string> data_forjado = Dictionary.Get("data_forjado");
+			Dictionary<string, string> data_pilar_hormigon = Dictionary.Get("data_pilar_hormigon");
+			Dictionary<string, string> data_floors_concreto = Dictionary.Get("data_floors_concreto");
+			Dictionary<string, string> data_Cimentaciones = Dictionary.Get("data_Cimentaciones");
+			Dictionary<string, string> data_ConcretoDeck = Dictionary.Get("data_ConcretoDeck");
+			Dictionary<string, string> data_Droppedbeam = Dictionary.Get("data_Droppedbeam");
+			Dictionary<string, string> data_ConcreteSlab = Dictionary.Get(" data_ConcreteSlab");
+			Dictionary<string, string> data_Beamembbeded = Dictionary.Get("data_Beamembbeded");
+			Dictionary<string, string> data_ConcreteInclinedSlab = Dictionary.Get("data_ConcreteInclinedSlab");
+			Dictionary<string, string> data_walls = Dictionary.Get("data_walls");
 
 
 			#endregion
 
-			#region datos iniciales
-			// 10 elementos : Listas Filtradas
-			List<Element> floors_Forjados = new List<Element>();
-			List<Element> structuralColumns_PilarHormigon = new List<Element>();
-			List<Element> floors_Concreto = new List<Element>();
-			List<Element> strfoundation_Cimentaciones = new List<Element>();
-			List<Element> floors_ConcretoDeck = new List<Element>();
-			List<Element> strFramming_Droppedbeam = new List<Element>();
-			List<Element> floors_ConcreteSlab = new List<Element>();
-			List<Element> strFramming_Beamembbededm = new List<Element>();
-			List<Element> floors_ConcreteInclinedSlab = new List<Element>();
-			List<Element> walls_Concrete = new List<Element>();
-
-			string nombre_floors_Forjados = "";
-			string nombre_structuralColumns_PilarHormigon = "";
-			string nombre_floors_Concreto = "";
-			string nombre_strfoundation_Cimentaciones = "";
-			string nombre_floors_ConcretoDeck = "";
-			string nombre_strFramming_Droppedbeam = "";
-			string nombre_floors_ConcreteSlab = "";
-			string nombre_strFramming_Beamembbededm = "";
-			string nombre_floors_ConcreteInclinedSla = "";
-			string nombre_walls_Concrete = "";
-
-			// 10 elementos : Area acumulada por cada Elemento con Código
-			double areaAcumulada_Forjados = 0;
-			double volumenAcumulado_PilarHormigon = 0;
-			double areaAcumulada_Concreto = 0;
-			double volumenAcumulado_Cimentaciones = 0;
-			double areaAcumulada_ConcretoDeck = 0;
-			double volumenAcumulado_Droppedbeam = 0;
-			double areaAcumulada_ConcreteSlab = 0;
-			double volumenAcumulado_Beamembbededm = 0;
-			double areaAcumulada_ConcreteInclinedSla = 0;
-			double volumenAcumulado_walls_Concrete = 0;
+			#region Datos y Variables iniciales
 
 			List<double> lista_sumaTotal_valor_porArea_Forjado = new List<double>();
 			List<double> lista_sumaTotal_valor_porVolumen_PilarConcreto = new List<double>();
@@ -277,22 +75,7 @@ namespace AddinExportCDW
 			List<double> lista_sumaTotal_valor_porArea_Beamembbededm = new List<double>();
 			List<double> lista_sumaTotal_valor_porArea_ConcreteInclinedSlab = new List<double>();
 			List<double> lista_sumaTotal_valor_porArea_walls_Concrete = new List<double>();
-			#endregion
-
-			#region keys
-			string key0 = "";
-			string key1 = "";
-			string key2 = "";
-			string key3 = "";
-			string key4 = "";
-			string key5 = "";
-			string key6 = "";
-			string key7 = "";
-			string key8 = "";
-			string key9 = "";
-			string key10 = "";
-			string key11 = "";
-			#endregion
+			
 
 			#region listas de valores
 			// listas de valores
@@ -306,571 +89,9 @@ namespace AddinExportCDW
 			List<double> lista9_valor = new List<double>();
 			List<double> lista10_valor = new List<double>();
 			List<double> lista11_valor = new List<double>();
+
+			List<List<double>> lista_DeListasValores = new List<List<double>>();
 			#endregion
-
-			List<string> lista_nombres_elementos = new List<string>();
-
-			// 10 elementos : Aquí se filtran los Elementos con el Código
-			if (floors.Count() != 0)
-			{
-				foreach (Element sc in floors)
-				{
-					ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
-					Parameter pamType = type.LookupParameter("Material estructural");
-					if ((pamType.AsValueString() == data_forjado["Código"]))
-					{
-						Parameter param = sc.LookupParameter("Área");
-						areaAcumulada_Forjados = areaAcumulada_Forjados + Math.Round(param.AsDouble() / 10.7639, 4);
-
-						#region codigos de diccionarios
-
-						string valor0 = data_forjado["Structural element"];
-						string valor1 = data_forjado["Código"];
-						string valor2 = data_forjado["07 07 01 - aqueous washing liquids"];//
-						string valor3 = data_forjado["15 01 02 - plastic packaging"];
-						string valor4 = data_forjado["15 01 03 - wooden packaging"];
-						string valor5 = data_forjado["15 01 04 - metallic packaging"];//
-						string valor6 = data_forjado["15 01 06 - mixed packaging"];//
-						string valor7 = data_forjado["17 01 01 - concrete"];//
-						string valor8 = data_forjado["17 02 01 - wood"];
-						string valor9 = data_forjado["17 02 03 - plastic"];
-						string valor10 = data_forjado["17 04 05 - iron and steel"];//
-						string valor11 = data_forjado["17 09 04 - mixed"];//
-
-						#endregion
-
-						#region keys
-						key0 = data_forjado.FirstOrDefault(x => x.Value == valor0).Key;//"Structural element"
-						key1 = data_forjado.FirstOrDefault(x => x.Value == valor1).Key;//"Código"
-						key2 = data_forjado.FirstOrDefault(x => x.Value == valor2).Key;//07 07 01 - aqueous washing liquids
-						key3 = data_forjado.FirstOrDefault(x => x.Value == valor3).Key;//"15 01 02 - plastic packaging
-						key4 = data_forjado.FirstOrDefault(x => x.Value == valor4).Key;//"15 01 03 - wooden packaging"
-						key5 = data_forjado.FirstOrDefault(x => x.Value == valor5).Key;//"15 01 04 - metallic packaging"
-						key6 = data_forjado.FirstOrDefault(x => x.Value == valor6).Key;//"15 01 06 - mixed packaging"
-						key7 = data_forjado.FirstOrDefault(x => x.Value == valor7).Key;//"17 01 01 - concrete"
-						key8 = data_forjado.FirstOrDefault(x => x.Value == valor8).Key;//"17 02 01 - wood"
-						key9 = data_forjado.FirstOrDefault(x => x.Value == valor9).Key;//"17 02 03 - plastic"
-						key10 = data_forjado.FirstOrDefault(x => x.Value == valor10).Key;//"17 04 05 - iron and steel"
-						key11 = data_forjado.FirstOrDefault(x => x.Value == valor11).Key;//"17 09 04 - mixed"
-						#endregion
-
-						#region valorxArea
-						double valor2_porArea = double.Parse(valor2) * Math.Round(param.AsDouble() / 10.7639);//07 07 01 - aqueous washing liquids X AREA
-						lista2_valor.Add(valor2_porArea);
-						double valor3_porArea = double.Parse(valor3) * Math.Round(param.AsDouble() / 10.7639);//"15 01 02 - plastic packaging" X AREA
-						lista3_valor.Add(valor3_porArea);
-						double valor4_porArea = double.Parse(valor4) * Math.Round(param.AsDouble() / 10.7639);//"15 01 03 - wooden packaging" X AREA
-						lista4_valor.Add(valor4_porArea);
-						double valor5_porArea = double.Parse(valor5) * Math.Round(param.AsDouble() / 10.7639);//"15 01 04 - metallic packaging" X AREA
-						lista5_valor.Add(valor5_porArea);
-						double valor6_porArea = double.Parse(valor6) * Math.Round(param.AsDouble() / 10.7639);//"15 01 06 - mixed packaging"]  X AREA
-						lista6_valor.Add(valor6_porArea);
-						double valor7_porArea = double.Parse(valor7) * Math.Round(param.AsDouble() / 10.7639);//"17 01 01 - concrete"  X AREA
-						lista7_valor.Add(valor7_porArea);
-						double valor8_porArea = double.Parse(valor8) * Math.Round(param.AsDouble() / 10.7639);//"17 02 01 - wood"  X AREA
-						lista8_valor.Add(valor8_porArea);
-						double valor9_porArea = double.Parse(valor9) * Math.Round(param.AsDouble() / 10.7639);//"17 02 03 - plastic"  X AREA
-						lista9_valor.Add(valor9_porArea);
-						double valor10_porArea = double.Parse(valor10) * Math.Round(param.AsDouble() / 10.7639);//"17 04 05 - iron and steel"  X AREA
-						lista10_valor.Add(valor10_porArea);
-						double valor11_porArea = double.Parse(valor11) * Math.Round(param.AsDouble() / 10.7639);//"17 09 04 - mixed"  X AREA
-						lista11_valor.Add(valor11_porArea);
-						#endregion
-
-						double sumaTotal_valor_porArea = valor2_porArea + valor3_porArea + valor4_porArea + valor5_porArea + valor6_porArea + valor7_porArea +
-						valor8_porArea + valor9_porArea + valor10_porArea + valor11_porArea;
-						lista_sumaTotal_valor_porArea_Forjado.Add(sumaTotal_valor_porArea);
-					}
-				}
-				lista_Dictionarios.Add(data_forjado);
-			}
-			if (structuralColumns.Count() != 0)
-			{
-				foreach (Element sc in structuralColumns)
-				{
-					if ((sc.LookupParameter("Material estructural").AsValueString() == data_pilar_hormigon["Código"]))
-					{
-						Parameter param = sc.LookupParameter("Volumen");
-						volumenAcumulado_PilarHormigon = volumenAcumulado_PilarHormigon + Math.Round(param.AsDouble() / 35.3147, 4);
-						double numero = Math.Round(param.AsDouble() / 35.3147, 4);
-
-						string valor0 = data_pilar_hormigon["Structural element"];
-						string valor1 = data_pilar_hormigon["Código"];
-						string valor2 = data_pilar_hormigon["07 07 01 - aqueous washing liquids"];
-						string valor3 = data_pilar_hormigon["15 01 02 - plastic packaging"];
-						string valor4 = data_pilar_hormigon["15 01 03 - wooden packaging"];
-						string valor5 = data_pilar_hormigon["15 01 04 - metallic packaging"];
-						string valor6 = data_pilar_hormigon["15 01 06 - mixed packaging"];
-						string valor7 = data_pilar_hormigon["17 01 01 - concrete"];
-						string valor8 = data_pilar_hormigon["17 02 01 - wood"];
-						string valor9 = data_pilar_hormigon["17 02 03 - plastic"];
-						string valor10 = data_pilar_hormigon["17 04 05 - iron and steel"];
-						string valor11 = data_pilar_hormigon["17 09 04 - mixed"];
-
-						double valor2_porVolumen = double.Parse(valor2) * Math.Round(param.AsDouble() / 35.3147, 4);//07 07 01 - aqueous washing liquids X VOLUMEN
-						lista2_valor.Add(valor2_porVolumen);
-						double valor3_porVolumen = double.Parse(valor3) * Math.Round(param.AsDouble() / 35.3147, 4);//"15 01 02 - plastic packaging" X VOLUMEN
-						lista3_valor.Add(valor3_porVolumen);
-						double valor4_porVolumen = double.Parse(valor4) * Math.Round(param.AsDouble() / 35.3147, 4);//"15 01 03 - wooden packaging" X VOLUMEN
-						lista4_valor.Add(valor4_porVolumen);
-						double valor5_porVolumen = double.Parse(valor5) * Math.Round(param.AsDouble() / 35.3147, 4);//"15 01 04 - metallic packaging" X VOLUMEN
-						lista5_valor.Add(valor5_porVolumen);
-						double valor6_porVolumen = double.Parse(valor6) * Math.Round(param.AsDouble() / 35.3147, 4);//"15 01 06 - mixed packaging"]  X VOLUMEN
-						lista6_valor.Add(valor6_porVolumen);
-						double valor7_porVolumen = double.Parse(valor7) * Math.Round(param.AsDouble() / 35.3147, 4);//"17 01 01 - concrete"  X VOLUMEN
-						lista7_valor.Add(valor7_porVolumen);
-						double valor8_porVolumen = double.Parse(valor8) * Math.Round(param.AsDouble() / 35.3147, 4);//"17 02 01 - wood"  X VOLUMEN
-						lista8_valor.Add(valor8_porVolumen);
-						double valor9_porVolumen = double.Parse(valor9) * Math.Round(param.AsDouble() / 35.3147, 4);//"17 02 03 - plastic"  X VOLUMEN
-						lista9_valor.Add(valor9_porVolumen);
-						double valor10_porVolumen = double.Parse(valor10) * Math.Round(param.AsDouble() / 35.3147, 4);//"17 04 05 - iron and steel"  X VOLUMEN
-						lista10_valor.Add(valor10_porVolumen);
-						double valor11_porVolumen = double.Parse(valor11) * Math.Round(param.AsDouble() / 35.3147, 4);//"17 09 04 - mixed"  X VOLUMEN
-						lista11_valor.Add(valor11_porVolumen);
-
-						double sumaTotal_valor_porVolumen = valor2_porVolumen + valor3_porVolumen + valor4_porVolumen + valor5_porVolumen + valor6_porVolumen + valor7_porVolumen +
-											valor8_porVolumen + valor9_porVolumen + valor10_porVolumen + valor11_porVolumen;
-						lista_sumaTotal_valor_porVolumen_PilarConcreto.Add(sumaTotal_valor_porVolumen);
-					}
-				}
-				lista_Dictionarios.Add(data_pilar_hormigon);
-			}
-			if (floors.Count() != 0)
-			{
-				foreach (Element sc in floors)
-				{
-					ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
-					Parameter pamType = type.LookupParameter("Material estructural");
-					if ((pamType.AsValueString() == data_floors_concreto["Código"]))
-					{
-						Parameter area = sc.LookupParameter("Área");
-						areaAcumulada_Concreto = areaAcumulada_Concreto + Math.Round(area.AsDouble() / 10.7639, 4);
-
-						string valor0 = data_floors_concreto["Structural element"];
-						string valor1 = data_floors_concreto["Código"];
-						string valor2 = data_floors_concreto["07 07 01 - aqueous washing liquids"];//
-						string valor3 = data_floors_concreto["15 01 02 - plastic packaging"];
-						string valor4 = data_floors_concreto["15 01 03 - wooden packaging"];
-						string valor5 = data_floors_concreto["15 01 04 - metallic packaging"];//
-						string valor6 = data_floors_concreto["15 01 06 - mixed packaging"];//
-						string valor7 = data_floors_concreto["17 01 01 - concrete"];//
-						string valor8 = data_floors_concreto["17 02 01 - wood"];
-						string valor9 = data_floors_concreto["17 02 03 - plastic"];
-						string valor10 = data_floors_concreto["17 04 05 - iron and steel"];//
-						string valor11 = data_floors_concreto["17 09 04 - mixed"];//
-
-						double valor2_porArea = double.Parse(valor2) * Math.Round(area.AsDouble() / 10.7639, 4);//07 07 01 - aqueous washing liquids X AREA
-						lista2_valor.Add(valor2_porArea);
-						double valor3_porArea = double.Parse(valor3) * Math.Round(area.AsDouble() / 10.7639, 4);//"15 01 02 - plastic packaging" X AREA
-						lista3_valor.Add(valor3_porArea);
-						double valor4_porArea = double.Parse(valor4) * Math.Round(area.AsDouble() / 10.7639, 4);//"15 01 03 - wooden packaging" X AREA
-						lista4_valor.Add(valor4_porArea);
-						double valor5_porArea = double.Parse(valor5) * Math.Round(area.AsDouble() / 10.7639, 4);//"15 01 04 - metallic packaging" X AREA
-						lista5_valor.Add(valor5_porArea);
-						double valor6_porArea = double.Parse(valor6) * Math.Round(area.AsDouble() / 10.7639, 4);//"15 01 06 - mixed packaging"]  X AREA
-						lista6_valor.Add(valor6_porArea);
-						double valor7_porArea = double.Parse(valor7) * Math.Round(area.AsDouble() / 10.7639, 4);//"17 01 01 - concrete"  X AREA
-						lista7_valor.Add(valor7_porArea);
-						double valor8_porArea = double.Parse(valor8) * Math.Round(area.AsDouble() / 10.7639, 4);//"17 02 01 - wood"  X AREA
-						lista8_valor.Add(valor8_porArea);
-						double valor9_porArea = double.Parse(valor9) * Math.Round(area.AsDouble() / 10.7639, 4);//"17 02 03 - plastic"  X AREA
-						lista9_valor.Add(valor9_porArea);
-						double valor10_porArea = double.Parse(valor10) * Math.Round(area.AsDouble() / 10.7639, 4);//"17 04 05 - iron and steel"  X AREA
-						lista10_valor.Add(valor10_porArea);
-						double valor11_porArea = double.Parse(valor11) * Math.Round(area.AsDouble() / 10.7639, 4);//"17 09 04 - mixed"  X AREA
-						lista11_valor.Add(valor11_porArea);
-
-						double sumaTotal_valor_porArea = valor2_porArea + valor3_porArea + valor4_porArea + valor5_porArea + valor6_porArea + valor7_porArea +
-											valor8_porArea + valor9_porArea + valor10_porArea + valor11_porArea;
-						lista_sumaTotal_valor_porArea_Concreto.Add(sumaTotal_valor_porArea);
-					}
-				}
-				lista_Dictionarios.Add(data_floors_concreto);
-			}
-			if (strFoundation.Count() != 0)
-			{
-				foreach (Element sc in strFoundation)
-				{
-					ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
-					Parameter pamType = type.LookupParameter("Material estructural");
-					if ((pamType.AsValueString() == data_Cimentaciones["Código"]))
-					{
-
-						Parameter param = sc.LookupParameter("Volumen");
-						volumenAcumulado_Cimentaciones = volumenAcumulado_Cimentaciones + Math.Round(param.AsDouble() / 35.3147, 4);
-
-						string valor0 = data_Cimentaciones["Structural element"];
-						string valor1 = data_Cimentaciones["Código"];
-						string valor2 = data_Cimentaciones["07 07 01 - aqueous washing liquids"];
-						string valor3 = data_Cimentaciones["15 01 02 - plastic packaging"];
-						string valor4 = data_Cimentaciones["15 01 03 - wooden packaging"];
-						string valor5 = data_Cimentaciones["15 01 04 - metallic packaging"];
-						string valor6 = data_Cimentaciones["15 01 06 - mixed packaging"];
-						string valor7 = data_Cimentaciones["17 01 01 - concrete"];
-						string valor8 = data_Cimentaciones["17 02 01 - wood"];
-						string valor9 = data_Cimentaciones["17 02 03 - plastic"];
-						string valor10 = data_Cimentaciones["17 04 05 - iron and steel"];
-						string valor11 = data_Cimentaciones["17 09 04 - mixed"];
-
-						Parameter volumen = sc.LookupParameter("Volumen");
-
-						double valor2_porVolumen = double.Parse(valor2) * Math.Round(volumen.AsDouble() / 35.3147, 4);//07 07 01 - aqueous washing liquids X VOLUMEN
-						lista2_valor.Add(valor2_porVolumen);
-						double valor3_porVolumen = double.Parse(valor3) * Math.Round(volumen.AsDouble() / 35.3147, 4);//"15 01 02 - plastic packaging" X VOLUMEN
-						lista3_valor.Add(valor3_porVolumen);
-						double valor4_porVolumen = double.Parse(valor4) * Math.Round(volumen.AsDouble() / 35.3147, 4);//"15 01 03 - wooden packaging" X VOLUMEN
-						lista4_valor.Add(valor4_porVolumen);
-						double valor5_porVolumen = double.Parse(valor5) * Math.Round(volumen.AsDouble() / 35.3147, 4);//"15 01 04 - metallic packaging" X VOLUMEN
-						lista5_valor.Add(valor5_porVolumen);
-						double valor6_porVolumen = double.Parse(valor6) * Math.Round(volumen.AsDouble() / 35.3147, 4);//"15 01 06 - mixed packaging"]  X VOLUMEN
-						lista6_valor.Add(valor6_porVolumen);
-						double valor7_porVolumen = double.Parse(valor7) * Math.Round(volumen.AsDouble() / 35.3147, 4);//"17 01 01 - concrete"  X VOLUMEN
-						lista7_valor.Add(valor7_porVolumen);
-						double valor8_porVolumen = double.Parse(valor8) * Math.Round(volumen.AsDouble() / 35.3147, 4);//"17 02 01 - wood"  X VOLUMEN
-						lista8_valor.Add(valor8_porVolumen);
-						double valor9_porVolumen = double.Parse(valor9) * Math.Round(volumen.AsDouble() / 35.3147, 4);//"17 02 03 - plastic"  X VOLUMEN
-						lista9_valor.Add(valor9_porVolumen);
-						double valor10_porVolumen = double.Parse(valor10) * Math.Round(volumen.AsDouble() / 35.3147, 4);//"17 04 05 - iron and steel"  X VOLUMEN
-						lista10_valor.Add(valor10_porVolumen);
-						double valor11_porVolumen = double.Parse(valor11) * Math.Round(volumen.AsDouble() / 35.3147, 4);//"17 09 04 - mixed"  X VOLUMEN
-						lista11_valor.Add(valor11_porVolumen);
-
-						double sumaTotal_valor_porVolumen = valor2_porVolumen + valor3_porVolumen + valor4_porVolumen + valor5_porVolumen + valor6_porVolumen + valor7_porVolumen +
-											valor8_porVolumen + valor9_porVolumen + valor10_porVolumen + valor11_porVolumen;
-						lista_sumaTotal_valor_porVolumen_Cimentaciones.Add(sumaTotal_valor_porVolumen);
-					}
-				}
-				lista_Dictionarios.Add(data_Cimentaciones);
-			}
-			if (floors.Count() != 0)
-			{
-				foreach (Element sc in floors)
-				{
-					ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
-					Parameter pamType = type.LookupParameter("Material estructural");
-					if ((pamType.AsValueString() == data_ConcretoDeck["Código"]))
-					{
-
-						Parameter param = sc.LookupParameter("Área");
-						areaAcumulada_ConcretoDeck = areaAcumulada_ConcretoDeck + Math.Round(param.AsDouble() / 10.7639, 4);
-
-						string valor0 = data_ConcretoDeck["Structural element"];
-						string valor1 = data_ConcretoDeck["Código"];
-						string valor2 = data_ConcretoDeck["07 07 01 - aqueous washing liquids"];//
-						string valor3 = data_ConcretoDeck["15 01 02 - plastic packaging"];
-						string valor4 = data_ConcretoDeck["15 01 03 - wooden packaging"];
-						string valor5 = data_ConcretoDeck["15 01 04 - metallic packaging"];//
-						string valor6 = data_ConcretoDeck["15 01 06 - mixed packaging"];//
-						string valor7 = data_ConcretoDeck["17 01 01 - concrete"];//
-						string valor8 = data_ConcretoDeck["17 02 01 - wood"];
-						string valor9 = data_ConcretoDeck["17 02 03 - plastic"];
-						string valor10 = data_ConcretoDeck["17 04 05 - iron and steel"];//
-						string valor11 = data_ConcretoDeck["17 09 04 - mixed"];//
-
-						Parameter area = sc.LookupParameter("Área");
-
-						double valor2_porArea = double.Parse(valor2) * Math.Round(area.AsDouble() / 10.7639, 4);//07 07 01 - aqueous washing liquids X AREA
-						lista2_valor.Add(valor2_porArea);
-						double valor3_porArea = double.Parse(valor3) * Math.Round(area.AsDouble() / 10.7639, 4);//"15 01 02 - plastic packaging" X AREA
-						lista3_valor.Add(valor3_porArea);
-						double valor4_porArea = double.Parse(valor4) * Math.Round(area.AsDouble() / 10.7639, 4);//"15 01 03 - wooden packaging" X AREA
-						lista4_valor.Add(valor4_porArea);
-						double valor5_porArea = double.Parse(valor5) * Math.Round(area.AsDouble() / 10.7639, 4);//"15 01 04 - metallic packaging" X AREA
-						lista5_valor.Add(valor5_porArea);
-						double valor6_porArea = double.Parse(valor6) * Math.Round(area.AsDouble() / 10.7639, 4);//"15 01 06 - mixed packaging"]  X AREA
-						lista6_valor.Add(valor6_porArea);
-						double valor7_porArea = double.Parse(valor7) * Math.Round(area.AsDouble() / 10.7639, 4);//"17 01 01 - concrete"  X AREA
-						lista7_valor.Add(valor7_porArea);
-						double valor8_porArea = double.Parse(valor8) * Math.Round(area.AsDouble() / 10.7639, 4);//"17 02 01 - wood"  X AREA
-						lista8_valor.Add(valor8_porArea);
-						double valor9_porArea = double.Parse(valor9) * Math.Round(area.AsDouble() / 10.7639, 4);//"17 02 03 - plastic"  X AREA
-						lista9_valor.Add(valor9_porArea);
-						double valor10_porArea = double.Parse(valor10) * Math.Round(area.AsDouble() / 10.7639, 4);//"17 04 05 - iron and steel"  X AREA
-						lista10_valor.Add(valor10_porArea);
-						double valor11_porArea = double.Parse(valor11) * Math.Round(area.AsDouble() / 10.7639, 4);//"17 09 04 - mixed"  X AREA
-						lista11_valor.Add(valor11_porArea);
-
-						double sumaTotal_valor_porArea = valor2_porArea + valor3_porArea + valor4_porArea + valor5_porArea + valor6_porArea + valor7_porArea +
-											valor8_porArea + valor9_porArea + valor10_porArea + valor11_porArea;
-						lista_sumaTotal_valor_porArea_ConcretoDeck.Add(sumaTotal_valor_porArea);
-					}
-				}
-				lista_Dictionarios.Add(data_ConcretoDeck);
-			}
-			if (strFramming.Count() != 0)
-			{
-				foreach (Element sc in strFramming)
-				{
-					if ((sc.LookupParameter("Material estructural").AsValueString() == data_Droppedbeam["Código"]))
-					{
-
-						Parameter param = sc.LookupParameter("Volumen");
-						volumenAcumulado_Droppedbeam = volumenAcumulado_Droppedbeam + Math.Round(param.AsDouble() / 35.3147, 4);
-
-						string valor0 = data_Droppedbeam["Structural element"];
-						string valor1 = data_Droppedbeam["Código"];
-						string valor2 = data_Droppedbeam["07 07 01 - aqueous washing liquids"];
-						string valor3 = data_Droppedbeam["15 01 02 - plastic packaging"];
-						string valor4 = data_Droppedbeam["15 01 03 - wooden packaging"];
-						string valor5 = data_Droppedbeam["15 01 04 - metallic packaging"];
-						string valor6 = data_Droppedbeam["15 01 06 - mixed packaging"];
-						string valor7 = data_Droppedbeam["17 01 01 - concrete"];
-						string valor8 = data_Droppedbeam["17 02 01 - wood"];
-						string valor9 = data_Droppedbeam["17 02 03 - plastic"];
-						string valor10 = data_Droppedbeam["17 04 05 - iron and steel"];
-						string valor11 = data_Droppedbeam["17 09 04 - mixed"];
-
-						Parameter volumen = sc.LookupParameter("Volumen");
-
-						double valor2_porVolumen = double.Parse(valor2) * Math.Round(volumen.AsDouble() / 35.3147, 4);//07 07 01 - aqueous washing liquids X VOLUMEN
-						lista2_valor.Add(valor2_porVolumen);
-						double valor3_porVolumen = double.Parse(valor3) * Math.Round(volumen.AsDouble() / 35.3147, 4);//"15 01 02 - plastic packaging" X VOLUMEN
-						lista3_valor.Add(valor3_porVolumen);
-						double valor4_porVolumen = double.Parse(valor4) * Math.Round(volumen.AsDouble() / 35.3147, 4);//"15 01 03 - wooden packaging" X VOLUMEN
-						lista4_valor.Add(valor4_porVolumen);
-						double valor5_porVolumen = double.Parse(valor5) * Math.Round(volumen.AsDouble() / 35.3147, 4);//"15 01 04 - metallic packaging" X VOLUMEN
-						lista5_valor.Add(valor5_porVolumen);
-						double valor6_porVolumen = double.Parse(valor6) * Math.Round(volumen.AsDouble() / 35.3147, 4);//"15 01 06 - mixed packaging"]  X VOLUMEN
-						lista6_valor.Add(valor6_porVolumen);
-						double valor7_porVolumen = double.Parse(valor7) * Math.Round(volumen.AsDouble() / 35.3147, 4);//"17 01 01 - concrete"  X VOLUMEN
-						lista7_valor.Add(valor7_porVolumen);
-						double valor8_porVolumen = double.Parse(valor8) * Math.Round(volumen.AsDouble() / 35.3147, 4);//"17 02 01 - wood"  X VOLUMEN
-						lista8_valor.Add(valor8_porVolumen);
-						double valor9_porVolumen = double.Parse(valor9) * Math.Round(volumen.AsDouble() / 35.3147, 4);//"17 02 03 - plastic"  X VOLUMEN
-						lista9_valor.Add(valor9_porVolumen);
-						double valor10_porVolumen = double.Parse(valor10) * Math.Round(volumen.AsDouble() / 35.3147, 4);//"17 04 05 - iron and steel"  X VOLUMEN
-						lista10_valor.Add(valor10_porVolumen);
-						double valor11_porVolumen = double.Parse(valor11) * Math.Round(volumen.AsDouble() / 35.3147, 4);//"17 09 04 - mixed"  X VOLUMEN
-						lista11_valor.Add(valor11_porVolumen);
-
-						double sumaTotal_valor_porVolumen = valor2_porVolumen + valor3_porVolumen + valor4_porVolumen + valor5_porVolumen + valor6_porVolumen + valor7_porVolumen +
-											valor8_porVolumen + valor9_porVolumen + valor10_porVolumen + valor11_porVolumen;
-						lista_sumaTotal_valor_porArea_Droppedbeam.Add(sumaTotal_valor_porVolumen);
-					}
-				}
-				lista_Dictionarios.Add(data_Droppedbeam);
-			}
-			if (floors.Count() != 0)
-			{
-				foreach (Element sc in floors)
-				{
-					ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
-					Parameter pamType = type.LookupParameter("Material estructural");
-					if ((pamType.AsValueString() == data_ConcreteSlab["Código"]))
-					{
-
-						Parameter param = sc.LookupParameter("Área");
-						areaAcumulada_ConcreteSlab = areaAcumulada_ConcreteSlab + Math.Round(param.AsDouble() / 10.7639, 4);
-
-						string valor0 = data_ConcreteSlab["Structural element"];
-						string valor1 = data_ConcreteSlab["Código"];
-						string valor2 = data_ConcreteSlab["07 07 01 - aqueous washing liquids"];//
-						string valor3 = data_ConcreteSlab["15 01 02 - plastic packaging"];
-						string valor4 = data_ConcreteSlab["15 01 03 - wooden packaging"];
-						string valor5 = data_ConcreteSlab["15 01 04 - metallic packaging"];//
-						string valor6 = data_ConcreteSlab["15 01 06 - mixed packaging"];//
-						string valor7 = data_ConcreteSlab["17 01 01 - concrete"];//
-						string valor8 = data_ConcreteSlab["17 02 01 - wood"];
-						string valor9 = data_ConcreteSlab["17 02 03 - plastic"];
-						string valor10 = data_ConcreteSlab["17 04 05 - iron and steel"];//
-						string valor11 = data_ConcreteSlab["17 09 04 - mixed"];//
-
-						Parameter area = sc.LookupParameter("Área");
-
-						double valor2_porArea = double.Parse(valor2) * Math.Round(area.AsDouble() / 10.7639, 4);//07 07 01 - aqueous washing liquids X AREA
-						lista2_valor.Add(valor2_porArea);
-						double valor3_porArea = double.Parse(valor3) * Math.Round(area.AsDouble() / 10.7639, 4);//"15 01 02 - plastic packaging" X AREA
-						lista3_valor.Add(valor3_porArea);
-						double valor4_porArea = double.Parse(valor4) * Math.Round(area.AsDouble() / 10.7639, 4);//"15 01 03 - wooden packaging" X AREA
-						lista4_valor.Add(valor4_porArea);
-						double valor5_porArea = double.Parse(valor5) * Math.Round(area.AsDouble() / 10.7639, 4);//"15 01 04 - metallic packaging" X AREA
-						lista5_valor.Add(valor5_porArea);
-						double valor6_porArea = double.Parse(valor6) * Math.Round(area.AsDouble() / 10.7639, 4);//"15 01 06 - mixed packaging"]  X AREA
-						lista6_valor.Add(valor6_porArea);
-						double valor7_porArea = double.Parse(valor7) * Math.Round(area.AsDouble() / 10.7639, 4);//"17 01 01 - concrete"  X AREA
-						lista7_valor.Add(valor7_porArea);
-						double valor8_porArea = double.Parse(valor8) * Math.Round(area.AsDouble() / 10.7639, 4);//"17 02 01 - wood"  X AREA
-						lista8_valor.Add(valor8_porArea);
-						double valor9_porArea = double.Parse(valor9) * Math.Round(area.AsDouble() / 10.7639, 4);//"17 02 03 - plastic"  X AREA
-						lista9_valor.Add(valor9_porArea);
-						double valor10_porArea = double.Parse(valor10) * Math.Round(area.AsDouble() / 10.7639, 4);//"17 04 05 - iron and steel"  X AREA
-						lista10_valor.Add(valor10_porArea);
-						double valor11_porArea = double.Parse(valor11) * Math.Round(area.AsDouble() / 10.7639, 4);//"17 09 04 - mixed"  X AREA
-						lista11_valor.Add(valor11_porArea);
-
-						double sumaTotal_valor_porArea = valor2_porArea + valor3_porArea + valor4_porArea + valor5_porArea + valor6_porArea + valor7_porArea +
-											valor8_porArea + valor9_porArea + valor10_porArea + valor11_porArea;
-						lista_sumaTotal_valor_porArea_ConcreteSlab.Add(sumaTotal_valor_porArea);
-
-					}
-				}
-				lista_Dictionarios.Add(data_ConcreteSlab);
-			}
-			if (strFramming.Count() != 0)
-			{
-				foreach (Element sc in strFramming)
-				{
-					if ((sc.LookupParameter("Material estructural").AsValueString() == data_Beamembbeded["Código"]))
-					{
-
-						Parameter param = sc.LookupParameter("Volumen");
-						volumenAcumulado_Beamembbededm = volumenAcumulado_Beamembbededm + Math.Round(param.AsDouble() / 35.3147, 4);
-
-						string valor0 = data_Beamembbeded["Structural element"];
-						string valor1 = data_Beamembbeded["Código"];
-						string valor2 = data_Beamembbeded["07 07 01 - aqueous washing liquids"];
-						string valor3 = data_Beamembbeded["15 01 02 - plastic packaging"];
-						string valor4 = data_Beamembbeded["15 01 03 - wooden packaging"];
-						string valor5 = data_Beamembbeded["15 01 04 - metallic packaging"];
-						string valor6 = data_Beamembbeded["15 01 06 - mixed packaging"];
-						string valor7 = data_Beamembbeded["17 01 01 - concrete"];
-						string valor8 = data_Beamembbeded["17 02 01 - wood"];
-						string valor9 = data_Beamembbeded["17 02 03 - plastic"];
-						string valor10 = data_Beamembbeded["17 04 05 - iron and steel"];
-						string valor11 = data_Beamembbeded["17 09 04 - mixed"];
-
-						Parameter volumen = sc.LookupParameter("Volumen");
-
-						double valor2_porVolumen = double.Parse(valor2) * Math.Round(volumen.AsDouble() / 35.3147, 4);//07 07 01 - aqueous washing liquids X VOLUMEN
-						lista2_valor.Add(valor2_porVolumen);
-						double valor3_porVolumen = double.Parse(valor3) * Math.Round(volumen.AsDouble() / 35.3147, 4);//"15 01 02 - plastic packaging" X VOLUMEN
-						lista3_valor.Add(valor3_porVolumen);
-						double valor4_porVolumen = double.Parse(valor4) * Math.Round(volumen.AsDouble() / 35.3147, 4);//"15 01 03 - wooden packaging" X VOLUMEN
-						lista4_valor.Add(valor4_porVolumen);
-						double valor5_porVolumen = double.Parse(valor5) * Math.Round(volumen.AsDouble() / 35.3147, 4);//"15 01 04 - metallic packaging" X VOLUMEN
-						lista5_valor.Add(valor5_porVolumen);
-						double valor6_porVolumen = double.Parse(valor6) * Math.Round(volumen.AsDouble() / 35.3147, 4);//"15 01 06 - mixed packaging"]  X VOLUMEN
-						lista6_valor.Add(valor6_porVolumen);
-						double valor7_porVolumen = double.Parse(valor7) * Math.Round(volumen.AsDouble() / 35.3147, 4);//"17 01 01 - concrete"  X VOLUMEN
-						lista7_valor.Add(valor7_porVolumen);
-						double valor8_porVolumen = double.Parse(valor8) * Math.Round(volumen.AsDouble() / 35.3147, 4);//"17 02 01 - wood"  X VOLUMEN
-						lista8_valor.Add(valor8_porVolumen);
-						double valor9_porVolumen = double.Parse(valor9) * Math.Round(volumen.AsDouble() / 35.3147, 4);//"17 02 03 - plastic"  X VOLUMEN
-						lista9_valor.Add(valor9_porVolumen);
-						double valor10_porVolumen = double.Parse(valor10) * Math.Round(volumen.AsDouble() / 35.3147, 4);//"17 04 05 - iron and steel"  X VOLUMEN
-						lista10_valor.Add(valor10_porVolumen);
-						double valor11_porVolumen = double.Parse(valor11) * Math.Round(volumen.AsDouble() / 35.3147, 4);//"17 09 04 - mixed"  X VOLUMEN
-						lista11_valor.Add(valor11_porVolumen);
-
-						double sumaTotal_valor_porVolumen = valor2_porVolumen + valor3_porVolumen + valor4_porVolumen + valor5_porVolumen + valor6_porVolumen + valor7_porVolumen +
-											valor8_porVolumen + valor9_porVolumen + valor10_porVolumen + valor11_porVolumen;
-						lista_sumaTotal_valor_porArea_Beamembbededm.Add(sumaTotal_valor_porVolumen);
-					}
-				}
-				lista_Dictionarios.Add(data_Beamembbeded);
-			}
-			if (floors.Count() != 0)
-			{
-				foreach (Element sc in floors)
-				{
-					ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
-					Parameter pamType = type.LookupParameter("Material estructural");
-					if ((pamType.AsValueString() == data_ConcreteInclinedSlab["Código"]))
-					{
-
-						Parameter param = sc.LookupParameter("Área");
-						areaAcumulada_ConcreteInclinedSla = areaAcumulada_ConcreteInclinedSla + Math.Round(param.AsDouble() / 10.7639, 4);
-
-						string valor0 = data_ConcreteInclinedSlab["Structural element"];
-						string valor1 = data_ConcreteInclinedSlab["Código"];
-						string valor2 = data_ConcreteInclinedSlab["07 07 01 - aqueous washing liquids"];//
-						string valor3 = data_ConcreteInclinedSlab["15 01 02 - plastic packaging"];
-						string valor4 = data_ConcreteInclinedSlab["15 01 03 - wooden packaging"];
-						string valor5 = data_ConcreteInclinedSlab["15 01 04 - metallic packaging"];//
-						string valor6 = data_ConcreteInclinedSlab["15 01 06 - mixed packaging"];//
-						string valor7 = data_ConcreteInclinedSlab["17 01 01 - concrete"];//
-						string valor8 = data_ConcreteInclinedSlab["17 02 01 - wood"];
-						string valor9 = data_ConcreteInclinedSlab["17 02 03 - plastic"];
-						string valor10 = data_ConcreteInclinedSlab["17 04 05 - iron and steel"];//
-						string valor11 = data_ConcreteInclinedSlab["17 09 04 - mixed"];//
-
-						Parameter area = sc.LookupParameter("Área");
-
-						double valor2_porArea = double.Parse(valor2) * Math.Round(area.AsDouble() / 10.7639, 4);//07 07 01 - aqueous washing liquids X AREA
-						lista2_valor.Add(valor2_porArea);
-						double valor3_porArea = double.Parse(valor3) * Math.Round(area.AsDouble() / 10.7639, 4);//"15 01 02 - plastic packaging" X AREA
-						lista3_valor.Add(valor3_porArea);
-						double valor4_porArea = double.Parse(valor4) * Math.Round(area.AsDouble() / 10.7639, 4);//"15 01 03 - wooden packaging" X AREA
-						lista4_valor.Add(valor4_porArea);
-						double valor5_porArea = double.Parse(valor5) * Math.Round(area.AsDouble() / 10.7639, 4);//"15 01 04 - metallic packaging" X AREA
-						lista5_valor.Add(valor5_porArea);
-						double valor6_porArea = double.Parse(valor6) * Math.Round(area.AsDouble() / 10.7639, 4);//"15 01 06 - mixed packaging"]  X AREA
-						lista6_valor.Add(valor6_porArea);
-						double valor7_porArea = double.Parse(valor7) * Math.Round(area.AsDouble() / 10.7639, 4);//"17 01 01 - concrete"  X AREA
-						lista7_valor.Add(valor7_porArea);
-						double valor8_porArea = double.Parse(valor8) * Math.Round(area.AsDouble() / 10.7639, 4);//"17 02 01 - wood"  X AREA
-						lista8_valor.Add(valor8_porArea);
-						double valor9_porArea = double.Parse(valor9) * Math.Round(area.AsDouble() / 10.7639, 4);//"17 02 03 - plastic"  X AREA
-						lista9_valor.Add(valor9_porArea);
-						double valor10_porArea = double.Parse(valor10) * Math.Round(area.AsDouble() / 10.7639, 4);//"17 04 05 - iron and steel"  X AREA
-						lista10_valor.Add(valor10_porArea);
-						double valor11_porArea = double.Parse(valor11) * Math.Round(area.AsDouble() / 10.7639, 4);//"17 09 04 - mixed"  X AREA
-						lista11_valor.Add(valor11_porArea);
-
-						double sumaTotal_valor_porArea = valor2_porArea + valor3_porArea + valor4_porArea + valor5_porArea + valor6_porArea + valor7_porArea +
-											valor8_porArea + valor9_porArea + valor10_porArea + valor11_porArea;
-						lista_sumaTotal_valor_porArea_ConcreteInclinedSlab.Add(sumaTotal_valor_porArea);
-
-					}
-				}
-				lista_Dictionarios.Add(data_ConcreteInclinedSlab);
-			}
-			if (walls.Count() != 0)
-			{
-				foreach (Element sc in walls)
-				{
-					ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
-					Parameter pamType = type.LookupParameter("Material estructural");
-					string valorSALIDA = pamType.AsValueString();
-					if ((pamType.AsValueString() == data_walls["Código"]) || (pamType.AsValueString() == data_Cimentaciones["Código"]))
-					{
-
-						Parameter param = sc.LookupParameter("Volumen");
-						volumenAcumulado_walls_Concrete = volumenAcumulado_walls_Concrete + Math.Round(param.AsDouble() / 35.3147, 4);
-
-						string valor0 = data_walls["Structural element"];
-						string valor1 = data_walls["Código"];
-						string valor2 = data_walls["07 07 01 - aqueous washing liquids"];//
-						string valor3 = data_walls["15 01 02 - plastic packaging"];
-						string valor4 = data_walls["15 01 03 - wooden packaging"];
-						string valor5 = data_walls["15 01 04 - metallic packaging"];//
-						string valor6 = data_walls["15 01 06 - mixed packaging"];//
-						string valor7 = data_walls["17 01 01 - concrete"];//
-						string valor8 = data_walls["17 02 01 - wood"];
-						string valor9 = data_walls["17 02 03 - plastic"];
-						string valor10 = data_walls["17 04 05 - iron and steel"];//
-						string valor11 = data_walls["17 09 04 - mixed"];//
-
-						Parameter area = sc.LookupParameter("Área");
-
-						double valor2_porArea = double.Parse(valor2) * Math.Round(area.AsDouble() / 10.7639, 4);//07 07 01 - aqueous washing liquids X AREA
-						lista2_valor.Add(valor2_porArea);
-						double valor3_porArea = double.Parse(valor3) * Math.Round(area.AsDouble() / 10.7639, 4);//"15 01 02 - plastic packaging" X AREA
-						lista3_valor.Add(valor3_porArea);
-						double valor4_porArea = double.Parse(valor4) * Math.Round(area.AsDouble() / 10.7639, 4);//"15 01 03 - wooden packaging" X AREA
-						lista4_valor.Add(valor4_porArea);
-						double valor5_porArea = double.Parse(valor5) * Math.Round(area.AsDouble() / 10.7639, 4);//"15 01 04 - metallic packaging" X AREA
-						lista5_valor.Add(valor5_porArea);
-						double valor6_porArea = double.Parse(valor6) * Math.Round(area.AsDouble() / 10.7639, 4);//"15 01 06 - mixed packaging"]  X AREA
-						lista6_valor.Add(valor6_porArea);
-						double valor7_porArea = double.Parse(valor7) * Math.Round(area.AsDouble() / 10.7639, 4);//"17 01 01 - concrete"  X AREA
-						lista7_valor.Add(valor7_porArea);
-						double valor8_porArea = double.Parse(valor8) * Math.Round(area.AsDouble() / 10.7639, 4);//"17 02 01 - wood"  X AREA
-						lista8_valor.Add(valor8_porArea);
-						double valor9_porArea = double.Parse(valor9) * Math.Round(area.AsDouble() / 10.7639, 4);//"17 02 03 - plastic"  X AREA
-						lista9_valor.Add(valor9_porArea);
-						double valor10_porArea = double.Parse(valor10) * Math.Round(area.AsDouble() / 10.7639, 4);//"17 04 05 - iron and steel"  X AREA
-						lista10_valor.Add(valor10_porArea);
-						double valor11_porArea = double.Parse(valor11) * Math.Round(area.AsDouble() / 10.7639, 4);//"17 09 04 - mixed"  X AREA
-						lista11_valor.Add(valor11_porArea);
-
-						double sumaTotal_valor_porArea = valor2_porArea + valor3_porArea + valor4_porArea + valor5_porArea + valor6_porArea + valor7_porArea +
-											valor8_porArea + valor9_porArea + valor10_porArea + valor11_porArea;
-						lista_sumaTotal_valor_porArea_walls_Concrete.Add(sumaTotal_valor_porArea);
-					}
-				}
-				lista_Dictionarios.Add(data_walls);
-			}
 
 			#region desperdicios
 
@@ -889,16 +110,72 @@ namespace AddinExportCDW
 
 			#endregion
 
-			if (floors.Count() != 0)// SI Sí existe
+			#endregion
+
+			// 10 elementos : Aquí se filtran los Elementos con el Código
+			if (floors.Count() != 0)
 			{
+				foreach (Element sc in floors)
+				{
+					ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+					Parameter pamType = type.LookupParameter("Material estructural");
+
+					if ((pamType.AsValueString() == data_forjado["Código"]))
+					{
+						Dictionary<string, string> data = data_forjado;
+
+						lista2_valor.Add(CalcArea.GetByValueOfKey(data, sc, "2"));
+						lista3_valor.Add(CalcArea.GetByValueOfKey(data, sc, "3"));
+						lista4_valor.Add(CalcArea.GetByValueOfKey(data, sc, "4"));
+						lista5_valor.Add(CalcArea.GetByValueOfKey(data, sc, "5"));
+						lista6_valor.Add(CalcArea.GetByValueOfKey(data, sc, "6"));
+						lista7_valor.Add(CalcArea.GetByValueOfKey(data, sc, "7"));
+						lista8_valor.Add(CalcArea.GetByValueOfKey(data, sc, "8"));
+						lista9_valor.Add(CalcArea.GetByValueOfKey(data, sc, "9"));
+						lista10_valor.Add(CalcArea.GetByValueOfKey(data, sc, "10"));
+						lista11_valor.Add(CalcArea.GetByValueOfKey(data, sc, "11"));
+
+						double sumaTotal_valor_porArea = CalcArea.Get(data, sc);
+
+						lista_sumaTotal_valor_porArea_Forjado.Add(sumaTotal_valor_porArea);
+					}
+				}
+				lista_Dictionarios.Add(data_forjado);
+
 				for (int i = 0; i < lista_sumaTotal_valor_porArea_Forjado.Count(); i++)
 				{
 					desperdicioForjado = desperdicioForjado + lista_sumaTotal_valor_porArea_Forjado[i];// para Forjados
 				}
 				lista_desperdicios.Add(desperdicioForjado);
+
+
 			}
 			if (structuralColumns.Count() != 0)
 			{
+				foreach (Element sc in structuralColumns)
+				{
+					if ((sc.LookupParameter("Material estructural").AsValueString() == data_pilar_hormigon["Código"]))
+					{
+						Dictionary<string, string> data = data_pilar_hormigon;
+
+						lista2_valor.Add(CalcVolume.GetByValueOfKey(data, sc, "2"));
+						lista3_valor.Add(CalcVolume.GetByValueOfKey(data, sc, "3"));
+						lista4_valor.Add(CalcVolume.GetByValueOfKey(data, sc, "4"));
+						lista5_valor.Add(CalcVolume.GetByValueOfKey(data, sc, "5"));
+						lista6_valor.Add(CalcVolume.GetByValueOfKey(data, sc, "6"));
+						lista7_valor.Add(CalcVolume.GetByValueOfKey(data, sc, "7"));
+						lista8_valor.Add(CalcVolume.GetByValueOfKey(data, sc, "8"));
+						lista9_valor.Add(CalcVolume.GetByValueOfKey(data, sc, "9"));
+						lista10_valor.Add(CalcVolume.GetByValueOfKey(data, sc, "10"));
+						lista11_valor.Add(CalcVolume.GetByValueOfKey(data, sc, "11"));
+
+						double sumaTotal_valor_porVolumen = CalcVolume.Get(data, sc);
+
+						lista_sumaTotal_valor_porVolumen_PilarConcreto.Add(sumaTotal_valor_porVolumen);
+					}
+				}
+				lista_Dictionarios.Add(data_pilar_hormigon);
+
 				for (int i = 0; i < lista_sumaTotal_valor_porVolumen_PilarConcreto.Count(); i++)
 				{
 					desperdicioPilarHormigon = desperdicioPilarHormigon + lista_sumaTotal_valor_porVolumen_PilarConcreto[i];// para pilar de hormigon
@@ -907,6 +184,32 @@ namespace AddinExportCDW
 			}
 			if (floors.Count() != 0)
 			{
+				foreach (Element sc in floors)
+				{
+					ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+					Parameter pamType = type.LookupParameter("Material estructural");
+					if ((pamType.AsValueString() == data_floors_concreto["Código"]))
+					{
+						Dictionary<string, string> data = data_floors_concreto;
+
+						lista2_valor.Add(CalcArea.GetByValueOfKey(data, sc, "2"));
+						lista3_valor.Add(CalcArea.GetByValueOfKey(data, sc, "3"));
+						lista4_valor.Add(CalcArea.GetByValueOfKey(data, sc, "4"));
+						lista5_valor.Add(CalcArea.GetByValueOfKey(data, sc, "5"));
+						lista6_valor.Add(CalcArea.GetByValueOfKey(data, sc, "6"));
+						lista7_valor.Add(CalcArea.GetByValueOfKey(data, sc, "7"));
+						lista8_valor.Add(CalcArea.GetByValueOfKey(data, sc, "8"));
+						lista9_valor.Add(CalcArea.GetByValueOfKey(data, sc, "9"));
+						lista10_valor.Add(CalcArea.GetByValueOfKey(data, sc, "10"));
+						lista11_valor.Add(CalcArea.GetByValueOfKey(data, sc, "11"));
+
+						double sumaTotal_valor_porArea = CalcArea.Get(data, sc);
+
+						lista_sumaTotal_valor_porArea_Concreto.Add(sumaTotal_valor_porArea);
+					}
+				}
+				lista_Dictionarios.Add(data_floors_concreto);
+
 				for (int i = 0; i < lista_sumaTotal_valor_porArea_Concreto.Count(); i++)
 				{
 					desperdicioConcreto = desperdicioConcreto + lista_sumaTotal_valor_porArea_Concreto[i];// para Concreto
@@ -915,6 +218,31 @@ namespace AddinExportCDW
 			}
 			if (strFoundation.Count() != 0)
 			{
+				foreach (Element sc in strFoundation)
+				{
+					ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+					Parameter pamType = type.LookupParameter("Material estructural");
+					if ((pamType.AsValueString() == data_Cimentaciones["Código"]))
+					{
+						Dictionary<string, string> data = data_Cimentaciones;
+
+						lista2_valor.Add(CalcVolume.GetByValueOfKey(data, sc, "2"));
+						lista3_valor.Add(CalcVolume.GetByValueOfKey(data, sc, "3"));
+						lista4_valor.Add(CalcVolume.GetByValueOfKey(data, sc, "4"));
+						lista5_valor.Add(CalcVolume.GetByValueOfKey(data, sc, "5"));
+						lista6_valor.Add(CalcVolume.GetByValueOfKey(data, sc, "6"));
+						lista7_valor.Add(CalcVolume.GetByValueOfKey(data, sc, "7"));
+						lista8_valor.Add(CalcVolume.GetByValueOfKey(data, sc, "8"));
+						lista9_valor.Add(CalcVolume.GetByValueOfKey(data, sc, "9"));
+						lista10_valor.Add(CalcVolume.GetByValueOfKey(data, sc, "10"));
+						lista11_valor.Add(CalcVolume.GetByValueOfKey(data, sc, "11"));
+
+						double sumaTotal_valor_porVolumen = CalcVolume.Get(data, sc);
+						lista_sumaTotal_valor_porVolumen_Cimentaciones.Add(sumaTotal_valor_porVolumen);
+					}
+				}
+				lista_Dictionarios.Add(data_Cimentaciones);
+
 				for (int i = 0; i < lista_sumaTotal_valor_porVolumen_Cimentaciones.Count(); i++)
 				{
 					desperdicioCimentacion = desperdicioCimentacion + lista_sumaTotal_valor_porVolumen_Cimentaciones[i];
@@ -923,23 +251,97 @@ namespace AddinExportCDW
 			}
 			if (floors.Count() != 0)
 			{
+				foreach (Element sc in floors)
+				{
+					ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+					Parameter pamType = type.LookupParameter("Material estructural");
+					if ((pamType.AsValueString() == data_ConcretoDeck["Código"]))
+					{
+						Dictionary<string, string> data = data_ConcretoDeck;
+
+						lista2_valor.Add(CalcArea.GetByValueOfKey(data, sc, "2"));
+						lista3_valor.Add(CalcArea.GetByValueOfKey(data, sc, "3"));
+						lista4_valor.Add(CalcArea.GetByValueOfKey(data, sc, "4"));
+						lista5_valor.Add(CalcArea.GetByValueOfKey(data, sc, "5"));
+						lista6_valor.Add(CalcArea.GetByValueOfKey(data, sc, "6"));
+						lista7_valor.Add(CalcArea.GetByValueOfKey(data, sc, "7"));
+						lista8_valor.Add(CalcArea.GetByValueOfKey(data, sc, "8"));
+						lista9_valor.Add(CalcArea.GetByValueOfKey(data, sc, "9"));
+						lista10_valor.Add(CalcArea.GetByValueOfKey(data, sc, "10"));
+						lista11_valor.Add(CalcArea.GetByValueOfKey(data, sc, "11"));
+
+						double sumaTotal_valor_porArea = CalcArea.Get(data, sc);
+						lista_sumaTotal_valor_porArea_ConcretoDeck.Add(sumaTotal_valor_porArea);
+					}
+				}
+				lista_Dictionarios.Add(data_ConcretoDeck);
 
 				for (int i = 0; i < lista_sumaTotal_valor_porArea_ConcretoDeck.Count(); i++)
 				{
 					desperdicioConcretoDeck = desperdicioConcretoDeck + lista_sumaTotal_valor_porArea_ConcretoDeck[i];// para Concreto
 				}
 				lista_desperdicios.Add(desperdicioConcretoDeck);
+
 			}
 			if (strFramming.Count() != 0)
 			{
+				foreach (Element sc in strFramming)
+				{
+					if ((sc.LookupParameter("Material estructural").AsValueString() == data_Droppedbeam["Código"]))
+					{
+						Dictionary<string, string> data = data_Droppedbeam;
+
+						lista2_valor.Add(CalcVolume.GetByValueOfKey(data, sc, "2"));
+						lista3_valor.Add(CalcVolume.GetByValueOfKey(data, sc, "3"));
+						lista4_valor.Add(CalcVolume.GetByValueOfKey(data, sc, "4"));
+						lista5_valor.Add(CalcVolume.GetByValueOfKey(data, sc, "5"));
+						lista6_valor.Add(CalcVolume.GetByValueOfKey(data, sc, "6"));
+						lista7_valor.Add(CalcVolume.GetByValueOfKey(data, sc, "7"));
+						lista8_valor.Add(CalcVolume.GetByValueOfKey(data, sc, "8"));
+						lista9_valor.Add(CalcVolume.GetByValueOfKey(data, sc, "9"));
+						lista10_valor.Add(CalcVolume.GetByValueOfKey(data, sc, "10"));
+						lista11_valor.Add(CalcVolume.GetByValueOfKey(data, sc, "11"));
+
+						double sumaTotal_valor_porVolumen = CalcVolume.Get(data, sc);
+						lista_sumaTotal_valor_porArea_Droppedbeam.Add(sumaTotal_valor_porVolumen);
+					}
+				}
+				lista_Dictionarios.Add(data_Droppedbeam);
+
 				for (int i = 0; i < lista_sumaTotal_valor_porArea_Droppedbeam.Count(); i++)
 				{
 					desperdicio_Droppedbeam = desperdicio_Droppedbeam + lista_sumaTotal_valor_porArea_Droppedbeam[i];// para Concreto
 				}
 				lista_desperdicios.Add(desperdicio_Droppedbeam);
+
 			}
 			if (floors.Count() != 0)
 			{
+				foreach (Element sc in floors)
+				{
+					ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+					Parameter pamType = type.LookupParameter("Material estructural");
+					if ((pamType.AsValueString() == data_ConcreteSlab["Código"]))
+					{
+						Dictionary<string, string> data = data_ConcreteSlab;
+
+						lista2_valor.Add(CalcArea.GetByValueOfKey(data, sc, "2"));
+						lista3_valor.Add(CalcArea.GetByValueOfKey(data, sc, "3"));
+						lista4_valor.Add(CalcArea.GetByValueOfKey(data, sc, "4"));
+						lista5_valor.Add(CalcArea.GetByValueOfKey(data, sc, "5"));
+						lista6_valor.Add(CalcArea.GetByValueOfKey(data, sc, "6"));
+						lista7_valor.Add(CalcArea.GetByValueOfKey(data, sc, "7"));
+						lista8_valor.Add(CalcArea.GetByValueOfKey(data, sc, "8"));
+						lista9_valor.Add(CalcArea.GetByValueOfKey(data, sc, "9"));
+						lista10_valor.Add(CalcArea.GetByValueOfKey(data, sc, "10"));
+						lista11_valor.Add(CalcArea.GetByValueOfKey(data, sc, "11"));
+
+						double sumaTotal_valor_porArea = CalcArea.Get(data, sc);
+						lista_sumaTotal_valor_porArea_ConcreteSlab.Add(sumaTotal_valor_porArea);
+
+					}
+				}
+				lista_Dictionarios.Add(data_ConcreteSlab);
 
 				for (int i = 0; i < lista_sumaTotal_valor_porArea_ConcreteSlab.Count(); i++)
 				{
@@ -949,6 +351,28 @@ namespace AddinExportCDW
 			}
 			if (strFramming.Count() != 0)
 			{
+				foreach (Element sc in strFramming)
+				{
+					if ((sc.LookupParameter("Material estructural").AsValueString() == data_Beamembbeded["Código"]))
+					{
+						Dictionary<string, string> data = data_Beamembbeded;
+
+						lista2_valor.Add(CalcVolume.GetByValueOfKey(data, sc, "2"));
+						lista3_valor.Add(CalcVolume.GetByValueOfKey(data, sc, "3"));
+						lista4_valor.Add(CalcVolume.GetByValueOfKey(data, sc, "4"));
+						lista5_valor.Add(CalcVolume.GetByValueOfKey(data, sc, "5"));
+						lista6_valor.Add(CalcVolume.GetByValueOfKey(data, sc, "6"));
+						lista7_valor.Add(CalcVolume.GetByValueOfKey(data, sc, "7"));
+						lista8_valor.Add(CalcVolume.GetByValueOfKey(data, sc, "8"));
+						lista9_valor.Add(CalcVolume.GetByValueOfKey(data, sc, "9"));
+						lista10_valor.Add(CalcVolume.GetByValueOfKey(data, sc, "10"));
+						lista11_valor.Add(CalcVolume.GetByValueOfKey(data, sc, "11"));
+
+						double sumaTotal_valor_porVolumen = CalcVolume.Get(data, sc);
+						lista_sumaTotal_valor_porArea_Beamembbededm.Add(sumaTotal_valor_porVolumen);
+					}
+				}
+				lista_Dictionarios.Add(data_Beamembbeded);
 				for (int i = 0; i < lista_sumaTotal_valor_porArea_Beamembbededm.Count(); i++)
 				{
 					desperdicio_Beamembbededm = desperdicio_Beamembbededm + lista_sumaTotal_valor_porArea_Beamembbededm[i];// para Concreto
@@ -957,6 +381,31 @@ namespace AddinExportCDW
 			}
 			if (floors.Count() != 0)
 			{
+				foreach (Element sc in floors)
+				{
+					ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+					Parameter pamType = type.LookupParameter("Material estructural");
+					if ((pamType.AsValueString() == data_ConcreteInclinedSlab["Código"]))
+					{
+						Dictionary<string, string> data = data_ConcreteInclinedSlab;
+
+						lista2_valor.Add(CalcArea.GetByValueOfKey(data, sc, "2"));
+						lista3_valor.Add(CalcArea.GetByValueOfKey(data, sc, "3"));
+						lista4_valor.Add(CalcArea.GetByValueOfKey(data, sc, "4"));
+						lista5_valor.Add(CalcArea.GetByValueOfKey(data, sc, "5"));
+						lista6_valor.Add(CalcArea.GetByValueOfKey(data, sc, "6"));
+						lista7_valor.Add(CalcArea.GetByValueOfKey(data, sc, "7"));
+						lista8_valor.Add(CalcArea.GetByValueOfKey(data, sc, "8"));
+						lista9_valor.Add(CalcArea.GetByValueOfKey(data, sc, "9"));
+						lista10_valor.Add(CalcArea.GetByValueOfKey(data, sc, "10"));
+						lista11_valor.Add(CalcArea.GetByValueOfKey(data, sc, "11"));
+
+						double sumaTotal_valor_porArea = CalcArea.Get(data, sc);
+						lista_sumaTotal_valor_porArea_ConcreteInclinedSlab.Add(sumaTotal_valor_porArea);
+
+					}
+				}
+				lista_Dictionarios.Add(data_ConcreteInclinedSlab);
 				for (int i = 0; i < lista_sumaTotal_valor_porArea_ConcreteInclinedSlab.Count(); i++)
 				{
 					desperdicio_ConcreteInclinedSlab = desperdicio_ConcreteInclinedSlab + lista_sumaTotal_valor_porArea_ConcreteInclinedSlab[i];// para Concreto
@@ -965,12 +414,39 @@ namespace AddinExportCDW
 			}
 			if (walls.Count() != 0)
 			{
+				foreach (Element sc in walls)
+				{
+					ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+					Parameter pamType = type.LookupParameter("Material estructural");
+					string valorSALIDA = pamType.AsValueString();
+					if ((pamType.AsValueString() == data_walls["Código"]) || (pamType.AsValueString() == data_Cimentaciones["Código"]))
+					{
+						Dictionary<string, string> data = data_walls;
+
+						lista2_valor.Add(CalcVolume.GetByValueOfKey(data, sc, "2"));
+						lista3_valor.Add(CalcVolume.GetByValueOfKey(data, sc, "3"));
+						lista4_valor.Add(CalcVolume.GetByValueOfKey(data, sc, "4"));
+						lista5_valor.Add(CalcVolume.GetByValueOfKey(data, sc, "5"));
+						lista6_valor.Add(CalcVolume.GetByValueOfKey(data, sc, "6"));
+						lista7_valor.Add(CalcVolume.GetByValueOfKey(data, sc, "7"));
+						lista8_valor.Add(CalcVolume.GetByValueOfKey(data, sc, "8"));
+						lista9_valor.Add(CalcVolume.GetByValueOfKey(data, sc, "9"));
+						lista10_valor.Add(CalcVolume.GetByValueOfKey(data, sc, "10"));
+						lista11_valor.Add(CalcVolume.GetByValueOfKey(data, sc, "11"));
+
+						double sumaTotal_valor_porVolumen = CalcVolume.Get(data, sc);
+						lista_sumaTotal_valor_porArea_walls_Concrete.Add(sumaTotal_valor_porVolumen);
+					}
+				}
+				lista_Dictionarios.Add(data_walls);
+
 				for (int i = 0; i < lista_sumaTotal_valor_porArea_walls_Concrete.Count(); i++)
 				{
 					desperdicio_walls_Concrete = desperdicio_walls_Concrete + lista_sumaTotal_valor_porArea_walls_Concrete[i];// para Concreto
 				}
 				lista_desperdicios.Add(desperdicio_walls_Concrete);
 			}
+
 
 			#region Desperdicio Total
 			// Desperdico total
@@ -1033,9 +509,11 @@ namespace AddinExportCDW
 			{
 				valor11_final = valor11_final + lista11_valor[i];
 			}
-			#endregion
+            #endregion
 
-			string mensaje = "Código LER     |     RCD (m3) " + Environment.NewLine + Environment.NewLine;
+            #region mensaje en Pantalla
+
+            string mensaje = "Código LER     |     RCD (m3) " + Environment.NewLine + Environment.NewLine;
 			for (int i = 0; i < lista_Dictionarios.Count(); i++)
 			{
 				mensaje = mensaje + lista_Dictionarios[i]["Structural element"] + " / " + lista_Dictionarios[i]["Código"] + "    =    " + lista_desperdicios[i].ToString() + Environment.NewLine;
@@ -1045,9 +523,10 @@ namespace AddinExportCDW
 
 			TaskDialog.Show("CDW Estimación", mensaje);
 
+			#endregion
 
 
-
+			//agregar Class ExportExcel
 			#region Obtener Excel
 			var bankAccounts = new List<Account>();
 
@@ -1128,8 +607,7 @@ namespace AddinExportCDW
 			DisplayInExcel(bankAccounts, bankAccounts2);
             #endregion
 
-            // se crean key schedule con mismas tablas de excel
-
+            // se crean Class key schedule con mismas tablas de excel
             #region keyschedule
 
             ViewSchedule keySchedule = null;
