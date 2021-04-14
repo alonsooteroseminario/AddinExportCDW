@@ -34,16 +34,15 @@ namespace AddinExportCDW
 
 			#region Macro Code
 
-			// llamada a Class Collectora de Elementos.
+			#region Collector de Elementos
+			// llamada a Class Collectora 
 
 			IList<Element> floors = CollectorElement.Get(doc, activeView, "floors");
 			IList<Element> structuralColumns = CollectorElement.Get(doc, activeView, "structuralColumns");
 			IList<Element> strFoundation = CollectorElement.Get(doc, activeView, "strFoundation");
 			IList<Element> strFramming = CollectorElement.Get(doc, activeView, "strFramming");
 			IList<Element> walls = CollectorElement.Get(doc, activeView, "walls");
-
-
-			// llamada a Class Dictionario
+			#endregion
 
 			#region Dictionarios
 
@@ -55,7 +54,7 @@ namespace AddinExportCDW
 			Dictionary<string, string> data_Cimentaciones = Dictionary.Get("data_Cimentaciones");
 			Dictionary<string, string> data_ConcretoDeck = Dictionary.Get("data_ConcretoDeck");
 			Dictionary<string, string> data_Droppedbeam = Dictionary.Get("data_Droppedbeam");
-			Dictionary<string, string> data_ConcreteSlab = Dictionary.Get(" data_ConcreteSlab");
+			Dictionary<string, string> data_ConcreteSlab = Dictionary.Get("data_ConcreteSlab");
 			Dictionary<string, string> data_Beamembbeded = Dictionary.Get("data_Beamembbeded");
 			Dictionary<string, string> data_ConcreteInclinedSlab = Dictionary.Get("data_ConcreteInclinedSlab");
 			Dictionary<string, string> data_walls = Dictionary.Get("data_walls");
@@ -63,8 +62,7 @@ namespace AddinExportCDW
 
 			#endregion
 
-			#region Datos y Variables iniciales
-
+			#region datos iniciales
 			List<double> lista_sumaTotal_valor_porArea_Forjado = new List<double>();
 			List<double> lista_sumaTotal_valor_porVolumen_PilarConcreto = new List<double>();
 			List<double> lista_sumaTotal_valor_porArea_Concreto = new List<double>();
@@ -75,7 +73,7 @@ namespace AddinExportCDW
 			List<double> lista_sumaTotal_valor_porArea_Beamembbededm = new List<double>();
 			List<double> lista_sumaTotal_valor_porArea_ConcreteInclinedSlab = new List<double>();
 			List<double> lista_sumaTotal_valor_porArea_walls_Concrete = new List<double>();
-			
+			#endregion
 
 			#region listas de valores
 			// listas de valores
@@ -90,7 +88,6 @@ namespace AddinExportCDW
 			List<double> lista10_valor = new List<double>();
 			List<double> lista11_valor = new List<double>();
 
-			List<List<double>> lista_DeListasValores = new List<List<double>>();
 			#endregion
 
 			#region desperdicios
@@ -110,7 +107,6 @@ namespace AddinExportCDW
 
 			#endregion
 
-			#endregion
 
 			// 10 elementos : Aquí se filtran los Elementos con el Código
 			if (floors.Count() != 0)
@@ -525,8 +521,6 @@ namespace AddinExportCDW
 
 			#endregion
 
-
-			//agregar Class ExportExcel
 			#region Obtener Excel
 			var bankAccounts = new List<Account>();
 
@@ -607,7 +601,6 @@ namespace AddinExportCDW
 			DisplayInExcel(bankAccounts, bankAccounts2);
             #endregion
 
-            // se crean Class key schedule con mismas tablas de excel
             #region keyschedule
 
             ViewSchedule keySchedule = null;
