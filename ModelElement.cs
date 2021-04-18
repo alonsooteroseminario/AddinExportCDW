@@ -90,69 +90,17 @@ namespace AddinExportCDW
 														  listaDe_listaN_valor);
 			MainMensaje.ShowDialog();
 
-			#endregion
+            #endregion
 
-			#region keyschedule
-
-			ViewSchedule keySchedule = null;
-
-			using (Transaction t = new Transaction(doc, "Crear key Schedulable"))
+            if (CreateSchedule.ExistParameters(commandData, lista_Dictionarios[0], floors))//si sí existen parametros
             {
-				t.Start();
-				keySchedule = ViewSchedule.CreateKeySchedule(doc, new ElementId(BuiltInCategory.OST_Floors));
-
-
-
-				string keySchParamName = keySchedule.KeyScheduleParameterName;
-				ScheduleDefinition definition = keySchedule.Definition;
-
-				IList<SchedulableField> schedulableFields = definition.GetSchedulableFields(); // [a,b,c,s,d,f,....]
-				List<SchedulableField> listashparam = new List<SchedulableField>();
-				foreach (SchedulableField element in schedulableFields) // Aquí se evalua un SchedulableField
-				{
-					if (element.ParameterId.IntegerValue > 0)
-					{
-						listashparam.Add(element);
-					}
-				}
-				double nro_items_listahpram = listashparam.Count();
-
-				keySchedule.Definition.AddField(listashparam[0]);
-				keySchedule.Definition.AddField(listashparam[1]);
-
-				TableData tableData = keySchedule.GetTableData();
-
-				TableSectionData tableSection = tableData.GetSectionData(SectionType.Body);
-
-				//for (int i = 0; i < lista_Dictionarios.Count(); i++)
-    //            {
-				//	tableSection.InsertRow(i);
-				//}
-
-
-                tableSection.InsertRow(0);
-                tableSection.InsertRow(1);
-				tableSection.InsertRow(2);
-
-
-
-				doc.Regenerate();
-
-
-
-				if (null != keySchedule)
-				{
-					t.Commit();
-				}
-				else
-				{
-					t.RollBack();
-				}
-
+				CreateSchedule.CreateSchedules(commandData, lista_Dictionarios[0]);
 			}
-			#endregion
-
-			// se abre ventana con chart
+            else
+            {
+				CreateSchedule.CreateParameters(commandData, lista_Dictionarios[0], floors);
+				CreateSchedule.CreateSchedules(commandData, lista_Dictionarios[0]);
+            }
 
 			#endregion
 

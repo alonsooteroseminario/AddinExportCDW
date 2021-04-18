@@ -95,6 +95,7 @@
     <Compile Include="ExecutionCore.cs" />
     <Compile Include="ExportExcel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="CreateSchedule.cs" />
     <Compile Include="SelectionElement.cs" />
     <Compile Include="ModelElement.cs" />
     <Compile Include="Views\ChartForm.cs">
