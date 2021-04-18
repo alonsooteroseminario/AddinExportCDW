@@ -11,100 +11,46 @@ using System.Threading.Tasks;
 using forms = System.Windows.Forms;
 using Excel = Microsoft.Office.Interop.Excel;
 using AddinExportCDW;
-using Autodesk.Revit.UI.Selection;
 using AddinExportCDW.Views;
 
 namespace AddinExportCDW
 {
     [TransactionAttribute(TransactionMode.Manual)]
     [RegenerationAttribute(RegenerationOption.Manual)]
-    class SelectionElement : IExternalCommand
+    class ModelElement : IExternalCommand
     {
 
-		public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
-		{
-			#region Comandos entrada
-			//Get application and document objects
-			UIApplication uiApp = commandData.Application;
-			UIDocument uidoc = uiApp.ActiveUIDocument;
-			Document doc = uiApp.ActiveUIDocument.Document;
-			Application app = uiApp.Application;
-			// Get Active View
-			View activeView = uidoc.ActiveView;
-			string ruta = App.ExecutingAssemblyPath;
+        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+        {
+            #region Comandos entrada
+            //Get application and document objects
+            UIApplication uiApp = commandData.Application;
+            UIDocument uidoc = uiApp.ActiveUIDocument;
+            Document doc = uiApp.ActiveUIDocument.Document;
+            Application app = uiApp.Application;
+            // Get Active View
+            View activeView = uidoc.ActiveView;
+            string ruta = App.ExecutingAssemblyPath;
 			#endregion
 
 			#region Macro Code
 
-			#region Selecton collector
-			List<Element> lista_SelectElements = new List<Element>();
-			IList<Reference> references = uidoc.Selection.PickObjects(ObjectType.Element, "Seleccionar el Elemento que se quiere analizar");
-			foreach (Reference reference in references)
-			{
-				Element e = doc.GetElement(reference);
-				lista_SelectElements.Add(e);
-			}
+			#region Collector de Elementos
+			// llamada a Class Collectora 
+
+			IList<Element> floors = CollectorElement.Get(doc, activeView, "floors");
+			IList<Element> structuralColumns = CollectorElement.Get(doc, activeView, "structuralColumns");
+			IList<Element> strFoundation = CollectorElement.Get(doc, activeView, "strFoundation");
+			IList<Element> strFramming = CollectorElement.Get(doc, activeView, "strFramming");
+			IList<Element> walls = CollectorElement.Get(doc, activeView, "walls");
 			#endregion
 
-			#region Colectores de Elementos
-
-			List<Element> floors = new List<Element>();
-			//Pilar Hormigon
-			//FilteredElementCollector DUcoll2 = new FilteredElementCollector(doc, activeView.Id);
-			List<Element> structuralColumns = new List<Element>();
-			//Cimentaciones
-			//FilteredElementCollector DUcoll3 = new FilteredElementCollector(doc, activeView.Id);
-			List<Element> strFoundation = new List<Element>();
-			// Structural framming
-			//FilteredElementCollector DUcoll4 = new FilteredElementCollector(doc, activeView.Id);
-			List<Element> strFramming = new List<Element>();
-			//  walls
-			//FilteredElementCollector DUcoll5 = new FilteredElementCollector(doc, activeView.Id);
-			List<Element> walls = new List<Element>();
-
-
-
-			foreach (Element sc in lista_SelectElements)
-			{
-				Category category = sc.Category;
-				BuiltInCategory builtCategory = (BuiltInCategory)category.Id.IntegerValue;
-
-				if (builtCategory == BuiltInCategory.OST_Floors)
-				{
-					floors.Add(sc);
-				}
-				if (builtCategory == BuiltInCategory.OST_Walls)
-				{
-					walls.Add(sc);
-				}
-				if (builtCategory == BuiltInCategory.OST_StructuralColumns)
-				{
-					structuralColumns.Add(sc);
-				}
-				if (builtCategory == BuiltInCategory.OST_StructuralFraming)
-				{
-					strFramming.Add(sc);
-				}
-				if (builtCategory == BuiltInCategory.OST_StructuralFoundation)
-				{
-					strFoundation.Add(sc);
-				}
-
-
-			}
-
-			#endregion
-
-
-
-			// lista de ValorXArea
-			List<double> listaN_valor = Core.GetListValores(commandData, 
-																floors, 
-																structuralColumns, 
-																strFoundation, 
-																strFramming, 
+			List<double> listaN_valor = Core.GetListValores(commandData,
+																floors,
+																structuralColumns,
+																strFoundation,
+																strFramming,
 																walls);
-
 			List<Dictionary<string, string>> lista_Dictionarios = Core.GetListDictionary(commandData,
 													floors,
 													structuralColumns,
@@ -125,27 +71,88 @@ namespace AddinExportCDW
 													strFoundation,
 													strFramming,
 													walls);
+
 			List<List<double>> listaDe_listaN_valor = Core.GetListValoresByName(commandData,
-										floors,
-										structuralColumns,
-										strFoundation,
-										strFramming,
-										walls);
-
-
-
+													floors,
+													structuralColumns,
+													strFoundation,
+													strFramming,
+													walls);
 
 
 			#region mensaje en Pantalla
+
 			WindowMensaje MainMensaje = new WindowMensaje(commandData,
-														  listaN_valor,
-														  lista_Dictionarios,
-														  lista_desperdicios,
+														  listaN_valor, 
+														  lista_Dictionarios, 
+														  lista_desperdicios, 
 														  desperdicioTotal,
 														  listaDe_listaN_valor);
 			MainMensaje.ShowDialog();
+
 			#endregion
 
+			#region keyschedule
+
+			ViewSchedule keySchedule = null;
+
+			using (Transaction t = new Transaction(doc, "Crear key Schedulable"))
+            {
+				t.Start();
+				keySchedule = ViewSchedule.CreateKeySchedule(doc, new ElementId(BuiltInCategory.OST_Floors));
+
+
+
+				string keySchParamName = keySchedule.KeyScheduleParameterName;
+				ScheduleDefinition definition = keySchedule.Definition;
+
+				IList<SchedulableField> schedulableFields = definition.GetSchedulableFields(); // [a,b,c,s,d,f,....]
+				List<SchedulableField> listashparam = new List<SchedulableField>();
+				foreach (SchedulableField element in schedulableFields) // Aquí se evalua un SchedulableField
+				{
+					if (element.ParameterId.IntegerValue > 0)
+					{
+						listashparam.Add(element);
+					}
+				}
+				double nro_items_listahpram = listashparam.Count();
+
+				keySchedule.Definition.AddField(listashparam[0]);
+				keySchedule.Definition.AddField(listashparam[1]);
+
+				TableData tableData = keySchedule.GetTableData();
+
+				TableSectionData tableSection = tableData.GetSectionData(SectionType.Body);
+
+				//for (int i = 0; i < lista_Dictionarios.Count(); i++)
+    //            {
+				//	tableSection.InsertRow(i);
+				//}
+
+
+                tableSection.InsertRow(0);
+                tableSection.InsertRow(1);
+				tableSection.InsertRow(2);
+
+
+
+				doc.Regenerate();
+
+
+
+				if (null != keySchedule)
+				{
+					t.Commit();
+				}
+				else
+				{
+					t.RollBack();
+				}
+
+			}
+			#endregion
+
+			// se abre ventana con chart
 
 			#endregion
 
@@ -173,6 +180,7 @@ namespace AddinExportCDW
 
 			// Establish column headings in cells A1 and B1.
 			workSheet.Cells[1, "A"] = "Elemento";
+
 			workSheet.Cells[1, "B"] = "RCD (m³)";
 
 
@@ -181,6 +189,7 @@ namespace AddinExportCDW
 			{
 				row++;
 				workSheet.Cells[row, "A"] = acct.ID;
+
 				workSheet.Cells[row, "B"] = acct.Balance;
 			}
 
@@ -268,4 +277,9 @@ namespace AddinExportCDW
         }
     }
 
+    internal class Account
+    {
+		public string ID { get; set; }
+		public double Balance { get; set; }
+	}
 }
