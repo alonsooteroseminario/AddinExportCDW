@@ -84,6 +84,48 @@ namespace AddinExportCDW
 			}
 			#endregion
 
+			#region Crear Tablas Schedules
+			FilteredElementCollector collector = new FilteredElementCollector(doc);
+			IList<Element> viewSchedulesAllProject = collector.OfClass(typeof(ViewSchedule)).ToElements();
+			bool existeSchedule = true;
+			foreach (Element viewSche in viewSchedulesAllProject)// Existe?
+			{
+				if (viewSche.Name.Contains(" CDW ESTIMACIÓN SCHEDULE"))
+				{
+					existeSchedule = false;
+					break;
+				}
+			}
+			List<Element> TodoslosElemetosDelModelo = new List<Element>();
+			// Todos los Elementos del Modelo
+			IEnumerable<Element> elementosProyecto = CollectorElement.GetAllModelElements(doc);
+			foreach (Element elemento in elementosProyecto)
+			{
+				TodoslosElemetosDelModelo.Add(elemento);
+			}
+			// Todos las Familias de instacia del proyecto
+			IEnumerable<Element> familiasInstanciaProyecto = CollectorElement.GetFamilyInstanceModelElements(doc);
+			foreach (Element elemento in familiasInstanciaProyecto)
+			{
+				TodoslosElemetosDelModelo.Add(elemento);
+			}
+			if (CreateSchedule.ExistParameters(commandData, Dictionary.Get("data_forjado"), TodoslosElemetosDelModelo))//si sí existen parametros
+			{
+				if (existeSchedule)
+				{
+					CreateSchedule.CreateSchedules(commandData, Dictionary.Get("data_forjado"));
+				}
+			}
+			else
+			{
+				CreateSchedule.CreateParameters(commandData, Dictionary.Get("data_forjado"), TodoslosElemetosDelModelo);
+				if (existeSchedule)
+				{
+					CreateSchedule.CreateSchedules(commandData, Dictionary.Get("data_forjado"));
+				}
+			}
+			#endregion
+
 			List<double> listaN_valor = Core.GetListValores(commandData, 
 																floors, 
 																structuralColumns, 
@@ -114,48 +156,6 @@ namespace AddinExportCDW
 										strFoundation,
 										strFramming,
 										walls);
-			#region Crear Tablas Schedules
-
-			FilteredElementCollector collector = new FilteredElementCollector(doc);
-			IList<Element> viewSchedulesAllProject = collector.OfClass(typeof(ViewSchedule)).ToElements();
-			bool existeSchedule = true;
-			foreach (Element viewSche in viewSchedulesAllProject)// Existe?
-			{
-				if (viewSche.Name.Contains(" CDW ESTIMACIÓN SCHEDULE"))
-				{
-					existeSchedule = false;
-					break;
-				}
-			}
-			List<Element> TodoslosElemetosDelModelo = new List<Element>();
-			// Todos los Elementos del Modelo
-			IEnumerable<Element> elementosProyecto = CollectorElement.GetAllModelElements(doc);
-            foreach (Element elemento in elementosProyecto)
-            {
-				TodoslosElemetosDelModelo.Add(elemento);
-			}
-			// Todos las Familias de instacia del proyecto
-			IEnumerable<Element> familiasInstanciaProyecto = CollectorElement.GetFamilyInstanceModelElements(doc);
-			foreach (Element elemento in familiasInstanciaProyecto)
-			{
-				TodoslosElemetosDelModelo.Add(elemento);
-			}
-			if (CreateSchedule.ExistParameters(commandData, lista_Dictionarios[0], TodoslosElemetosDelModelo))//si sí existen parametros
-			{
-				if (existeSchedule)
-				{
-					CreateSchedule.CreateSchedules(commandData, lista_Dictionarios[0]);
-				}
-			}
-			else
-			{
-				CreateSchedule.CreateParameters(commandData, lista_Dictionarios[0], TodoslosElemetosDelModelo);
-				if (existeSchedule)
-				{
-					CreateSchedule.CreateSchedules(commandData, lista_Dictionarios[0]);
-				}
-			}
-			#endregion
 
 			#region mensaje en Pantalla
 			WindowMensaje MainMensaje = new WindowMensaje(commandData,

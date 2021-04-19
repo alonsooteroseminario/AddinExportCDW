@@ -27,11 +27,9 @@ namespace AddinExportCDW.Views
                          List<List<double>> listaDe_listaN_valor)
         {
             InitializeComponent();
-
             listaDe_listaN_valor_NEW = listaDe_listaN_valor;
             lista_Dictionarios_NEW = lista_Dictionarios;
             listaN_valor_NEW = listaN_valor;
-
             cartesianChart1.Series = new SeriesCollection { };
             cartesianChart1.Series.Add(new RowSeries
             {
@@ -39,9 +37,7 @@ namespace AddinExportCDW.Views
                 MaxRowHeigth = 5,
                 RowPadding = 2
             });
-
             Eleccion = "07 07 01 - aqueous washing liquids";
-
             if (Eleccion == "07 07 01 - aqueous washing liquids")
             {
                 //Hacer calculos de nuevo
@@ -50,22 +46,17 @@ namespace AddinExportCDW.Views
                     cartesianChart1.Series[0].Values.Add(new ObservablePoint(i, listaDe_listaN_valor[0][i]));
                 }
             }
-
             List<string> array = new List<string>();
-
             for (int i = 0; i < lista_Dictionarios_NEW.Count(); i++)
             {
                 array.Add(lista_Dictionarios_NEW[i]["Structural element"] + " / " + lista_Dictionarios_NEW[i]["Código"]);
             }
-
             cartesianChart1.AxisY.Add(new Axis
             {
                 // deberia ser de l Lista de Dictionarios
                 Title = "Código",
                 Labels = array.ToArray()
             });
-
-
             cartesianChart1.AxisX.Add(new Axis
             {
                 Title = "Cantidad",
@@ -75,7 +66,6 @@ namespace AddinExportCDW.Views
             {
                 SelectionMode = TooltipSelectionMode.SharedYValues
             };
- 
             cartesianChart1.DataTooltip = tooltip;
         }
 
@@ -108,6 +98,17 @@ namespace AddinExportCDW.Views
                     Title = "Código",
                     Labels = array.ToArray()
                 });
+                cartesianChart1.AxisX.Clear();
+                cartesianChart1.AxisX.Add(new Axis
+                {
+                    Title = "Cantidad",
+                    LabelFormatter = value => value.ToString("N")
+                });
+                var tooltip = new DefaultTooltip
+                {
+                    SelectionMode = TooltipSelectionMode.SharedYValues
+                };
+                cartesianChart1.DataTooltip = tooltip;
             }
             else if (selectedIndex == 1)
             {
@@ -136,6 +137,17 @@ namespace AddinExportCDW.Views
                     Title = "Código",
                     Labels = array.ToArray()
                 });
+                cartesianChart1.AxisX.Clear();
+                cartesianChart1.AxisX.Add(new Axis
+                {
+                    Title = "Cantidad",
+                    LabelFormatter = value => value.ToString("N")
+                });
+                var tooltip = new DefaultTooltip
+                {
+                    SelectionMode = TooltipSelectionMode.SharedYValues
+                };
+                cartesianChart1.DataTooltip = tooltip;
             }
             else if (selectedIndex == 2)
             {
@@ -164,6 +176,17 @@ namespace AddinExportCDW.Views
                     Title = "Código",
                     Labels = array.ToArray()
                 });
+                cartesianChart1.AxisX.Clear();
+                cartesianChart1.AxisX.Add(new Axis
+                {
+                    Title = "Cantidad",
+                    LabelFormatter = value => value.ToString("N")
+                });
+                var tooltip = new DefaultTooltip
+                {
+                    SelectionMode = TooltipSelectionMode.SharedYValues
+                };
+                cartesianChart1.DataTooltip = tooltip;
             }
             else if (selectedIndex == 3)
             {
@@ -192,6 +215,17 @@ namespace AddinExportCDW.Views
                     Title = "Código",
                     Labels = array.ToArray()
                 });
+                cartesianChart1.AxisX.Clear();
+                cartesianChart1.AxisX.Add(new Axis
+                {
+                    Title = "Cantidad",
+                    LabelFormatter = value => value.ToString("N")
+                });
+                var tooltip = new DefaultTooltip
+                {
+                    SelectionMode = TooltipSelectionMode.SharedYValues
+                };
+                cartesianChart1.DataTooltip = tooltip;
             }
             else if (selectedIndex == 4)
             {
@@ -220,6 +254,17 @@ namespace AddinExportCDW.Views
                     Title = "Código",
                     Labels = array.ToArray()
                 });
+                cartesianChart1.AxisX.Clear();
+                cartesianChart1.AxisX.Add(new Axis
+                {
+                    Title = "Cantidad",
+                    LabelFormatter = value => value.ToString("N")
+                });
+                var tooltip = new DefaultTooltip
+                {
+                    SelectionMode = TooltipSelectionMode.SharedYValues
+                };
+                cartesianChart1.DataTooltip = tooltip;
             }
             else if (selectedIndex == 5)
             {
@@ -248,6 +293,17 @@ namespace AddinExportCDW.Views
                     Title = "Código",
                     Labels = array.ToArray()
                 });
+                cartesianChart1.AxisX.Clear();
+                cartesianChart1.AxisX.Add(new Axis
+                {
+                    Title = "Cantidad",
+                    LabelFormatter = value => value.ToString("N")
+                });
+                var tooltip = new DefaultTooltip
+                {
+                    SelectionMode = TooltipSelectionMode.SharedYValues
+                };
+                cartesianChart1.DataTooltip = tooltip;
             }
             else if (selectedIndex == 6)
             {
@@ -276,6 +332,17 @@ namespace AddinExportCDW.Views
                     Title = "Código",
                     Labels = array.ToArray()
                 });
+                cartesianChart1.AxisX.Clear();
+                cartesianChart1.AxisX.Add(new Axis
+                {
+                    Title = "Cantidad",
+                    LabelFormatter = value => value.ToString("N")
+                });
+                var tooltip = new DefaultTooltip
+                {
+                    SelectionMode = TooltipSelectionMode.SharedYValues
+                };
+                cartesianChart1.DataTooltip = tooltip;
             }
             else if (selectedIndex == 7)
             {
@@ -304,6 +371,17 @@ namespace AddinExportCDW.Views
                     Title = "Código",
                     Labels = array.ToArray()
                 });
+                cartesianChart1.AxisX.Clear();
+                cartesianChart1.AxisX.Add(new Axis
+                {
+                    Title = "Cantidad",
+                    LabelFormatter = value => value.ToString("N")
+                });
+                var tooltip = new DefaultTooltip
+                {
+                    SelectionMode = TooltipSelectionMode.SharedYValues
+                };
+                cartesianChart1.DataTooltip = tooltip;
             }
             else if (selectedIndex == 8)
             {
@@ -332,6 +410,17 @@ namespace AddinExportCDW.Views
                     Title = "Código",
                     Labels = array.ToArray()
                 });
+                cartesianChart1.AxisX.Clear();
+                cartesianChart1.AxisX.Add(new Axis
+                {
+                    Title = "Cantidad",
+                    LabelFormatter = value => value.ToString("N")
+                });
+                var tooltip = new DefaultTooltip
+                {
+                    SelectionMode = TooltipSelectionMode.SharedYValues
+                };
+                cartesianChart1.DataTooltip = tooltip;
             }
             else if (selectedIndex == 9)
             {
@@ -360,6 +449,17 @@ namespace AddinExportCDW.Views
                     Title = "Código",
                     Labels = array.ToArray()
                 });
+                cartesianChart1.AxisX.Clear();
+                cartesianChart1.AxisX.Add(new Axis
+                {
+                    Title = "Cantidad",
+                    LabelFormatter = value => value.ToString("N")
+                });
+                var tooltip = new DefaultTooltip
+                {
+                    SelectionMode = TooltipSelectionMode.SharedYValues
+                };
+                cartesianChart1.DataTooltip = tooltip;
             }
 
         }

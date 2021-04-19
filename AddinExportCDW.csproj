@@ -97,6 +97,7 @@
     <Compile Include="CreateSchedule.cs" />
     <Compile Include="SelectionElement.cs" />
     <Compile Include="ModelElement.cs" />
+    <Compile Include="SetValueToParameter.cs" />
     <Compile Include="Views\ChartForm.cs">
       <SubType>Form</SubType>
     </Compile>

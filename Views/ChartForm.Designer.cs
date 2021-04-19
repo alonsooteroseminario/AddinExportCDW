@@ -43,7 +43,7 @@ namespace AddinExportCDW.Views
             this.cartesianChart1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cartesianChart1.Location = new System.Drawing.Point(3, 16);
             this.cartesianChart1.Name = "cartesianChart1";
-            this.cartesianChart1.Size = new System.Drawing.Size(770, 467);
+            this.cartesianChart1.Size = new System.Drawing.Size(992, 603);
             this.cartesianChart1.TabIndex = 0;
             this.cartesianChart1.Text = "cartesianChart1";
             // 
@@ -51,9 +51,10 @@ namespace AddinExportCDW.Views
             // 
             this.groupBox1.Controls.Add(this.button1);
             this.groupBox1.Controls.Add(this.comboBox1);
-            this.groupBox1.Location = new System.Drawing.Point(12, 12);
+            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(776, 65);
+            this.groupBox1.Size = new System.Drawing.Size(998, 77);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Elige una opción";
@@ -91,9 +92,10 @@ namespace AddinExportCDW.Views
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.cartesianChart1);
-            this.groupBox2.Location = new System.Drawing.Point(12, 83);
+            this.groupBox2.Dock = System.Windows.Forms.DockStyle.Right;
+            this.groupBox2.Location = new System.Drawing.Point(0, 77);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(776, 486);
+            this.groupBox2.Size = new System.Drawing.Size(998, 622);
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Chart";
@@ -102,7 +104,7 @@ namespace AddinExportCDW.Views
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 581);
+            this.ClientSize = new System.Drawing.Size(998, 699);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Name = "ChartForm";

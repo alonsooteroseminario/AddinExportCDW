@@ -59,7 +59,7 @@ namespace AddinExportCDW.Views
                     Values = new ChartValues<double> { listaN_valor_NEW[2] },
                     DataLabels = true,
                     LabelPoint = labelPoint,
-                    PushOut = 15,
+                    //PushOut = 15,
                 },
                 new PieSeries
                 {
