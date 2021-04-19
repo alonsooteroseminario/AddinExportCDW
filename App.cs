@@ -16,25 +16,21 @@ namespace AddinExportCDW
     class App : IExternalApplication
     {
         public static string ExecutingAssemblyPath = System.Reflection.Assembly.GetExecutingAssembly().Location;
-
-
         public Result OnStartup(UIControlledApplication application)
         {
             //Aqui va los botones
             // Todo el código para crear los botones en la Ribbon
             string tabName = "CDW Estimación";
             application.CreateRibbonTab(tabName);
-
             // Crear Panel 1
-            RibbonPanel panel1 = application.CreateRibbonPanel(tabName, "ExportCDW");
-
+            RibbonPanel panel1 = application.CreateRibbonPanel(tabName, "Calcular");
+            RibbonPanel panel2 = application.CreateRibbonPanel(tabName, "Seleccionar");
             // Agregar un botón a Panel 1
-            PushButton button = panel1.AddItem(new PushButtonData("button", "Calcular", ExecutingAssemblyPath, "AddinExportCDW.ThisApplication")) as PushButton;
-            PushButton button2 = panel1.AddItem(new PushButtonData("button2", "Seleccionar", ExecutingAssemblyPath, "AddinExportCDW.SelectionElement")) as PushButton;
+            PushButton button = panel1.AddItem(new PushButtonData("button", "Calcular", ExecutingAssemblyPath, "AddinExportCDW.ModelElement")) as PushButton;
+            PushButton button2 = panel2.AddItem(new PushButtonData("button2", "Seleccionar", ExecutingAssemblyPath, "AddinExportCDW.SelectionElement")) as PushButton;
 
             return Result.Succeeded;
         }
-
         public Result OnShutdown(UIControlledApplication application)
         {
             return Result.Succeeded;
