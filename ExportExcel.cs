@@ -16,8 +16,6 @@ namespace AddinExportCDW
         {
 			#region Obtener Excel
 			var bankAccounts = new List<Account>();
-
-
 			// aqui solo los elementos que se usan . No deberian ser todos.
 			for (int i = 0; i < lista_Dictionarios.Count(); i++)
 			{
@@ -25,7 +23,6 @@ namespace AddinExportCDW
 				{
 					ID = lista_Dictionarios[i]["Structural element"] + " / " + lista_Dictionarios[i]["Código"],
 					Balance = lista_desperdicios[i]
-
 				};
 				bankAccounts.Add(cuenta);
 			}
@@ -41,7 +38,6 @@ namespace AddinExportCDW
 			};
 			bankAccounts.Add(nuevo1);
 			bankAccounts.Add(nuevo2);
-
 			var bankAccounts2 = new List<Account> {
 					new Account {
 									  ID = "07 07 01 - aqueous washing liquids",
@@ -92,7 +88,6 @@ namespace AddinExportCDW
 									Balance =  desperdicioTotal
 					}
 				};
-
 			DisplayInExcel(bankAccounts, bankAccounts2);
 			#endregion
 		}
@@ -151,6 +146,5 @@ namespace AddinExportCDW
 
 
 		}
-
 	}
 }

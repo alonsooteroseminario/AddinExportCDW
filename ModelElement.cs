@@ -19,7 +19,6 @@ namespace AddinExportCDW
     [RegenerationAttribute(RegenerationOption.Manual)]
     class ModelElement : IExternalCommand
     {
-
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             #region Comandos entrada
@@ -57,14 +56,12 @@ namespace AddinExportCDW
 													strFoundation,
 													strFramming,
 													walls);
-
 			List<double> lista_desperdicios = Core.GetListDesperdicio(commandData,
 													floors,
 													structuralColumns,
 													strFoundation,
 													strFramming,
 													walls);
-
 			double desperdicioTotal = Core.GetDesperdicioTotal(commandData,
 													floors,
 													structuralColumns,
@@ -78,11 +75,52 @@ namespace AddinExportCDW
 													strFoundation,
 													strFramming,
 													walls);
+            #region Crear Tablas Schedules
+            FilteredElementCollector collector = new FilteredElementCollector(doc);
+			IList<Element> viewSchedulesAllProject = collector.OfClass(typeof(ViewSchedule)).ToElements();
+			bool existeSchedule = true;
+			foreach (Element viewSche in viewSchedulesAllProject)// Existe?
+			{
+				if (viewSche.Name.Contains(" CDW ESTIMACIÓN SCHEDULE"))
+				{
+					existeSchedule = false;
+					break;
+				}
+			}
+			List<Element> TodoslosElemetosDelModelo = new List<Element>();
+			// Todos los Elementos del Modelo
+			IEnumerable<Element> elementosProyecto = CollectorElement.GetAllModelElements(doc);
+			foreach (Element elemento in elementosProyecto)
+			{
+				TodoslosElemetosDelModelo.Add(elemento);
+			}
+			// Todos las Familias de instacia del proyecto
+			IEnumerable<Element> familiasInstanciaProyecto = CollectorElement.GetFamilyInstanceModelElements(doc);
+			foreach (Element elemento in familiasInstanciaProyecto)
+			{
+				TodoslosElemetosDelModelo.Add(elemento);
+			}
 
+			if (CreateSchedule.ExistParameters(commandData, lista_Dictionarios[0], TodoslosElemetosDelModelo))//si sí existen parametros
+			{
+                if (existeSchedule)
+                {
+					CreateSchedule.CreateSchedules(commandData, lista_Dictionarios[0]);
+				}
+			}
+			else
+			{
+				CreateSchedule.CreateParameters(commandData, lista_Dictionarios[0], TodoslosElemetosDelModelo);
+				if (existeSchedule)
+				{
+					CreateSchedule.CreateSchedules(commandData, lista_Dictionarios[0]);
+				}
+			}
+            #endregion
 
-			#region mensaje en Pantalla
+            #region mensaje en Pantalla
 
-			WindowMensaje MainMensaje = new WindowMensaje(commandData,
+            WindowMensaje MainMensaje = new WindowMensaje(commandData,
 														  listaN_valor, 
 														  lista_Dictionarios, 
 														  lista_desperdicios, 
@@ -92,21 +130,10 @@ namespace AddinExportCDW
 
             #endregion
 
-            if (CreateSchedule.ExistParameters(commandData, lista_Dictionarios[0], floors))//si sí existen parametros
-            {
-				CreateSchedule.CreateSchedules(commandData, lista_Dictionarios[0]);
-			}
-            else
-            {
-				CreateSchedule.CreateParameters(commandData, lista_Dictionarios[0], floors);
-				CreateSchedule.CreateSchedules(commandData, lista_Dictionarios[0]);
-            }
-
 			#endregion
 
 			return Result.Succeeded;
         }
-
 		static void DisplayInExcel(IEnumerable<Account> accounts, IEnumerable<Account> accounts2)
 		{
 			Excel.Application excelApp = new Excel.Application();
@@ -164,67 +191,15 @@ namespace AddinExportCDW
 
 
 		}
-
-		#region Get all model elements
-		/// <summary>
-		/// Return all model elements, cf.
-		/// http://forums.autodesk.com/t5/revit-api/traverse-all-model-elements-in-a-project-top-down-approach/m-p/5815247
-		/// </summary>
-		IEnumerable<Element> GetAllModelElements(
-		  Document doc)
-		{
-			Options opt = new Options();
-
-			return new FilteredElementCollector(doc)
-			  .WhereElementIsNotElementType()
-			  .WhereElementIsViewIndependent()
-			  .Where<Element>(e
-			   => null != e.Category
-			   && null != e.get_Geometry(opt));
-		}
-
-		IList<Element> GetFamilyInstanceModelElements(
-		  Document doc)
-		{
-			ElementClassFilter familyInstanceFilter
-			  = new ElementClassFilter(
-				typeof(FamilyInstance));
-
-			FilteredElementCollector familyInstanceCollector
-			  = new FilteredElementCollector(doc);
-
-			IList<Element> elementsCollection
-			  = familyInstanceCollector.WherePasses(
-				familyInstanceFilter).ToElements();
-
-			IList<Element> modelElements
-			  = new List<Element>();
-
-			foreach (Element e in elementsCollection)
-			{
-				if ((null != e.Category)
-				&& (null != e.LevelId)
-				&& (null != e.get_Geometry(new Options()))
-				)
-				{
-					modelElements.Add(e);
-				}
-			}
-			return modelElements;
-		}
-		#endregion // Get all model elements
-
 		public Result OnStartup(UIControlledApplication application)
         {
             return Result.Succeeded;
         }
         public Result OnShutdown(UIControlledApplication application)
         {
-
             return Result.Succeeded;
         }
     }
-
     internal class Account
     {
 		public string ID { get; set; }

@@ -52,36 +52,28 @@ namespace AddinExportCDW
                                                     strFoundation,
                                                     strFramming,
                                                     walls);
-
             List<double> lista_desperdicios = Core.GetListDesperdicio(commandData,
                                                     floors,
                                                     structuralColumns,
                                                     strFoundation,
                                                     strFramming,
                                                     walls);
-
             double desperdicioTotal = Core.GetDesperdicioTotal(commandData,
                                                     floors,
                                                     structuralColumns,
                                                     strFoundation,
                                                     strFramming,
                                                     walls);
-
-
-            //ChartForm chartForm = new ChartForm(commandData ,listaN_valor, lista_Dictionarios);
-            //chartForm.ShowDialog();
             #endregion
 
             return Result.Succeeded;
         }
-
         public Result OnStartup(UIControlledApplication application)
         {
             return Result.Succeeded;
         }
         public Result OnShutdown(UIControlledApplication application)
         {
-
             return Result.Succeeded;
         }
     }

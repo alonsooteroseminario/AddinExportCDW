@@ -13,13 +13,12 @@ namespace AddinExportCDW
 {
     public static class CollectorElement
     {
-
         #region Get all model elements
         /// <summary>
         /// Return all model elements, cf.
         /// http://forums.autodesk.com/t5/revit-api/traverse-all-model-elements-in-a-project-top-down-approach/m-p/5815247
         /// </summary>
-        static IEnumerable<Element> GetAllModelElements(
+        public static IEnumerable<Element> GetAllModelElements(
 		  Document doc)
 		{
 			Options opt = new Options();
@@ -31,8 +30,7 @@ namespace AddinExportCDW
 			   => null != e.Category
 			   && null != e.get_Geometry(opt));
 		}
-
-        static IList<Element> GetFamilyInstanceModelElements(
+        public static IList<Element> GetFamilyInstanceModelElements(
 		  Document doc)
 		{
 			ElementClassFilter familyInstanceFilter
@@ -62,7 +60,6 @@ namespace AddinExportCDW
 			return modelElements;
 		}
 		#endregion // Get all model elements
-
 		public static IList<Element> Get(Document doc, View activeView, string categoryElement)
         {
 			#region Colectores de Elementos
@@ -102,13 +99,6 @@ namespace AddinExportCDW
 			//  walls
 			FilteredElementCollector DUcoll5 = new FilteredElementCollector(doc, activeView.Id);
 			IList<Element> walls = DUcoll5.WherePasses(DUInstancesFilter_walls).ToElements();
-
-
-			// Todos los Elementos del Modelo
-			IEnumerable<Element> elementosProyecto = GetAllModelElements(doc);
-			// Todos las Familias de instacia del proyecto
-			IEnumerable<Element> familiasInstanciaProyecto = GetFamilyInstanceModelElements(doc);
-
 			#endregion
 
             if (categoryElement == "floors")
@@ -131,10 +121,7 @@ namespace AddinExportCDW
 			{
 				return walls;
 			}
-
 			return null;
 		}
-
-
 	}
 }

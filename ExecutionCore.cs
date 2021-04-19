@@ -11,7 +11,6 @@ namespace AddinExportCDW
 {
     public static class Core
     {
-
 		public static List<List<double>> GetListValoresByName(ExternalCommandData commandData,
 						IList<Element> floors,
 						IList<Element> structuralColumns,
@@ -1000,7 +999,6 @@ namespace AddinExportCDW
 
 			return salida;
 		}
-
 		public static List<Dictionary<string, string>> GetListDictionary(ExternalCommandData commandData,
 								IList<Element> floors,
 								IList<Element> structuralColumns,
@@ -1420,7 +1418,6 @@ namespace AddinExportCDW
 
 			return lista_Dictionarios;
 		}
-
 		public static List<double> GetListDesperdicio(ExternalCommandData commandData,
 								IList<Element> floors,
 								IList<Element> structuralColumns,
@@ -1850,7 +1847,6 @@ namespace AddinExportCDW
 
 			return lista_desperdicios;
 		}
-
 		public static double GetDesperdicioTotal(ExternalCommandData commandData,
 						IList<Element> floors,
 						IList<Element> structuralColumns,

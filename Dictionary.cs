@@ -8,11 +8,9 @@ namespace AddinExportCDW
 {
     public static class Dictionary
     {
-
 		public static Dictionary<string, string> Get(string elementName)
         {
 			#region Dictionarios
-
 			Dictionary<string, string> data_forjado = new Dictionary<string, string>(){
 				{"Structural element", "Concrete waffle slab "},
 				{"Código", "05WCH80110N"},
@@ -154,9 +152,7 @@ namespace AddinExportCDW
                 {"17 09 04 - mixed", "0,000225"},//
             };
 			#endregion
-
 			Dictionary<string, string> DictionaryOutPut = new Dictionary<string, string>();
-
             if (elementName == "data_forjado")
             {
 				DictionaryOutPut = data_forjado;
@@ -197,41 +193,27 @@ namespace AddinExportCDW
 			{
 				DictionaryOutPut = data_walls;
 			}
-
 			return DictionaryOutPut;
-			
-
 		}
-
 		public static List<string> DictionaryListValues(Dictionary<string, string> dictionary)
 		{
 			List<string> salida = new List<string>();
-
 			foreach (KeyValuePair<string, string> entry in dictionary)
 			{
 				salida.Add(entry.Value);
 			}
 			salida.RemoveRange(0, 2);
-
-			int mensaje = salida.Count();
-
 			return salida;
-
 		}
 		public static List<string> DictionaryListKeys(Dictionary<string, string> dictionary)
 		{
 			List<string> salida = new List<string>();
-
 			foreach (KeyValuePair<string, string> entry in dictionary)
 			{
 				salida.Add(entry.Key);
 			}
 			salida.RemoveRange(0, 2);
-
-			int mensaje = salida.Count();
-
 			return salida;
-
 		}
 	}
 }
