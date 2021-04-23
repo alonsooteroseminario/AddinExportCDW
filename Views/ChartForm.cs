@@ -4,12 +4,7 @@ using LiveCharts.Defaults;
 using LiveCharts.Wpf;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace AddinExportCDW.Views
@@ -19,8 +14,9 @@ namespace AddinExportCDW.Views
         private List<List<double>> listaDe_listaN_valor_NEW { get; set; }
         private List<Dictionary<string, string>> lista_Dictionarios_NEW { get; set; }
         private List<double> listaN_valor_NEW { get; set; }
-        int selectedIndex { get; set; }
-        string Eleccion { get; set; }
+        private int selectedIndex { get; set; }
+        private string Eleccion { get; set; }
+
         public ChartForm(ExternalCommandData commandData,
                          List<double> listaN_valor,
                          List<Dictionary<string, string>> lista_Dictionarios,
@@ -71,7 +67,7 @@ namespace AddinExportCDW.Views
 
         private void CambiarChart(int selectedIndex)
         {
-            if(selectedIndex == 0)
+            if (selectedIndex == 0)
             {
                 Eleccion = "07 07 01 - aqueous washing liquids";
                 cartesianChart1.Series.Clear();
@@ -461,8 +457,8 @@ namespace AddinExportCDW.Views
                 };
                 cartesianChart1.DataTooltip = tooltip;
             }
-
         }
+
         private void button1_Click(object sender, EventArgs e)
         {
             selectedIndex = comboBox1.SelectedIndex;

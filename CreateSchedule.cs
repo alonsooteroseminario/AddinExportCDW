@@ -15,6 +15,7 @@ namespace AddinExportCDW
                                                         Dictionary<string, string> dictionary)
         {
             #region Comandos entrada
+
             //Get application and document objects
             UIApplication uiApp = commandData.Application;
             UIDocument uidoc = uiApp.ActiveUIDocument;
@@ -23,7 +24,8 @@ namespace AddinExportCDW
             // Get Active View
             View activeView = uidoc.ActiveView;
             string ruta = App.ExecutingAssemblyPath;
-            #endregion
+
+            #endregion Comandos entrada
 
             List<string> keys = Dictionary.DictionaryListKeys(dictionary);
             string paramName = keys[0];
@@ -36,7 +38,6 @@ namespace AddinExportCDW
             string paramName8 = keys[7];
             string paramName9 = keys[8];
             string paramName10 = keys[9];
-
 
             DefinitionFile myDefinitionFile = app.OpenSharedParameterFile();
             DefinitionGroup myGroup = myDefinitionFile.Groups.Create("Create CDW Parameters");
@@ -117,10 +118,12 @@ namespace AddinExportCDW
                 t.Commit();
             }
         }
+
         public static void CreateParametersWithSharedParameterFile(ExternalCommandData commandData,
                                                                     Dictionary<string, string> dictionary)
         {
             #region Comandos entrada
+
             //Get application and document objects
             UIApplication uiApp = commandData.Application;
             UIDocument uidoc = uiApp.ActiveUIDocument;
@@ -129,7 +132,9 @@ namespace AddinExportCDW
             // Get Active View
             View activeView = uidoc.ActiveView;
             string ruta = App.ExecutingAssemblyPath;
-            #endregion
+
+            #endregion Comandos entrada
+
             List<string> keys = Dictionary.DictionaryListKeys(dictionary);
             string paramName = keys[0];
             string paramName2 = keys[1];
@@ -193,11 +198,13 @@ namespace AddinExportCDW
                 t.Commit();
             }
         }
+
         public static void CreateParameters(ExternalCommandData commandData,
                                     Dictionary<string, string> dictionary,
                                     IList<Element> listaElementos)
         {
             #region Comandos entrada
+
             //Get application and document objects
             UIApplication uiApp = commandData.Application;
             UIDocument uidoc = uiApp.ActiveUIDocument;
@@ -206,7 +213,9 @@ namespace AddinExportCDW
             // Get Active View
             View activeView = uidoc.ActiveView;
             string ruta = App.ExecutingAssemblyPath;
-            #endregion
+
+            #endregion Comandos entrada
+
             List<string> keys = Dictionary.DictionaryListKeys(dictionary);
             string paramName = keys[0];
             // create shared parameter file
@@ -266,11 +275,13 @@ namespace AddinExportCDW
                 }
             }
         }
+
         public static bool ExistParameters(ExternalCommandData commandData,
                             Dictionary<string, string> dictionary,
-                            IList<Element> listaElementos)
+                            IList<Element> TodosLosElementosCDW)
         {
             #region Comandos entrada
+
             //Get application and document objects
             UIApplication uiApp = commandData.Application;
             UIDocument uidoc = uiApp.ActiveUIDocument;
@@ -279,14 +290,15 @@ namespace AddinExportCDW
             // Get Active View
             View activeView = uidoc.ActiveView;
             string ruta = App.ExecutingAssemblyPath;
-            #endregion
+
+            #endregion Comandos entrada
+
             List<string> keys = Dictionary.DictionaryListKeys(dictionary);
             string paramName = keys[0];
             bool salida = false;
             DefinitionFile sharedParameterFile = app.OpenSharedParameterFile(); // Abrimos el archivo .txt de shared parameters
             if (sharedParameterFile == null)
             {
-
             }
             else
             {
@@ -307,7 +319,7 @@ namespace AddinExportCDW
                         if (dg.Name.ToString() == "Create CDW Parameters")
                         {
                             //Existe parametro entonces no hacer nada
-                            Element elemento = listaElementos.First();
+                            Element elemento = TodosLosElementosCDW.First();
                             Parameter parameter = elemento.LookupParameter(paramName);
                             if (parameter != null)// Sí existen los parametros
                             {
@@ -333,10 +345,12 @@ namespace AddinExportCDW
             }
             return salida;
         }
+
         public static void CreateSchedules(ExternalCommandData commandData,
                                     Dictionary<string, string> dictionary)
         {
             #region Comandos entrada
+
             //Get application and document objects
             UIApplication uiApp = commandData.Application;
             UIDocument uidoc = uiApp.ActiveUIDocument;
@@ -345,7 +359,9 @@ namespace AddinExportCDW
             // Get Active View
             View activeView = uidoc.ActiveView;
             string ruta = App.ExecutingAssemblyPath;
-            #endregion
+
+            #endregion Comandos entrada
+
             List<string> keys = Dictionary.DictionaryListKeys(dictionary);
             string paramName = keys[0];
             string paramName2 = keys[1];
