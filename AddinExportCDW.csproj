@@ -88,7 +88,6 @@
     <Compile Include="App.cs" />
     <Compile Include="CalcArea.cs" />
     <Compile Include="CalcVolume.cs" />
-    <Compile Include="ChartElement.cs" />
     <Compile Include="CollectorElement.cs" />
     <Compile Include="Dictionary.cs" />
     <Compile Include="ExecutionCore.cs" />

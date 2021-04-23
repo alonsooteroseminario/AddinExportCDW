@@ -33,10 +33,9 @@ namespace AddinExportCDW.Views
                 MaxRowHeigth = 5,
                 RowPadding = 2
             });
-            Eleccion = "07 07 01 - aqueous washing liquids";
-            if (Eleccion == "07 07 01 - aqueous washing liquids")
+            Eleccion = "07 07 01 aqueous washing liquids";
+            if (Eleccion == "07 07 01 aqueous washing liquids")
             {
-                //Hacer calculos de nuevo
                 for (int i = 0; i < listaDe_listaN_valor[0].Count(); i++)
                 {
                     cartesianChart1.Series[0].Values.Add(new ObservablePoint(i, listaDe_listaN_valor[0][i]));
@@ -49,7 +48,6 @@ namespace AddinExportCDW.Views
             }
             cartesianChart1.AxisY.Add(new Axis
             {
-                // deberia ser de l Lista de Dictionarios
                 Title = "Código",
                 Labels = array.ToArray()
             });
@@ -69,7 +67,7 @@ namespace AddinExportCDW.Views
         {
             if (selectedIndex == 0)
             {
-                Eleccion = "07 07 01 - aqueous washing liquids";
+                Eleccion = "07 07 01 aqueous washing liquids";
                 cartesianChart1.Series.Clear();
                 cartesianChart1.Series.Add(new RowSeries
                 {
@@ -90,7 +88,6 @@ namespace AddinExportCDW.Views
                 cartesianChart1.AxisY.Clear();
                 cartesianChart1.AxisY.Add(new Axis
                 {
-                    // deberia ser de l Lista de Dictionarios
                     Title = "Código",
                     Labels = array.ToArray()
                 });
@@ -108,7 +105,7 @@ namespace AddinExportCDW.Views
             }
             else if (selectedIndex == 1)
             {
-                Eleccion = "15 01 02 - plastic packaging";
+                Eleccion = "15 01 02 plastic packaging";
                 cartesianChart1.Series.Clear();
                 cartesianChart1.Series.Add(new RowSeries
                 {
@@ -129,7 +126,6 @@ namespace AddinExportCDW.Views
                 cartesianChart1.AxisY.Clear();
                 cartesianChart1.AxisY.Add(new Axis
                 {
-                    // deberia ser de l Lista de Dictionarios
                     Title = "Código",
                     Labels = array.ToArray()
                 });
@@ -147,7 +143,7 @@ namespace AddinExportCDW.Views
             }
             else if (selectedIndex == 2)
             {
-                Eleccion = "15 01 03 - wooden packaging";
+                Eleccion = "15 01 03 wooden packaging";
                 cartesianChart1.Series.Clear();
                 cartesianChart1.Series.Add(new RowSeries
                 {
@@ -168,7 +164,6 @@ namespace AddinExportCDW.Views
                 cartesianChart1.AxisY.Clear();
                 cartesianChart1.AxisY.Add(new Axis
                 {
-                    // deberia ser de l Lista de Dictionarios
                     Title = "Código",
                     Labels = array.ToArray()
                 });
@@ -186,7 +181,7 @@ namespace AddinExportCDW.Views
             }
             else if (selectedIndex == 3)
             {
-                Eleccion = "15 01 04 - metallic packaging";
+                Eleccion = "15 01 04 metallic packaging";
                 cartesianChart1.Series.Clear();
                 cartesianChart1.Series.Add(new RowSeries
                 {
@@ -207,7 +202,6 @@ namespace AddinExportCDW.Views
                 cartesianChart1.AxisY.Clear();
                 cartesianChart1.AxisY.Add(new Axis
                 {
-                    // deberia ser de l Lista de Dictionarios
                     Title = "Código",
                     Labels = array.ToArray()
                 });
@@ -225,7 +219,7 @@ namespace AddinExportCDW.Views
             }
             else if (selectedIndex == 4)
             {
-                Eleccion = "15 01 06 - mixed packaging";
+                Eleccion = "15 01 06 mixed packaging";
                 cartesianChart1.Series.Clear();
                 cartesianChart1.Series.Add(new RowSeries
                 {
@@ -246,7 +240,6 @@ namespace AddinExportCDW.Views
                 cartesianChart1.AxisY.Clear();
                 cartesianChart1.AxisY.Add(new Axis
                 {
-                    // deberia ser de l Lista de Dictionarios
                     Title = "Código",
                     Labels = array.ToArray()
                 });
@@ -264,7 +257,7 @@ namespace AddinExportCDW.Views
             }
             else if (selectedIndex == 5)
             {
-                Eleccion = "17 01 01 - concrete";
+                Eleccion = "17 01 01 concrete";
                 cartesianChart1.Series.Clear();
                 cartesianChart1.Series.Add(new RowSeries
                 {
@@ -285,7 +278,6 @@ namespace AddinExportCDW.Views
                 cartesianChart1.AxisY.Clear();
                 cartesianChart1.AxisY.Add(new Axis
                 {
-                    // deberia ser de l Lista de Dictionarios
                     Title = "Código",
                     Labels = array.ToArray()
                 });
@@ -303,7 +295,7 @@ namespace AddinExportCDW.Views
             }
             else if (selectedIndex == 6)
             {
-                Eleccion = "17 02 01 - wood";
+                Eleccion = "17 02 01 wood";
                 cartesianChart1.Series.Clear();
                 cartesianChart1.Series.Add(new RowSeries
                 {
@@ -324,7 +316,6 @@ namespace AddinExportCDW.Views
                 cartesianChart1.AxisY.Clear();
                 cartesianChart1.AxisY.Add(new Axis
                 {
-                    // deberia ser de l Lista de Dictionarios
                     Title = "Código",
                     Labels = array.ToArray()
                 });
@@ -342,7 +333,7 @@ namespace AddinExportCDW.Views
             }
             else if (selectedIndex == 7)
             {
-                Eleccion = "17 02 03 - plastic";
+                Eleccion = "17 02 03 plastic";
                 cartesianChart1.Series.Clear();
                 cartesianChart1.Series.Add(new RowSeries
                 {
@@ -363,7 +354,6 @@ namespace AddinExportCDW.Views
                 cartesianChart1.AxisY.Clear();
                 cartesianChart1.AxisY.Add(new Axis
                 {
-                    // deberia ser de l Lista de Dictionarios
                     Title = "Código",
                     Labels = array.ToArray()
                 });
@@ -381,7 +371,7 @@ namespace AddinExportCDW.Views
             }
             else if (selectedIndex == 8)
             {
-                Eleccion = "17 04 05 - iron and steel";
+                Eleccion = "17 04 05 iron and steel";
                 cartesianChart1.Series.Clear();
                 cartesianChart1.Series.Add(new RowSeries
                 {
@@ -402,7 +392,6 @@ namespace AddinExportCDW.Views
                 cartesianChart1.AxisY.Clear();
                 cartesianChart1.AxisY.Add(new Axis
                 {
-                    // deberia ser de l Lista de Dictionarios
                     Title = "Código",
                     Labels = array.ToArray()
                 });
@@ -420,7 +409,7 @@ namespace AddinExportCDW.Views
             }
             else if (selectedIndex == 9)
             {
-                Eleccion = "17 09 04 - mixed";
+                Eleccion = "17 09 04 mixed";
                 cartesianChart1.Series.Clear();
                 cartesianChart1.Series.Add(new RowSeries
                 {
@@ -441,7 +430,6 @@ namespace AddinExportCDW.Views
                 cartesianChart1.AxisY.Clear();
                 cartesianChart1.AxisY.Add(new Axis
                 {
-                    // deberia ser de l Lista de Dictionarios
                     Title = "Código",
                     Labels = array.ToArray()
                 });
@@ -467,7 +455,6 @@ namespace AddinExportCDW.Views
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // Recoge valor del UI
             selectedIndex = comboBox1.SelectedIndex;
         }
     }

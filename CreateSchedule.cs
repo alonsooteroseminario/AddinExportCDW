@@ -458,8 +458,9 @@ namespace AddinExportCDW
                         TableData td = clashSchedule.GetTableData(); // get viewschedule table data
                         TableSectionData tsd = td.GetSectionData(SectionType.Header); // get header section data
                         string text = tsd.GetCellText(0, 0);
-                        tsd.SetCellText(0, 0, bic.ToString() + " CDW ESTIMACIÓN SCHEDULE");
-                        clashSchedule.Name = bic.ToString() + " CDW ESTIMACIÓN SCHEDULE";
+                        string nombreBorrado_OST = (bic.ToString() + " CDW ESTIMACIÓN SCHEDULE").Remove(0, 4);
+                        tsd.SetCellText(0, 0, nombreBorrado_OST);
+                        clashSchedule.Name = nombreBorrado_OST;
                         tsd.InsertColumn(0);
                         tran.Commit();
                     }

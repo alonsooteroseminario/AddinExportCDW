@@ -14,14 +14,14 @@ namespace AddinExportCDW
         {
             //Aqui va los botones
             // Todo el código para crear los botones en la Ribbon
-            string tabName = "CDW Estimación";
+            string tabName = "CDW Estimation";
             application.CreateRibbonTab(tabName);
             // Crear Panel 1
-            RibbonPanel panel1 = application.CreateRibbonPanel(tabName, "Calcular");
-            RibbonPanel panel2 = application.CreateRibbonPanel(tabName, "Seleccionar");
+            RibbonPanel panel1 = application.CreateRibbonPanel(tabName, "Calculate");
+            RibbonPanel panel2 = application.CreateRibbonPanel(tabName, "Select");
             // Agregar un botón a Panel 1
-            PushButton button = panel1.AddItem(new PushButtonData("button", "Todo el Proyecto", ExecutingAssemblyPath, "AddinExportCDW.ModelElement")) as PushButton;
-            PushButton button2 = panel2.AddItem(new PushButtonData("button2", "Seleccionar elementos", ExecutingAssemblyPath, "AddinExportCDW.SelectionElement")) as PushButton;
+            PushButton button = panel1.AddItem(new PushButtonData("button", "TOTAL WASTE", ExecutingAssemblyPath, "AddinExportCDW.ModelElement")) as PushButton;
+            PushButton button2 = panel2.AddItem(new PushButtonData("button2", "WASTE by ELEMENT", ExecutingAssemblyPath, "AddinExportCDW.SelectionElement")) as PushButton;
             // Agregar Imagen al botón
             button.LargeImage = new BitmapImage(new Uri("pack://application:,,,/AddinExportCDW;component/Resources/pictograma_total_waste_opt.png"));
             button.ToolTip = "Calcula la estimación CDW para todos los elementos del documento activo.";

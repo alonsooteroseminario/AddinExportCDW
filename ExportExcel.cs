@@ -39,43 +39,43 @@ namespace AddinExportCDW
             bankAccounts.Add(nuevo2);
             var bankAccounts2 = new List<Account> {
                     new Account {
-                                      ID = "07 07 01 - aqueous washing liquids",
+                                      ID = "07 07 01 aqueous washing liquids",
                                       Balance = listaN_valor[0]//valor_porAres solo hormigon
 				                },
                     new Account {
-                                      ID = "15 01 02 - plastic packaging",
+                                      ID = "15 01 02 plastic packaging",
                                       Balance = listaN_valor[1]// valor_porArea solo suelos por defecto
 				                },
                     new Account {
-                                    ID = "15 01 03 - wooden packaging",
+                                    ID = "15 01 03 wooden packaging",
                                     Balance = listaN_valor[2]
                     },
                     new Account {
-                                    ID = "15 01 04 - metallic packaging",
+                                    ID = "15 01 04 metallic packaging",
                                     Balance = listaN_valor[3]
                     },
                     new Account {
-                                    ID = "15 01 06 - mixed packaging",
+                                    ID = "15 01 06 mixed packaging",
                                     Balance = listaN_valor[4]
                     },
                     new Account {
-                                    ID = "17 01 01 - concrete",
+                                    ID = "17 01 01 concrete",
                                     Balance = listaN_valor[5]
                     },
                     new Account {
-                                    ID = "17 02 01 - wood",
+                                    ID = "17 02 01 wood",
                                     Balance = listaN_valor[6]
                     },
                     new Account {
-                                    ID = "17 02 03 - plastic",
+                                    ID = "17 02 03 plastic",
                                     Balance = listaN_valor[7]
                     },
                     new Account {
-                                    ID = "17 04 05 - iron and steel",
+                                    ID = "17 04 05 iron and steel",
                                     Balance = listaN_valor[8]
                     },
                     new Account {
-                                    ID = "17 09 04 - mixed",
+                                    ID = "17 09 04 mixed",
                                     Balance = listaN_valor[9]
                     },
                     new Account {

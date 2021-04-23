@@ -73,16 +73,16 @@ namespace AddinExportCDW.Views
             // 
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Items.AddRange(new object[] {
-            "07 07 01 - aqueous washing liquids",
-            "15 01 02 - plastic packaging",
-            "15 01 03 - wooden packaging",
-            "15 01 04 - metallic packaging",
-            "15 01 06 - mixed packaging",
-            "17 01 01 - concrete",
-            "17 02 01 - wood",
-            "17 02 03 - plastic",
-            "17 04 05 - iron and steel",
-            "17 09 04 - mixed"});
+            "07 07 01 aqueous washing liquids",
+            "15 01 02 plastic packaging",
+            "15 01 03 wooden packaging",
+            "15 01 04 metallic packaging",
+            "15 01 06 mixed packaging",
+            "17 01 01 concrete",
+            "17 02 01 wood",
+            "17 02 03 plastic",
+            "17 04 05 iron and steel",
+            "17 09 04 mixed"});
             this.comboBox1.Location = new System.Drawing.Point(27, 26);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(241, 21);

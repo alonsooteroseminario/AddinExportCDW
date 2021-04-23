@@ -34,11 +34,18 @@ namespace AddinExportCDW
             #region Selecton collector
 
             List<Element> lista_SelectElements = new List<Element>();
-            IList<Reference> references = uidoc.Selection.PickObjects(ObjectType.Element, "Seleccionar el Elemento que se quiere analizar");
-            foreach (Reference reference in references)
+            try
             {
-                Element e = doc.GetElement(reference);
-                lista_SelectElements.Add(e);
+                IList<Reference> references = uidoc.Selection.PickObjects(ObjectType.Element, "Seleccionar el Elemento que se quiere analizar");
+                foreach (Reference reference in references)
+                {
+                    Element e = doc.GetElement(reference);
+                    lista_SelectElements.Add(e);
+                }
+            }
+            catch
+            {
+                return Result.Cancelled;
             }
 
             #endregion Selecton collector

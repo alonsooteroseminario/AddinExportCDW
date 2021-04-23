@@ -62,6 +62,8 @@ namespace AddinExportCDW.Views
 
             ExcelDataGrid.ItemsSource = dt.DefaultView;
 
+            ExcelDataGrid.GridLinesVisibility = System.Windows.Controls.DataGridGridLinesVisibility.None;
+
             listaN_valor_NEW = listaN_valor;
             lista_Dictionarios_NEW = lista_Dictionarios;
             lista_desperdicios_NEW = lista_desperdicios;
