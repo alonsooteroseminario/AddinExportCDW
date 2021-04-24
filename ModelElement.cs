@@ -119,6 +119,13 @@ namespace AddinExportCDW
                                                     strFramming,
                                                     walls);
 
+            List<List<List<double>>> listaDe_listaN_valorSeparaadaPorDataElemento = Core.GetListValoresSeparaadaPorDataElemento(commandData,
+                                                    floors,
+                                                    structuralColumns,
+                                                    strFoundation,
+                                                    strFramming,
+                                                    walls);
+
             #region mensaje en Pantalla
 
             WindowMensaje MainMensaje = new WindowMensaje(commandData,
@@ -126,7 +133,8 @@ namespace AddinExportCDW
                                                           lista_Dictionarios,
                                                           lista_desperdicios,
                                                           desperdicioTotal,
-                                                          listaDe_listaN_valor);
+                                                          listaDe_listaN_valor,
+                                                          listaDe_listaN_valorSeparaadaPorDataElemento);
             MainMensaje.ShowDialog();
 
             #endregion mensaje en Pantalla
