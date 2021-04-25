@@ -407,39 +407,39 @@ namespace AddinExportCDW
                         {
                             clashSchedule.Definition.AddField(listashparam[i]);
                         }
-                        else if (listashparam[i].GetName(doc).ToString() == paramName2)
+                        if (listashparam[i].GetName(doc).ToString() == paramName2)
                         {
                             clashSchedule.Definition.AddField(listashparam[i]);
                         }
-                        else if (listashparam[i].GetName(doc).ToString() == paramName3)
+                        if (listashparam[i].GetName(doc).ToString() == paramName3)
                         {
                             clashSchedule.Definition.AddField(listashparam[i]);
                         }
-                        else if (listashparam[i].GetName(doc).ToString() == paramName4)
+                        if (listashparam[i].GetName(doc).ToString() == paramName4)
                         {
                             clashSchedule.Definition.AddField(listashparam[i]);
                         }
-                        else if (listashparam[i].GetName(doc).ToString() == paramName5)
+                        if (listashparam[i].GetName(doc).ToString() == paramName5)
                         {
                             clashSchedule.Definition.AddField(listashparam[i]);
                         }
-                        else if (listashparam[i].GetName(doc).ToString() == paramName6)
+                        if (listashparam[i].GetName(doc).ToString() == paramName6)
                         {
                             clashSchedule.Definition.AddField(listashparam[i]);
                         }
-                        else if (listashparam[i].GetName(doc).ToString() == paramName7)
+                        if (listashparam[i].GetName(doc).ToString() == paramName7)
                         {
                             clashSchedule.Definition.AddField(listashparam[i]);
                         }
-                        else if (listashparam[i].GetName(doc).ToString() == paramName8)
+                        if (listashparam[i].GetName(doc).ToString() == paramName8)
                         {
                             clashSchedule.Definition.AddField(listashparam[i]);
                         }
-                        else if (listashparam[i].GetName(doc).ToString() == paramName9)
+                        if (listashparam[i].GetName(doc).ToString() == paramName9)
                         {
                             clashSchedule.Definition.AddField(listashparam[i]);
                         }
-                        else if (listashparam[i].GetName(doc).ToString() == paramName10)
+                        if (listashparam[i].GetName(doc).ToString() == paramName10)
                         {
                             clashSchedule.Definition.AddField(listashparam[i]);
                         }

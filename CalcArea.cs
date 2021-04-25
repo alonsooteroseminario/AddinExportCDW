@@ -7,6 +7,10 @@ namespace AddinExportCDW
 {
     public static class CalcArea
     {
+        /// <summary>
+        /// Devuelve la lista de valores del diccionario ingresado como parámetro.
+        /// </summary>
+        /// <param name="dictionary">Diccionario el cual se quiene analizar.</param>
         public static List<string> DictionaryListValues(Dictionary<string, string> dictionary)
         {
             List<string> salida = new List<string>();
