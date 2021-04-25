@@ -1,19 +1,8 @@
 ﻿using Autodesk.Revit.UI;
-using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace AddinExportCDW.Views
 {
@@ -27,6 +16,8 @@ namespace AddinExportCDW.Views
         private List<double> lista_desperdicios_NEW { get; set; }
         private double desperdicioTotal_NEW { get; set; }
 
+        private List<List<List<double>>> listaDe_listaN_valorSeparaadaPorDataElemento_NEW { get; set; }
+
         private ExternalCommandData commandData_NEW { get; set; }
 
         private List<List<double>> listaDe_listaN_valor_NEW { get; set; }
@@ -36,7 +27,8 @@ namespace AddinExportCDW.Views
                              List<Dictionary<string, string>> lista_Dictionarios,
                              List<double> lista_desperdicios,
                              double desperdicioTotal,
-                             List<List<double>> listaDe_listaN_valor)
+                             List<List<double>> listaDe_listaN_valor,
+                             List<List<List<double>>> listaDe_listaN_valorSeparaadaPorDataElemento)
         {
             InitializeComponent();
 
@@ -73,10 +65,13 @@ namespace AddinExportCDW.Views
 
             ExcelDataGrid.ItemsSource = dt.DefaultView;
 
+            ExcelDataGrid.GridLinesVisibility = System.Windows.Controls.DataGridGridLinesVisibility.None;
+
             listaN_valor_NEW = listaN_valor;
             lista_Dictionarios_NEW = lista_Dictionarios;
             lista_desperdicios_NEW = lista_desperdicios;
             desperdicioTotal_NEW = desperdicioTotal;
+            listaDe_listaN_valorSeparaadaPorDataElemento_NEW = listaDe_listaN_valorSeparaadaPorDataElemento;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -92,7 +87,11 @@ namespace AddinExportCDW.Views
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            ChartForm chartForm = new ChartForm(commandData_NEW, listaN_valor_NEW, lista_Dictionarios_NEW, listaDe_listaN_valor_NEW);
+            ChartForm chartForm = new ChartForm(commandData_NEW,
+                                                listaN_valor_NEW,
+                                                lista_Dictionarios_NEW,
+                                                listaDe_listaN_valor_NEW,
+                                                listaDe_listaN_valorSeparaadaPorDataElemento_NEW);
             chartForm.ShowDialog();
         }
     }

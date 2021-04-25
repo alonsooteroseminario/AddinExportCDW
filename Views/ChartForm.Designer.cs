@@ -49,9 +49,11 @@ namespace AddinExportCDW.Views
             // 
             // groupBox1
             // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.button1);
             this.groupBox1.Controls.Add(this.comboBox1);
-            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(998, 77);
@@ -73,16 +75,16 @@ namespace AddinExportCDW.Views
             // 
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Items.AddRange(new object[] {
-            "07 07 01 - aqueous washing liquids",
-            "15 01 02 - plastic packaging",
-            "15 01 03 - wooden packaging",
-            "15 01 04 - metallic packaging",
-            "15 01 06 - mixed packaging",
-            "17 01 01 - concrete",
-            "17 02 01 - wood",
-            "17 02 03 - plastic",
-            "17 04 05 - iron and steel",
-            "17 09 04 - mixed"});
+            "07 07 01 aqueous washing liquids",
+            "15 01 02 plastic packaging",
+            "15 01 03 wooden packaging",
+            "15 01 04 metallic packaging",
+            "15 01 06 mixed packaging",
+            "17 01 01 concrete",
+            "17 02 01 wood",
+            "17 02 03 plastic",
+            "17 04 05 iron and steel",
+            "17 09 04 mixed"});
             this.comboBox1.Location = new System.Drawing.Point(27, 26);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(241, 21);
@@ -91,8 +93,10 @@ namespace AddinExportCDW.Views
             // 
             // groupBox2
             // 
+            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox2.Controls.Add(this.cartesianChart1);
-            this.groupBox2.Dock = System.Windows.Forms.DockStyle.Right;
             this.groupBox2.Location = new System.Drawing.Point(0, 77);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(998, 622);
