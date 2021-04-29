@@ -33,10 +33,20 @@ namespace AddinExportCDW.Views
             pieChart1.InnerRadius = 75;
 
             List<string> keys = Dictionary.DictionaryListKeys(Dictionary.Get("data_forjado"));
+            
+            // calculo por porcentaje
+            double suma = 0;
+            foreach (var item in listaN_valor_NEW)
+            {
+                suma = suma + item;
+            }
+            var porcentaje = 1;
+            var valorPorcentaje = (porcentaje * suma) / 100;
+            
             int i = 0;
             foreach (var item in listaN_valor_NEW)
             {
-                if (item < 1)
+                if (item < valorPorcentaje)
                 {
                     pieChart1.Series.Add(new PieSeries
                     {

@@ -5,6 +5,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Excel = Microsoft.Office.Interop.Excel;
 
 namespace AddinExportCDW
@@ -128,7 +129,14 @@ namespace AddinExportCDW
 
             #region mensaje en Pantalla
 
-            WindowMensaje MainMensaje = new WindowMensaje(commandData,
+            double count = floors.Count()
+                        + structuralColumns.Count()
+                        + strFoundation.Count()
+                        + strFramming.Count()
+                        + walls.Count();
+
+            WindowMensaje MainMensaje = new WindowMensaje(count,
+                                                          commandData,
                                                           listaN_valor,
                                                           lista_Dictionarios,
                                                           lista_desperdicios,
@@ -205,11 +213,5 @@ namespace AddinExportCDW
         {
             return Result.Succeeded;
         }
-    }
-
-    internal class Account
-    {
-        public string ID { get; set; }
-        public double Balance { get; set; }
     }
 }

@@ -94,6 +94,12 @@
     <Compile Include="Views\ChartForm.Designer.cs">
       <DependentUpon>ChartForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\ChartPickOneForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\ChartPickOneForm.Designer.cs">
+      <DependentUpon>ChartPickOneForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\InformationForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -124,6 +130,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\ChartForm.resx">
       <DependentUpon>ChartForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\ChartPickOneForm.resx">
+      <DependentUpon>ChartPickOneForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\InformationForm.resx">
       <DependentUpon>InformationForm.cs</DependentUpon>

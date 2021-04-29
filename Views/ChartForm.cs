@@ -13,9 +13,13 @@ namespace AddinExportCDW.Views
     {
         private List<Dictionary<string, string>> lista_Dictionarios_NEW { get; set; }
         private List<List<List<double>>> listaDe_listaN_valorSeparaadaPorDataElemento_NEW { get; set; }
+
+        private double count_NEW { get; set; }
+
         private int selectedIndex { get; set; }
 
-        public ChartForm(ExternalCommandData commandData,
+        public ChartForm(double count,
+                         ExternalCommandData commandData,
                          List<double> listaN_valor,
                          List<Dictionary<string, string>> lista_Dictionarios,
                          List<List<double>> listaDe_listaN_valor,
@@ -24,6 +28,7 @@ namespace AddinExportCDW.Views
             InitializeComponent();
             lista_Dictionarios_NEW = lista_Dictionarios;
             listaDe_listaN_valorSeparaadaPorDataElemento_NEW = listaDe_listaN_valorSeparaadaPorDataElemento;
+            count_NEW = count;
 
             cartesianChart1.Series = new SeriesCollection { };
             cartesianChart1.Series.Add(new RowSeries
@@ -33,36 +38,36 @@ namespace AddinExportCDW.Views
                 RowPadding = 2
             });
 
-            for (int i = 0; i < listaDe_listaN_valorSeparaadaPorDataElemento_NEW.Count(); i++)
-            {
-                double suma = 0;
-                foreach (var item in listaDe_listaN_valorSeparaadaPorDataElemento_NEW[i][0])
-                {
-                    suma = suma + item;
-                }
-                cartesianChart1.Series[0].Values.Add(new ObservablePoint(suma, i));
-            }
+            //for (int i = 0; i < listaDe_listaN_valorSeparaadaPorDataElemento_NEW.Count(); i++)
+            //{
+            //    double suma = 0;
+            //    foreach (var item in listaDe_listaN_valorSeparaadaPorDataElemento_NEW[i][0])
+            //    {
+            //        suma = suma + item;
+            //    }
+            //    cartesianChart1.Series[0].Values.Add(new ObservablePoint(suma, i));
+            //}
 
-            List<string> array = new List<string>();
-            for (int i = 0; i < lista_Dictionarios_NEW.Count(); i++)
-            {
-                array.Add(lista_Dictionarios_NEW[i]["Structural element"] + " / " + lista_Dictionarios_NEW[i]["Código"]);
-            }
-            cartesianChart1.AxisY.Add(new Axis
-            {
-                Title = "Código",
-                Labels = array.ToArray()
-            });
-            cartesianChart1.AxisX.Add(new Axis
-            {
-                Title = "Cantidad",
-                LabelFormatter = value => (value).ToString("N") + " m3"
-            });
-            var tooltip = new DefaultTooltip
-            {
-                SelectionMode = TooltipSelectionMode.SharedYValues
-            };
-            cartesianChart1.DataTooltip = tooltip;
+            //List<string> array = new List<string>();
+            //for (int i = 0; i < lista_Dictionarios_NEW.Count(); i++)
+            //{
+            //    array.Add(lista_Dictionarios_NEW[i]["Structural element"] + " / " + lista_Dictionarios_NEW[i]["Código"]);
+            //}
+            //cartesianChart1.AxisY.Add(new Axis
+            //{
+            //    Title = "Código",
+            //    Labels = array.ToArray()
+            //});
+            //cartesianChart1.AxisX.Add(new Axis
+            //{
+            //    Title = "Cantidad",
+            //    LabelFormatter = value => (value).ToString("N") + " m3"
+            //});
+            //var tooltip = new DefaultTooltip
+            //{
+            //    SelectionMode = TooltipSelectionMode.SharedYValues
+            //};
+            //cartesianChart1.DataTooltip = tooltip;
         }
 
         private void CambiarChart(int selectedIndex)

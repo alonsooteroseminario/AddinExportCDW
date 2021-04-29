@@ -20,7 +20,8 @@ namespace AddinExportCDW
             {
                 Account cuenta = new Account
                 {
-                    ID = lista_Dictionarios[i]["Structural element"] + " / " + lista_Dictionarios[i]["Código"],
+                    ID = lista_Dictionarios[i]["Structural element"],
+                    Code = lista_Dictionarios[i]["Código"],
                     Balance = lista_desperdicios[i]
                 };
                 bankAccounts.Add(cuenta);
@@ -28,15 +29,20 @@ namespace AddinExportCDW
             Account nuevo1 = new Account
             {
                 ID = "",
+                Code = "",
                 Balance = 0
             };
             Account nuevo2 = new Account
             {
                 ID = "Total",
+                Code = "",
                 Balance = desperdicioTotal
             };
             bankAccounts.Add(nuevo1);
             bankAccounts.Add(nuevo2);
+
+            
+
             var bankAccounts2 = new List<Account> {
                     new Account {
                                       ID = "07 07 01 aqueous washing liquids",
@@ -87,11 +93,11 @@ namespace AddinExportCDW
                                     Balance =  desperdicioTotal
                     }
                 };
+
             DisplayInExcel(bankAccounts, bankAccounts2);
 
             #endregion Obtener Excel
         }
-
         private static void DisplayInExcel(IEnumerable<Account> accounts, IEnumerable<Account> accounts2)
         {
             Excel.Application excelApp = new Excel.Application();
@@ -113,21 +119,25 @@ namespace AddinExportCDW
 
             // Establish column headings in cells A1 and B1.
             workSheet.Cells[1, "A"] = "Building element";
-            workSheet.Cells[1, "B"] = "CDW (m3)";
+            workSheet.Cells[1, "B"] = "Code";
+            workSheet.Cells[1, "C"] = "CDW (m3)";
 
             var row = 1;
             foreach (var acct in accounts)
             {
                 row++;
                 workSheet.Cells[row, "A"] = acct.ID;
-                workSheet.Cells[row, "B"] = acct.Balance;
+                workSheet.Cells[row, "B"] = acct.Code;
+                workSheet.Cells[row, "C"] = acct.Balance;
             }
 
             ((Excel.Range)workSheet.Columns[1]).AutoFit();
             ((Excel.Range)workSheet.Columns[2]).AutoFit();
+            ((Excel.Range)workSheet.Columns[3]).AutoFit();
+
 
             Excel.Sheets worksheets = xlWorkBook.Worksheets;
- 
+
             var xlNewSheet = (Excel.Worksheet)worksheets.Add(worksheets[1], Type.Missing, Type.Missing, Type.Missing);
             xlNewSheet.Name = "CDW by building element";
 
@@ -145,5 +155,11 @@ namespace AddinExportCDW
             ((Excel.Range)xlNewSheet.Columns[1]).AutoFit();
             ((Excel.Range)xlNewSheet.Columns[2]).AutoFit();
         }
+    }
+    internal class Account
+    {
+        public string ID { get; set; }
+        public string Code { get; set; }
+        public double Balance { get; set; }
     }
 }

@@ -22,7 +22,10 @@ namespace AddinExportCDW.Views
 
         private List<List<double>> listaDe_listaN_valor_NEW { get; set; }
 
-        public WindowMensaje(ExternalCommandData commandData,
+        private double count_NEW { get; set; }
+
+        public WindowMensaje(double count,
+                             ExternalCommandData commandData,
                              List<double> listaN_valor,
                              List<Dictionary<string, string>> lista_Dictionarios,
                              List<double> lista_desperdicios,
@@ -34,6 +37,7 @@ namespace AddinExportCDW.Views
 
             commandData_NEW = commandData;
             listaDe_listaN_valor_NEW = listaDe_listaN_valor;
+            count_NEW = count;
 
             Dictionary<string, string> dictionary = Dictionary.Get("data_forjado");
             List<string> ListKeys = Dictionary.DictionaryListKeys(dictionary);
@@ -87,12 +91,24 @@ namespace AddinExportCDW.Views
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            ChartForm chartForm = new ChartForm(commandData_NEW,
-                                                listaN_valor_NEW,
-                                                lista_Dictionarios_NEW,
-                                                listaDe_listaN_valor_NEW,
-                                                listaDe_listaN_valorSeparaadaPorDataElemento_NEW);
-            chartForm.ShowDialog();
+            if (count_NEW == 1)
+            {
+                ChartPickOneForm chartPickOneForm = new ChartPickOneForm(listaN_valor_NEW,
+                                                                     lista_Dictionarios_NEW,
+                                                                     lista_desperdicios_NEW,
+                                                                     desperdicioTotal_NEW);
+                chartPickOneForm.ShowDialog();
+            }
+            else
+            {
+                ChartForm chartForm = new ChartForm(count_NEW,
+                                    commandData_NEW,
+                                    listaN_valor_NEW,
+                                    lista_Dictionarios_NEW,
+                                    listaDe_listaN_valor_NEW,
+                                    listaDe_listaN_valorSeparaadaPorDataElemento_NEW);
+                chartForm.ShowDialog();
+            }
         }
     }
 }

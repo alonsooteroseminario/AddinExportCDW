@@ -6,6 +6,7 @@ using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Excel = Microsoft.Office.Interop.Excel;
 
 namespace AddinExportCDW
@@ -174,15 +175,19 @@ namespace AddinExportCDW
                                         walls);
 
             #region mensaje en Pantalla
+            
+            double count = lista_SelectElements.Count();
 
-            WindowMensaje MainMensaje = new WindowMensaje(commandData,
-                                                          listaN_valor,
-                                                          lista_Dictionarios,
-                                                          lista_desperdicios,
-                                                          desperdicioTotal,
-                                                          listaDe_listaN_valor,
-                                                          listaDe_listaN_valorSeparaadaPorDataElemento);
+            WindowMensaje MainMensaje = new WindowMensaje(count,
+                                              commandData,
+                                              listaN_valor,
+                                              lista_Dictionarios,
+                                              lista_desperdicios,
+                                              desperdicioTotal,
+                                              listaDe_listaN_valor,
+                                              listaDe_listaN_valorSeparaadaPorDataElemento);
             MainMensaje.ShowDialog();
+            
 
             #endregion mensaje en Pantalla
 
