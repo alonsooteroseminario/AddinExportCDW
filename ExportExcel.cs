@@ -109,9 +109,11 @@ namespace AddinExportCDW
             // removed in a later procedure.
             Excel._Worksheet workSheet = (Excel.Worksheet)excelApp.ActiveSheet;
 
+            workSheet.Name = "CDW by type of waste";
+
             // Establish column headings in cells A1 and B1.
-            workSheet.Cells[1, "A"] = "Elemento";
-            workSheet.Cells[1, "B"] = "RCD (m³)";
+            workSheet.Cells[1, "A"] = "Building element";
+            workSheet.Cells[1, "B"] = "CDW (m3)";
 
             var row = 1;
             foreach (var acct in accounts)
@@ -125,10 +127,12 @@ namespace AddinExportCDW
             ((Excel.Range)workSheet.Columns[2]).AutoFit();
 
             Excel.Sheets worksheets = xlWorkBook.Worksheets;
+ 
             var xlNewSheet = (Excel.Worksheet)worksheets.Add(worksheets[1], Type.Missing, Type.Missing, Type.Missing);
-            xlNewSheet.Name = "Hoja2";
-            xlNewSheet.Cells[1, "A"] = "Código LER";
-            xlNewSheet.Cells[1, "B"] = "RCD (m³)";
+            xlNewSheet.Name = "CDW by building element";
+
+            xlNewSheet.Cells[1, "A"] = "European Waste Code (EWC)";
+            xlNewSheet.Cells[1, "B"] = "CDW (m3)";
 
             var row2 = 1;
             foreach (var acct in accounts2)

@@ -39,8 +39,8 @@ namespace AddinExportCDW.Views
             List<string> ListKeys = Dictionary.DictionaryListKeys(dictionary);
 
             DataTable dt = new DataTable();
-            DataColumn CodLer = new DataColumn("Código LER", typeof(string));
-            DataColumn rcd = new DataColumn("RCD (m³)", typeof(string));
+            DataColumn CodLer = new DataColumn("European Waste Code (EWC)", typeof(string));
+            DataColumn rcd = new DataColumn("CDW (m3)", typeof(string));
 
             dt.Columns.Add(CodLer);
             dt.Columns.Add(rcd);

@@ -63,9 +63,9 @@ namespace AddinExportCDW {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap pictograma_total_waste_opt {
+        internal static System.Drawing.Bitmap pictograma_información {
             get {
-                object obj = ResourceManager.GetObject("pictograma_total_waste_opt", resourceCulture);
+                object obj = ResourceManager.GetObject("pictograma_información", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -73,9 +73,9 @@ namespace AddinExportCDW {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap pictograma_waste_by_element_opt {
+        internal static System.Drawing.Bitmap pictograma_residuos {
             get {
-                object obj = ResourceManager.GetObject("pictograma_waste_by_element_opt", resourceCulture);
+                object obj = ResourceManager.GetObject("pictograma_residuos", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
