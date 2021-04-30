@@ -37,37 +37,6 @@ namespace AddinExportCDW.Views
                 MaxRowHeigth = 15,
                 RowPadding = 2
             });
-
-            //for (int i = 0; i < listaDe_listaN_valorSeparaadaPorDataElemento_NEW.Count(); i++)
-            //{
-            //    double suma = 0;
-            //    foreach (var item in listaDe_listaN_valorSeparaadaPorDataElemento_NEW[i][0])
-            //    {
-            //        suma = suma + item;
-            //    }
-            //    cartesianChart1.Series[0].Values.Add(new ObservablePoint(suma, i));
-            //}
-
-            //List<string> array = new List<string>();
-            //for (int i = 0; i < lista_Dictionarios_NEW.Count(); i++)
-            //{
-            //    array.Add(lista_Dictionarios_NEW[i]["Structural element"] + " / " + lista_Dictionarios_NEW[i]["Código"]);
-            //}
-            //cartesianChart1.AxisY.Add(new Axis
-            //{
-            //    Title = "Código",
-            //    Labels = array.ToArray()
-            //});
-            //cartesianChart1.AxisX.Add(new Axis
-            //{
-            //    Title = "Cantidad",
-            //    LabelFormatter = value => (value).ToString("N") + " m3"
-            //});
-            //var tooltip = new DefaultTooltip
-            //{
-            //    SelectionMode = TooltipSelectionMode.SharedYValues
-            //};
-            //cartesianChart1.DataTooltip = tooltip;
         }
 
         private void CambiarChart(int selectedIndex)

@@ -28,7 +28,7 @@ namespace AddinExportCDW.Views
 
         private void PieChartForm_Load(object sender, EventArgs e)
         {
-            Func<ChartPoint, string> labelPoint = chartPoint => string.Format("{0} m3   ({1:P})", chartPoint.Y, chartPoint.Participation);
+            Func<ChartPoint, string> labelPoint = chartPoint => string.Format("{0} m3   ({1:P})", Math.Round(chartPoint.Y, 2), chartPoint.Participation);
 
             pieChart1.InnerRadius = 75;
 
@@ -51,7 +51,7 @@ namespace AddinExportCDW.Views
                     pieChart1.Series.Add(new PieSeries
                     {
                         Title = keys[i],
-                        Values = new ChartValues<double> { Math.Round(item, 2) },
+                        Values = new ChartValues<double> { item },
                         LabelPoint = labelPoint,
                         LabelPosition = PieLabelPosition.OutsideSlice,
                         Foreground = Brushes.Black,
@@ -63,7 +63,7 @@ namespace AddinExportCDW.Views
                     pieChart1.Series.Add(new PieSeries
                     {
                         Title = keys[i],
-                        Values = new ChartValues<double> { Math.Round(item, 2) },
+                        Values = new ChartValues<double> { item },
                         DataLabels = true,
                         LabelPoint = labelPoint,
                         LabelPosition = PieLabelPosition.InsideSlice,

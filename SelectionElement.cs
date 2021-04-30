@@ -62,6 +62,9 @@ namespace AddinExportCDW
             List<Element> strFramming = new List<Element>();
             //  walls
             List<Element> walls = new List<Element>();
+            //  Columns
+            List<Element> columns = new List<Element>();
+
             foreach (Element sc in lista_SelectElements)
             {
                 Category category = sc.Category;
@@ -86,6 +89,10 @@ namespace AddinExportCDW
                 if (builtCategory == BuiltInCategory.OST_StructuralFoundation)
                 {
                     strFoundation.Add(sc);
+                }
+                if (builtCategory == BuiltInCategory.OST_Columns)
+                {
+                    columns.Add(sc);
                 }
             }
 
@@ -116,6 +123,7 @@ namespace AddinExportCDW
             {
                 TodoslosElemetosDelModelo.Add(elemento);
             }
+
             List<Element> TodosLosElementosCDW = CollectorElement.FiltrarElementosCDW(commandData, TodoslosElemetosDelModelo);
 
             if (CreateSchedule.ExistParameters(commandData, Dictionary.Get("data_forjado"), TodosLosElementosCDW))//si sí existen parametros
@@ -141,51 +149,58 @@ namespace AddinExportCDW
                                                                 structuralColumns,
                                                                 strFoundation,
                                                                 strFramming,
-                                                                walls);
+                                                                walls,
+                                                                columns);
             List<Dictionary<string, string>> lista_Dictionarios = Core.GetListDictionary(commandData,
                                                     floors,
                                                     structuralColumns,
                                                     strFoundation,
                                                     strFramming,
-                                                    walls);
+                                                    walls,
+                                                    columns);
             List<double> lista_desperdicios = Core.GetListDesperdicio(commandData,
                                                     floors,
                                                     structuralColumns,
                                                     strFoundation,
                                                     strFramming,
-                                                    walls);
+                                                    walls,
+                                                    columns);
             double desperdicioTotal = Core.GetDesperdicioTotal(commandData,
                                                     floors,
                                                     structuralColumns,
                                                     strFoundation,
                                                     strFramming,
-                                                    walls);
+                                                    walls,
+                                                    columns);
+
             List<List<double>> listaDe_listaN_valor = Core.GetListValoresByName(commandData,
                                         floors,
                                         structuralColumns,
                                         strFoundation,
                                         strFramming,
-                                        walls);
+                                        walls,
+                                        columns);
 
             List<List<List<double>>> listaDe_listaN_valorSeparaadaPorDataElemento = Core.GetListValoresSeparaadaPorDataElemento(commandData,
                                         floors,
                                         structuralColumns,
                                         strFoundation,
                                         strFramming,
-                                        walls);
+                                        walls,
+                                        columns);
 
             #region mensaje en Pantalla
             
             double count = lista_SelectElements.Count();
 
             WindowMensaje MainMensaje = new WindowMensaje(count,
-                                              commandData,
-                                              listaN_valor,
-                                              lista_Dictionarios,
-                                              lista_desperdicios,
-                                              desperdicioTotal,
-                                              listaDe_listaN_valor,
-                                              listaDe_listaN_valorSeparaadaPorDataElemento);
+                                                          commandData,
+                                                          listaN_valor,
+                                                          lista_Dictionarios,
+                                                          lista_desperdicios,
+                                                          desperdicioTotal,
+                                                          listaDe_listaN_valor,
+                                                          listaDe_listaN_valorSeparaadaPorDataElemento);
             MainMensaje.ShowDialog();
             
 

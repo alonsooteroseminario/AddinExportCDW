@@ -40,13 +40,13 @@ namespace AddinExportCDW.Views
                 MaxRowHeigth = 15,
                 RowPadding = 2
             });
-            listaN_valor_NEW.Reverse();
+            //listaN_valor_NEW.Reverse();
             for (int i = 0; i < listaN_valor_NEW.Count(); i++)
             {
                 cartesianChart1.Series[0].Values.Add(new ObservablePoint(listaN_valor_NEW[i], i));
             }
             List<string> array = Dictionary.DictionaryListKeys(Dictionary.Get("data_forjado"));
-            array.Reverse();
+            //array.Reverse();
             cartesianChart1.AxisY.Add(new Axis
             {
                 Title = "Código",

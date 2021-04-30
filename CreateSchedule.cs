@@ -11,6 +11,7 @@ namespace AddinExportCDW
 {
     public static class CreateSchedule
     {
+        //Crea desde cero el SharedParameterFile
         public static void CreateSharedParameterFile(ExternalCommandData commandData,
                                                         Dictionary<string, string> dictionary)
         {
@@ -84,6 +85,7 @@ namespace AddinExportCDW
                     BuiltInCategory.OST_StructuralFraming,
                     BuiltInCategory.OST_Walls,
                     BuiltInCategory.OST_StructuralFoundation,
+                    BuiltInCategory.OST_Columns,
             };
             foreach (BuiltInCategory bic in bics)
             {
@@ -166,6 +168,7 @@ namespace AddinExportCDW
                     BuiltInCategory.OST_StructuralFraming,
                     BuiltInCategory.OST_Walls,
                     BuiltInCategory.OST_StructuralFoundation,
+                    BuiltInCategory.OST_Columns,
             };
             foreach (BuiltInCategory bic in bics)
             {
@@ -380,6 +383,7 @@ namespace AddinExportCDW
                     BuiltInCategory.OST_StructuralFraming,
                     BuiltInCategory.OST_Walls,
                     BuiltInCategory.OST_StructuralFoundation,
+                    BuiltInCategory.OST_Columns,
             };
             foreach (BuiltInCategory bic in bics)
             {
@@ -400,48 +404,99 @@ namespace AddinExportCDW
                         }
                     }
                     clashSchedule.Definition.AddField(schedulableFields.FirstOrDefault(o => o.GetName(doc).ToString() == "Familia y tipo"));
-                    double nro_items_listahpram = listashparam.Count();
+
+                    bool verificarSiPasoPorAqui = false;
+                    bool verificarSiPasoPorAqui2 = false;
+                    bool verificarSiPasoPorAqui3 = false;
+                    bool verificarSiPasoPorAqui4 = false;
+                    bool verificarSiPasoPorAqui5 = false;
+                    bool verificarSiPasoPorAqui6 = false;
+                    bool verificarSiPasoPorAqui7 = false;
+                    bool verificarSiPasoPorAqui8 = false;
+                    bool verificarSiPasoPorAqui9 = false;
+                    bool verificarSiPasoPorAqui10 = false;
+
                     for (int i = 0; i < listashparam.Count(); i++)
                     {
                         if (listashparam[i].GetName(doc).ToString() == paramName)
                         {
-                            clashSchedule.Definition.AddField(listashparam[i]);
+                            if (!verificarSiPasoPorAqui)
+                            {
+                                clashSchedule.Definition.AddField(listashparam[i]);
+                                verificarSiPasoPorAqui = true;
+                            }
                         }
                         if (listashparam[i].GetName(doc).ToString() == paramName2)
                         {
-                            clashSchedule.Definition.AddField(listashparam[i]);
+                            if (!verificarSiPasoPorAqui2)
+                            {
+                                clashSchedule.Definition.AddField(listashparam[i]);
+                                verificarSiPasoPorAqui2 = true;
+                            }
                         }
                         if (listashparam[i].GetName(doc).ToString() == paramName3)
                         {
-                            clashSchedule.Definition.AddField(listashparam[i]);
+                            if (!verificarSiPasoPorAqui3)
+                            {
+                                clashSchedule.Definition.AddField(listashparam[i]);
+                                verificarSiPasoPorAqui3 = true;
+                            }
                         }
                         if (listashparam[i].GetName(doc).ToString() == paramName4)
                         {
-                            clashSchedule.Definition.AddField(listashparam[i]);
+                            if (!verificarSiPasoPorAqui4)
+                            {
+                                clashSchedule.Definition.AddField(listashparam[i]);
+                                verificarSiPasoPorAqui4 = true;
+                            }
                         }
                         if (listashparam[i].GetName(doc).ToString() == paramName5)
                         {
-                            clashSchedule.Definition.AddField(listashparam[i]);
+                            if (!verificarSiPasoPorAqui5)
+                            {
+                                clashSchedule.Definition.AddField(listashparam[i]);
+                                verificarSiPasoPorAqui5 = true;
+                            }
                         }
                         if (listashparam[i].GetName(doc).ToString() == paramName6)
                         {
-                            clashSchedule.Definition.AddField(listashparam[i]);
+                            if (!verificarSiPasoPorAqui6)
+                            {
+                                clashSchedule.Definition.AddField(listashparam[i]);
+                                verificarSiPasoPorAqui6 = true;
+                            }
                         }
                         if (listashparam[i].GetName(doc).ToString() == paramName7)
                         {
-                            clashSchedule.Definition.AddField(listashparam[i]);
+                            if (!verificarSiPasoPorAqui7)
+                            {
+                                clashSchedule.Definition.AddField(listashparam[i]);
+                                verificarSiPasoPorAqui7 = true;
+                            }
                         }
                         if (listashparam[i].GetName(doc).ToString() == paramName8)
                         {
-                            clashSchedule.Definition.AddField(listashparam[i]);
+                            if (!verificarSiPasoPorAqui8)
+                            {
+                                clashSchedule.Definition.AddField(listashparam[i]);
+                                verificarSiPasoPorAqui8 = true;
+                            }
                         }
                         if (listashparam[i].GetName(doc).ToString() == paramName9)
                         {
-                            clashSchedule.Definition.AddField(listashparam[i]);
+                            if (!verificarSiPasoPorAqui9)
+                            {
+                                clashSchedule.Definition.AddField(listashparam[i]);
+                                verificarSiPasoPorAqui9 = true;
+                            }
                         }
                         if (listashparam[i].GetName(doc).ToString() == paramName10)
                         {
-                            clashSchedule.Definition.AddField(listashparam[i]);
+                            if (!verificarSiPasoPorAqui10)
+                            {
+                                clashSchedule.Definition.AddField(listashparam[i]);
+                                verificarSiPasoPorAqui10 = true;
+                            }
                         }
                     }
                     if (null != clashSchedule)

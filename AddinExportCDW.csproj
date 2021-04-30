@@ -155,9 +155,9 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>if $(ConfigurationName) == Debug mkdir "$(AppData)\Autodesk\REVIT\Addins\2021\$(TargetName)\"
-if $(ConfigurationName) == Debug copy "$(ProjectDir)$(OutputPath)*.dll" "$(AppData)\Autodesk\REVIT\Addins\2021\$(TargetName)\"
-if $(ConfigurationName) == Debug copy "$(ProjectDir)$(OutputPath)*.addin" "$(AppData)\Autodesk\REVIT\Addins\2021"
+    <PostBuildEvent>if $(ConfigurationName) == Debug mkdir "$(AppData)\Autodesk\REVIT\Addins\2022\$(TargetName)\"
+if $(ConfigurationName) == Debug copy "$(ProjectDir)$(OutputPath)*.dll" "$(AppData)\Autodesk\REVIT\Addins\2022\$(TargetName)\"
+if $(ConfigurationName) == Debug copy "$(ProjectDir)$(OutputPath)*.addin" "$(AppData)\Autodesk\REVIT\Addins\2022"
 </PostBuildEvent>
   </PropertyGroup>
 </Project>

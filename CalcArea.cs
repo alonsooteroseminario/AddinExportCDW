@@ -40,7 +40,7 @@ namespace AddinExportCDW
         public static double GetByValueOfKey(Dictionary<string, string> dictionary, Element element, string numeroKey) // key del 2 al 11
         {
             double salida = 0;
-            Parameter param = element.LookupParameter("Área");
+            Parameter param = element.LookupParameter("Área");//en revit aparece en m2 pero en la api te entrega el valor en pies2
             List<string> lista_keys = new List<string>()
             {
                 "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"
@@ -51,7 +51,7 @@ namespace AddinExportCDW
                 if (numeroKey == lista_keys[i])
                 {
                     string valor = entrada[i];
-                    salida = double.Parse(valor) * Math.Round(param.AsDouble() / 10.7639, 4);
+                    salida = double.Parse(valor) * Math.Round(param.AsDouble() / 10.7639, 4);//convertimos "param" de pies a metros (1 m2 = 10,7639 pies2)
                 }
             }
             return salida;
