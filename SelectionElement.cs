@@ -130,7 +130,7 @@ namespace AddinExportCDW
             {
                 if (existeSchedule)
                 {
-                    CreateSchedule.CreateSchedules(commandData, Dictionary.Get("data_forjado"));
+                    //CreateSchedule.CreateSchedules(commandData, Dictionary.Get("data_forjado"));
                 }
             }
             else

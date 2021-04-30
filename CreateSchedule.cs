@@ -219,11 +219,12 @@ namespace AddinExportCDW
 
             #endregion Comandos entrada
 
+
             List<string> keys = Dictionary.DictionaryListKeys(dictionary);
             string paramName = keys[0];
             // create shared parameter file
-            String modulePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            String paramFile = modulePath + "\\CDWParameters.txt";
+            String paramFile = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) 
+                             + "\\CDWParameters.txt";
             if (File.Exists(paramFile))
             {
                 File.Delete(paramFile);
@@ -232,51 +233,7 @@ namespace AddinExportCDW
             fs.Close();
             // prepare shared parameter file
             commandData.Application.Application.SharedParametersFilename = paramFile;
-            DefinitionFile sharedParameterFile = app.OpenSharedParameterFile(); // Abrimos el archivo .txt de shared parameters
-
-            if (sharedParameterFile == null)
-            {
-                CreateSharedParameterFile(commandData, dictionary);
-            }
-            else
-            {
-                List<DefinitionGroup> defGroups = new List<DefinitionGroup>();
-                foreach (DefinitionGroup dg in sharedParameterFile.Groups)
-                {
-                    defGroups.Add(dg);
-                }
-                if (defGroups.Count() == 0) // No existe
-                {
-                    CreateSharedParameterFile(commandData, dictionary);
-                }
-                else
-                {
-                    for (int i = 0; i < defGroups.Count(); i++) // Sí existe
-                    {
-                        DefinitionGroup dg = defGroups[i];
-                        if (dg.Name.ToString() == "Create CDW Parameters")
-                        {
-                            //Existe parametro entonces no hacer nada
-                            Element elemento = listaElementos.First();
-                            Parameter parameter = elemento.LookupParameter(paramName);
-                            if (parameter != null)// Sí existen los parametros y si existe el archio de parametros compartidos "Create CDW Parameters"
-                            {
-                                //No hacer nada porque ya existen los parametros
-                            }
-                            else
-                            {
-                                // No existen parametros pero si existe archivo de parametros compartidos
-                                CreateParametersWithSharedParameterFile(commandData, dictionary);
-                                i = i + defGroups.Count();
-                            }
-                        }
-                        else // No existen parametros ytampoco existe archivo de parametros compartidos "Create CDW Parameters"
-                        {
-                            CreateSharedParameterFile(commandData, dictionary);
-                        }
-                    }
-                }
-            }
+            CreateSharedParameterFile(commandData, dictionary);
         }
 
         public static bool ExistParameters(ExternalCommandData commandData,
@@ -295,56 +252,15 @@ namespace AddinExportCDW
             string ruta = App.ExecutingAssemblyPath;
 
             #endregion Comandos entrada
-
-            List<string> keys = Dictionary.DictionaryListKeys(dictionary);
-            string paramName = keys[0];
             bool salida = false;
-            DefinitionFile sharedParameterFile = app.OpenSharedParameterFile(); // Abrimos el archivo .txt de shared parameters
-            if (sharedParameterFile == null)
+            string key = Dictionary.DictionaryListKeys(dictionary).First();
+            if (TodosLosElementosCDW.First().LookupParameter(key) == null)//no existe parametro
             {
+
             }
-            else
+            else//si existe parametro
             {
-                List<DefinitionGroup> defGroups = new List<DefinitionGroup>();
-                foreach (DefinitionGroup dg in sharedParameterFile.Groups)
-                {
-                    defGroups.Add(dg);
-                }
-                if (defGroups.Count() == 0) // No existe
-                {
-                    CreateSharedParameterFile(commandData, dictionary);
-                }
-                else
-                {
-                    for (int i = 0; i < defGroups.Count(); i++) // Sí existe
-                    {
-                        DefinitionGroup dg = defGroups[i];
-                        if (dg.Name.ToString() == "Create CDW Parameters")
-                        {
-                            //Existe parametro entonces no hacer nada
-                            Element elemento = TodosLosElementosCDW.First();
-                            Parameter parameter = elemento.LookupParameter(paramName);
-                            if (parameter != null)// Sí existen los parametros
-                            {
-                                //No hacer nada porque ya existen los parametros
-                                i = i + defGroups.Count();
-                                salida = true;
-                            }
-                            else
-                            {
-                                // No existen parametros pero si existe archivo de parametros compartidos
-                                //CreateParametersWithSharedParameterFile(commandData, dictionary);
-                                i = i + defGroups.Count();
-                                salida = false;
-                            }
-                        }
-                        else // no existe "Create CDW Parameters"
-                        {
-                            //CreateSharedParameterFile(commandData, dictionary);
-                            salida = false;
-                        }
-                    }
-                }
+                salida = true;
             }
             return salida;
         }
