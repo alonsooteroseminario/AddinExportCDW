@@ -99,10 +99,11 @@ namespace AddinExportCDW
 
         private static void DisplayInExcel(IEnumerable<Account> accounts, IEnumerable<Account> accounts2)
         {
-            Excel.Application excelApp = new Excel.Application();
-
-            // Make the object visible.
-            excelApp.Visible = true;
+            Excel.Application excelApp = new Excel.Application
+            {
+                // Make the object visible.
+                Visible = true
+            };
 
             // Create a new, empty workbook and add it to the collection returned
             // by property Workbooks. The new workbook becomes the active workbook.

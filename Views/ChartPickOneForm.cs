@@ -10,25 +10,16 @@ namespace AddinExportCDW.Views
 {
     public partial class ChartPickOneForm : Form
     {
-        private List<double> listaN_valor_NEW { get; set; }
-        private List<Dictionary<string, string>> lista_Dictionarios_NEW { get; set; }
-        private List<double> lista_desperdicios_NEW { get; set; }
-        private double desperdicioTotal_NEW { get; set; }
+        private List<double> ListaN_valor_NEW { get; set; }
 
-        private bool pasoPorAqui_NEW { get; set; }
+        private bool PasoPorAqui_NEW { get; set; }
 
         public ChartPickOneForm(bool pasoPorAqui,
-                             List<double> listaN_valor,
-                             List<Dictionary<string, string>> lista_Dictionarios,
-                             List<double> lista_desperdicios,
-                             double desperdicioTotal)
+                             List<double> listaN_valor)
         {
             InitializeComponent();
-            listaN_valor_NEW = listaN_valor;
-            lista_Dictionarios_NEW = lista_Dictionarios;
-            lista_desperdicios_NEW = lista_desperdicios;
-            desperdicioTotal_NEW = desperdicioTotal;
-            pasoPorAqui_NEW = pasoPorAqui;
+            ListaN_valor_NEW = listaN_valor;
+            PasoPorAqui_NEW = pasoPorAqui;
         }
 
         private void ChartPickOneForm_Load(object sender, EventArgs e)
@@ -41,13 +32,13 @@ namespace AddinExportCDW.Views
                 RowPadding = 2
             });
 
-            if (!pasoPorAqui_NEW)
+            if (!PasoPorAqui_NEW)
             {
-                listaN_valor_NEW.Reverse();
+                ListaN_valor_NEW.Reverse();
             }
-            for (int i = 0; i < listaN_valor_NEW.Count(); i++)
+            for (int i = 0; i < ListaN_valor_NEW.Count(); i++)
             {
-                cartesianChart1.Series[0].Values.Add(new ObservablePoint(listaN_valor_NEW[i], i));
+                cartesianChart1.Series[0].Values.Add(new ObservablePoint(ListaN_valor_NEW[i], i));
             }
             List<string> array = Dictionary.DictionaryListKeys(Dictionary.Get("data_forjado"));
             array.Reverse();

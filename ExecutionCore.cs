@@ -1,5 +1,4 @@
-﻿using Autodesk.Revit.ApplicationServices;
-using Autodesk.Revit.DB;
+﻿using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +7,12 @@ namespace AddinExportCDW
 {
     public static class Core
     {
-        //entrega lista de listas con los valores de las listas2,3,4,5,6,7,8,9,10,11
+        private static void ComandosEntrada(UIApplication uiApp, UIDocument uidoc)
+        {
+            _ = uiApp.Application;
+            _ = uidoc.ActiveView;
+        }
+
         public static List<List<double>> GetListValoresByName(ExternalCommandData commandData,
                         IList<Element> floors,
                         IList<Element> structuralColumns,
@@ -23,10 +27,7 @@ namespace AddinExportCDW
             UIApplication uiApp = commandData.Application;
             UIDocument uidoc = uiApp.ActiveUIDocument;
             Document doc = uiApp.ActiveUIDocument.Document;
-            Application app = uiApp.Application;
-            // Get Active View
-            View activeView = uidoc.ActiveView;
-            string ruta = App.ExecutingAssemblyPath;
+            ComandosEntrada(uiApp, uidoc);
 
             #endregion Comandos entrada
 
@@ -43,6 +44,7 @@ namespace AddinExportCDW
             Dictionary<string, string> data_ConcreteInclinedSlab = Dictionary.Get("data_ConcreteInclinedSlab");
             Dictionary<string, string> data_walls = Dictionary.Get("data_walls");
             Dictionary<string, string> data_SteelColumns = Dictionary.Get("data_SteelColumns");
+            Dictionary<string, string> data_forjado35 = Dictionary.Get("data_forjado35");
 
             #endregion Dictionarios
 
@@ -64,7 +66,6 @@ namespace AddinExportCDW
 
             StepLog.Write(commandData, "GetListValoresByName Start");
 
-            // 10 elementos : Aquí se filtran los Elementos con el Código
             if (floors.Count() != 0)
             {
                 foreach (Element sc in floors)
@@ -314,26 +315,50 @@ namespace AddinExportCDW
                     }
                 }
             }
+            if (floors.Count() != 0)
+            {
+                foreach (Element sc in floors)
+                {
+                    ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                    Parameter pamType = type.LookupParameter("Material estructural");
 
-            List<List<double>> salida = new List<List<double>>();
+                    if ((pamType.AsValueString() == data_forjado35["Código"]))
+                    {
+                        Dictionary<string, string> data = data_forjado35;
+                        SetValueToParameter.SetArea(data, sc, doc);
+                        lista2_valor.Add(CalcArea.GetByValueOfKey(data, sc, "2"));
+                        lista3_valor.Add(CalcArea.GetByValueOfKey(data, sc, "3"));
+                        lista4_valor.Add(CalcArea.GetByValueOfKey(data, sc, "4"));
+                        lista5_valor.Add(CalcArea.GetByValueOfKey(data, sc, "5"));
+                        lista6_valor.Add(CalcArea.GetByValueOfKey(data, sc, "6"));
+                        lista7_valor.Add(CalcArea.GetByValueOfKey(data, sc, "7"));
+                        lista8_valor.Add(CalcArea.GetByValueOfKey(data, sc, "8"));
+                        lista9_valor.Add(CalcArea.GetByValueOfKey(data, sc, "9"));
+                        lista10_valor.Add(CalcArea.GetByValueOfKey(data, sc, "10"));
+                        lista11_valor.Add(CalcArea.GetByValueOfKey(data, sc, "11"));
+                    }
+                }
+            }
 
-            salida.Add(lista2_valor);
-            salida.Add(lista3_valor);
-            salida.Add(lista4_valor);
-            salida.Add(lista5_valor);
-            salida.Add(lista6_valor);
-            salida.Add(lista7_valor);
-            salida.Add(lista8_valor);
-            salida.Add(lista9_valor);
-            salida.Add(lista10_valor);
-            salida.Add(lista11_valor);
+            List<List<double>> salida = new List<List<double>>
+            {
+                lista2_valor,
+                lista3_valor,
+                lista4_valor,
+                lista5_valor,
+                lista6_valor,
+                lista7_valor,
+                lista8_valor,
+                lista9_valor,
+                lista10_valor,
+                lista11_valor
+            };
 
             StepLog.Write(commandData, "GetListValoresByName Finish");
 
             return salida;
         }
 
-        //entrega una lista con todo los valores sumados de las listas2,3,4,5,6,7,8,9,10,11
         public static List<double> GetListValores(ExternalCommandData commandData,
                                 IList<Element> floors,
                                 IList<Element> structuralColumns,
@@ -348,16 +373,11 @@ namespace AddinExportCDW
             UIApplication uiApp = commandData.Application;
             UIDocument uidoc = uiApp.ActiveUIDocument;
             Document doc = uiApp.ActiveUIDocument.Document;
-            Application app = uiApp.Application;
-            // Get Active View
-            View activeView = uidoc.ActiveView;
-            string ruta = App.ExecutingAssemblyPath;
+            ComandosEntrada(uiApp, uidoc);
 
             #endregion Comandos entrada
 
             #region Dictionarios
-
-            List<Dictionary<string, string>> lista_Dictionarios = new List<Dictionary<string, string>>();
 
             Dictionary<string, string> data_forjado = Dictionary.Get("data_forjado");
             Dictionary<string, string> data_pilar_hormigon = Dictionary.Get("data_pilar_hormigon");
@@ -370,6 +390,7 @@ namespace AddinExportCDW
             Dictionary<string, string> data_ConcreteInclinedSlab = Dictionary.Get("data_ConcreteInclinedSlab");
             Dictionary<string, string> data_walls = Dictionary.Get("data_walls");
             Dictionary<string, string> data_SteelColumns = Dictionary.Get("data_SteelColumns");
+            Dictionary<string, string> data_forjado35 = Dictionary.Get("data_forjado35");
 
             #endregion Dictionarios
 
@@ -391,7 +412,6 @@ namespace AddinExportCDW
 
             StepLog.Write(commandData, "GetListValores Start");
 
-            // 10 elementos : Aquí se filtran los Elementos con el Código
             if (floors.Count() != 0)
             {
                 foreach (Element sc in floors)
@@ -638,6 +658,29 @@ namespace AddinExportCDW
                     }
                 }
             }
+            if (floors.Count() != 0)
+            {
+                foreach (Element sc in floors)
+                {
+                    ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                    Parameter pamType = type.LookupParameter("Material estructural");
+
+                    if ((pamType.AsValueString() == data_forjado35["Código"]))
+                    {
+                        Dictionary<string, string> data = data_forjado35;
+                        lista2_valor.Add(CalcArea.GetByValueOfKey(data, sc, "2"));
+                        lista3_valor.Add(CalcArea.GetByValueOfKey(data, sc, "3"));
+                        lista4_valor.Add(CalcArea.GetByValueOfKey(data, sc, "4"));
+                        lista5_valor.Add(CalcArea.GetByValueOfKey(data, sc, "5"));
+                        lista6_valor.Add(CalcArea.GetByValueOfKey(data, sc, "6"));
+                        lista7_valor.Add(CalcArea.GetByValueOfKey(data, sc, "7"));
+                        lista8_valor.Add(CalcArea.GetByValueOfKey(data, sc, "8"));
+                        lista9_valor.Add(CalcArea.GetByValueOfKey(data, sc, "9"));
+                        lista10_valor.Add(CalcArea.GetByValueOfKey(data, sc, "10"));
+                        lista11_valor.Add(CalcArea.GetByValueOfKey(data, sc, "11"));
+                    }
+                }
+            }
 
             List<double> salida = new List<double>();
 
@@ -647,61 +690,61 @@ namespace AddinExportCDW
             double valor2_final = 0; //07 07 01 - aqueous washing liquids ACUMULADO
             for (int i = 0; i < lista2_valor.Count(); i++)
             {
-                valor2_final = valor2_final + lista2_valor[i];
+                valor2_final += lista2_valor[i];
             }
             salida.Add(valor2_final);
             double valor3_final = 0; //"15 01 02 - plastic packaging" ACUMULADO
             for (int i = 0; i < lista3_valor.Count(); i++)
             {
-                valor3_final = valor3_final + lista3_valor[i];
+                valor3_final += lista3_valor[i];
             }
             salida.Add(valor3_final);
             double valor4_final = 0;//"15 01 03 - wooden packaging" ACUMULADO
             for (int i = 0; i < lista4_valor.Count(); i++)
             {
-                valor4_final = valor4_final + lista4_valor[i];
+                valor4_final += lista4_valor[i];
             }
             salida.Add(valor4_final);
             double valor5_final = 0;//"15 01 04 - metallic packaging" ACUMULADO
             for (int i = 0; i < lista5_valor.Count(); i++)
             {
-                valor5_final = valor5_final + lista5_valor[i];
+                valor5_final += lista5_valor[i];
             }
             salida.Add(valor5_final);
             double valor6_final = 0;//"15 01 06 - mixed packaging"] ACUMULADO
             for (int i = 0; i < lista6_valor.Count(); i++)
             {
-                valor6_final = valor6_final + lista6_valor[i];
+                valor6_final += lista6_valor[i];
             }
             salida.Add(valor6_final);
             double valor7_final = 0;//"17 01 01 - concrete" ACUMULADO
             for (int i = 0; i < lista7_valor.Count(); i++)
             {
-                valor7_final = valor7_final + lista7_valor[i];
+                valor7_final += lista7_valor[i];
             }
             salida.Add(valor7_final);
             double valor8_final = 0;//"17 02 01 - wood" ACUMULADO
             for (int i = 0; i < lista8_valor.Count(); i++)
             {
-                valor8_final = valor8_final + lista8_valor[i];
+                valor8_final += lista8_valor[i];
             }
             salida.Add(valor8_final);
             double valor9_final = 0; //"17 02 03 - plastic" ACUMULADO
             for (int i = 0; i < lista9_valor.Count(); i++)
             {
-                valor9_final = valor9_final + lista9_valor[i];
+                valor9_final += lista9_valor[i];
             }
             salida.Add(valor9_final);
             double valor10_final = 0;//"17 04 05 - iron and steel" ACUMULADO
             for (int i = 0; i < lista10_valor.Count(); i++)
             {
-                valor10_final = valor10_final + lista10_valor[i];
+                valor10_final += lista10_valor[i];
             }
             salida.Add(valor10_final);
             double valor11_final = 0;//"17 09 04 - mixed" ACUMULADO
             for (int i = 0; i < lista11_valor.Count(); i++)
             {
-                valor11_final = valor11_final + lista11_valor[i];
+                valor11_final += lista11_valor[i];
             }
             salida.Add(valor11_final);
 
@@ -712,7 +755,6 @@ namespace AddinExportCDW
             return salida;
         }
 
-        //entrega lista de los diccionarios que se usan en la ejecución
         public static List<Dictionary<string, string>> GetListDictionary(ExternalCommandData commandData,
                                 IList<Element> floors,
                                 IList<Element> structuralColumns,
@@ -726,11 +768,7 @@ namespace AddinExportCDW
             //Get application and document objects
             UIApplication uiApp = commandData.Application;
             UIDocument uidoc = uiApp.ActiveUIDocument;
-            Document doc = uiApp.ActiveUIDocument.Document;
-            Application app = uiApp.Application;
-            // Get Active View
-            View activeView = uidoc.ActiveView;
-            string ruta = App.ExecutingAssemblyPath;
+            ComandosEntrada(uiApp, uidoc);
 
             #endregion Comandos entrada
 
@@ -749,6 +787,7 @@ namespace AddinExportCDW
             Dictionary<string, string> data_ConcreteInclinedSlab = Dictionary.Get("data_ConcreteInclinedSlab");
             Dictionary<string, string> data_walls = Dictionary.Get("data_walls");
             Dictionary<string, string> data_SteelColumns = Dictionary.Get("data_SteelColumns");
+            Dictionary<string, string> data_forjado35 = Dictionary.Get("data_forjado35");
 
             #endregion Dictionarios
 
@@ -799,13 +838,16 @@ namespace AddinExportCDW
             {
                 lista_Dictionarios.Add(data_SteelColumns);
             }
+            if (floors.Count() != 0)
+            {
+                lista_Dictionarios.Add(data_forjado35);
+            }
 
             StepLog.Write(commandData, "GetListDictionary Finish");
 
             return lista_Dictionarios;
         }
 
-        //entrega la lista de desperdicio de los elementos presentes separados por categoria
         public static List<double> GetListDesperdicio(ExternalCommandData commandData,
                                 IList<Element> floors,
                                 IList<Element> structuralColumns,
@@ -820,16 +862,11 @@ namespace AddinExportCDW
             UIApplication uiApp = commandData.Application;
             UIDocument uidoc = uiApp.ActiveUIDocument;
             Document doc = uiApp.ActiveUIDocument.Document;
-            Application app = uiApp.Application;
-            // Get Active View
-            View activeView = uidoc.ActiveView;
-            string ruta = App.ExecutingAssemblyPath;
+            ComandosEntrada(uiApp, uidoc);
 
             #endregion Comandos entrada
 
             #region Dictionarios
-
-            List<Dictionary<string, string>> lista_Dictionarios = new List<Dictionary<string, string>>();
 
             Dictionary<string, string> data_forjado = Dictionary.Get("data_forjado");
             Dictionary<string, string> data_pilar_hormigon = Dictionary.Get("data_pilar_hormigon");
@@ -842,6 +879,7 @@ namespace AddinExportCDW
             Dictionary<string, string> data_ConcreteInclinedSlab = Dictionary.Get("data_ConcreteInclinedSlab");
             Dictionary<string, string> data_walls = Dictionary.Get("data_walls");
             Dictionary<string, string> data_SteelColumns = Dictionary.Get("data_SteelColumns");
+            Dictionary<string, string> data_forjado35 = Dictionary.Get("data_forjado35");
 
             #endregion Dictionarios
 
@@ -858,6 +896,7 @@ namespace AddinExportCDW
             List<double> lista_sumaTotal_valor_porArea_ConcreteInclinedSlab = new List<double>();
             List<double> lista_sumaTotal_valor_porArea_walls_Concrete = new List<double>();
             List<double> lista_sumaTotal_valor_porVolumen_data_SteelColumns = new List<double>();
+            List<double> lista_sumaTotal_valor_porArea_forjado35 = new List<double>();
 
             #endregion datos iniciales
 
@@ -876,12 +915,12 @@ namespace AddinExportCDW
             double desperdicio_ConcreteInclinedSlab = 0;
             double desperdicio_walls_Concrete = 0;
             double desperdicio_SteelColumns = 0;
+            double desperdicio_forjado35 = 0;
 
             #endregion desperdicios
 
             StepLog.Write(commandData, "GetListDesperdicio Start");
 
-            // 10 elementos : Aquí se filtran los Elementos con el Código
             if (floors.Count() != 0)
             {
                 foreach (Element sc in floors)
@@ -898,7 +937,7 @@ namespace AddinExportCDW
                 }
                 for (int i = 0; i < lista_sumaTotal_valor_porArea_Forjado.Count(); i++)
                 {
-                    desperdicioForjado = desperdicioForjado + lista_sumaTotal_valor_porArea_Forjado[i];// para Forjados
+                    desperdicioForjado += lista_sumaTotal_valor_porArea_Forjado[i];// para Forjados
                 }
                 lista_desperdicios.Add(desperdicioForjado);
             }
@@ -915,7 +954,9 @@ namespace AddinExportCDW
                 }
                 for (int i = 0; i < lista_sumaTotal_valor_porVolumen_PilarConcreto.Count(); i++)
                 {
+#pragma warning disable IDE0054 // Use compound assignment
                     desperdicioPilarHormigon = desperdicioPilarHormigon + lista_sumaTotal_valor_porVolumen_PilarConcreto[i];// para pilar de hormigon
+#pragma warning restore IDE0054 // Use compound assignment
                 }
                 lista_desperdicios.Add(desperdicioPilarHormigon);
             }
@@ -934,7 +975,9 @@ namespace AddinExportCDW
                 }
                 for (int i = 0; i < lista_sumaTotal_valor_porArea_Concreto.Count(); i++)
                 {
+#pragma warning disable IDE0054 // Use compound assignment
                     desperdicioConcreto = desperdicioConcreto + lista_sumaTotal_valor_porArea_Concreto[i];// para Concreto
+#pragma warning restore IDE0054 // Use compound assignment
                 }
                 lista_desperdicios.Add(desperdicioConcreto);
             }
@@ -953,7 +996,9 @@ namespace AddinExportCDW
                 }
                 for (int i = 0; i < lista_sumaTotal_valor_porVolumen_Cimentaciones.Count(); i++)
                 {
+#pragma warning disable IDE0054 // Use compound assignment
                     desperdicioCimentacion = desperdicioCimentacion + lista_sumaTotal_valor_porVolumen_Cimentaciones[i];
+#pragma warning restore IDE0054 // Use compound assignment
                 }
                 lista_desperdicios.Add(desperdicioCimentacion);
             }
@@ -972,7 +1017,9 @@ namespace AddinExportCDW
                 }
                 for (int i = 0; i < lista_sumaTotal_valor_porArea_ConcretoDeck.Count(); i++)
                 {
+#pragma warning disable IDE0054 // Use compound assignment
                     desperdicioConcretoDeck = desperdicioConcretoDeck + lista_sumaTotal_valor_porArea_ConcretoDeck[i];// para Concreto
+#pragma warning restore IDE0054 // Use compound assignment
                 }
                 lista_desperdicios.Add(desperdicioConcretoDeck);
             }
@@ -989,7 +1036,9 @@ namespace AddinExportCDW
                 }
                 for (int i = 0; i < lista_sumaTotal_valor_porArea_Droppedbeam.Count(); i++)
                 {
+#pragma warning disable IDE0054 // Use compound assignment
                     desperdicio_Droppedbeam = desperdicio_Droppedbeam + lista_sumaTotal_valor_porArea_Droppedbeam[i];// para Concreto
+#pragma warning restore IDE0054 // Use compound assignment
                 }
                 lista_desperdicios.Add(desperdicio_Droppedbeam);
             }
@@ -1008,7 +1057,9 @@ namespace AddinExportCDW
                 }
                 for (int i = 0; i < lista_sumaTotal_valor_porArea_ConcreteSlab.Count(); i++)
                 {
+#pragma warning disable IDE0054 // Use compound assignment
                     desperdicio_ConcreteSlab = desperdicio_ConcreteSlab + lista_sumaTotal_valor_porArea_ConcreteSlab[i];// para Concreto
+#pragma warning restore IDE0054 // Use compound assignment
                 }
                 lista_desperdicios.Add(desperdicio_ConcreteSlab);
             }
@@ -1025,7 +1076,9 @@ namespace AddinExportCDW
                 }
                 for (int i = 0; i < lista_sumaTotal_valor_porArea_Beamembbededm.Count(); i++)
                 {
+#pragma warning disable IDE0054 // Use compound assignment
                     desperdicio_Beamembbededm = desperdicio_Beamembbededm + lista_sumaTotal_valor_porArea_Beamembbededm[i];// para Concreto
+#pragma warning restore IDE0054 // Use compound assignment
                 }
                 lista_desperdicios.Add(desperdicio_Beamembbededm);
             }
@@ -1044,7 +1097,7 @@ namespace AddinExportCDW
                 }
                 for (int i = 0; i < lista_sumaTotal_valor_porArea_ConcreteInclinedSlab.Count(); i++)
                 {
-                    desperdicio_ConcreteInclinedSlab = desperdicio_ConcreteInclinedSlab + lista_sumaTotal_valor_porArea_ConcreteInclinedSlab[i];// para Concreto
+                    desperdicio_ConcreteInclinedSlab += lista_sumaTotal_valor_porArea_ConcreteInclinedSlab[i];// para Concreto
                 }
                 lista_desperdicios.Add(desperdicio_ConcreteInclinedSlab);
             }
@@ -1063,7 +1116,7 @@ namespace AddinExportCDW
                 }
                 for (int i = 0; i < lista_sumaTotal_valor_porArea_walls_Concrete.Count(); i++)
                 {
-                    desperdicio_walls_Concrete = desperdicio_walls_Concrete + lista_sumaTotal_valor_porArea_walls_Concrete[i];// para Concreto
+                    desperdicio_walls_Concrete += lista_sumaTotal_valor_porArea_walls_Concrete[i];// para Concreto
                 }
                 lista_desperdicios.Add(desperdicio_walls_Concrete);
             }
@@ -1082,9 +1135,29 @@ namespace AddinExportCDW
                 }
                 for (int i = 0; i < lista_sumaTotal_valor_porVolumen_data_SteelColumns.Count(); i++)
                 {
-                    desperdicio_SteelColumns = desperdicio_SteelColumns + lista_sumaTotal_valor_porVolumen_data_SteelColumns[i];// para Concreto
+                    desperdicio_SteelColumns += lista_sumaTotal_valor_porVolumen_data_SteelColumns[i];// para Concreto
                 }
                 lista_desperdicios.Add(desperdicio_SteelColumns);
+            }
+            if (floors.Count() != 0)
+            {
+                foreach (Element sc in floors)
+                {
+                    ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                    Parameter pamType = type.LookupParameter("Material estructural");
+
+                    if ((pamType.AsValueString() == data_forjado35["Código"]))
+                    {
+                        Dictionary<string, string> data = data_forjado35;
+                        double sumaTotal_valor_porArea = CalcArea.Get(data, sc);
+                        lista_sumaTotal_valor_porArea_forjado35.Add(sumaTotal_valor_porArea);
+                    }
+                }
+                for (int i = 0; i < lista_sumaTotal_valor_porArea_forjado35.Count(); i++)
+                {
+                    desperdicio_forjado35 += lista_sumaTotal_valor_porArea_forjado35[i];// para Forjados
+                }
+                lista_desperdicios.Add(desperdicio_forjado35);
             }
 
             StepLog.Write(commandData, "GetListDesperdicio Finish");
@@ -1092,7 +1165,6 @@ namespace AddinExportCDW
             return lista_desperdicios;
         }
 
-        //entrega el desperdicio total de todos sumados
         public static double GetDesperdicioTotal(ExternalCommandData commandData,
                         IList<Element> floors,
                         IList<Element> structuralColumns,
@@ -1107,10 +1179,7 @@ namespace AddinExportCDW
             UIApplication uiApp = commandData.Application;
             UIDocument uidoc = uiApp.ActiveUIDocument;
             Document doc = uiApp.ActiveUIDocument.Document;
-            Application app = uiApp.Application;
-            // Get Active View
-            View activeView = uidoc.ActiveView;
-            string ruta = App.ExecutingAssemblyPath;
+            ComandosEntrada(uiApp, uidoc);
 
             #endregion Comandos entrada
 
@@ -1127,6 +1196,7 @@ namespace AddinExportCDW
             Dictionary<string, string> data_ConcreteInclinedSlab = Dictionary.Get("data_ConcreteInclinedSlab");
             Dictionary<string, string> data_walls = Dictionary.Get("data_walls");
             Dictionary<string, string> data_SteelColumns = Dictionary.Get("data_SteelColumns");
+            Dictionary<string, string> data_forjado35 = Dictionary.Get("data_forjado35");
 
             #endregion Dictionarios
 
@@ -1143,6 +1213,7 @@ namespace AddinExportCDW
             List<double> lista_sumaTotal_valor_porArea_ConcreteInclinedSlab = new List<double>();
             List<double> lista_sumaTotal_valor_porArea_walls_Concrete = new List<double>();
             List<double> lista_sumaTotal_valor_porVolumen_data_SteelColumns = new List<double>();
+            List<double> lista_sumaTotal_valor_porArea_forjado35 = new List<double>();
 
             #endregion datos iniciales
 
@@ -1161,12 +1232,12 @@ namespace AddinExportCDW
             double desperdicio_ConcreteInclinedSlab = 0;
             double desperdicio_walls_Concrete = 0;
             double desperdicio_SteelColumns = 0;
+            double desperdicio_forjado35 = 0;
 
             #endregion desperdicios
 
             StepLog.Write(commandData, "GetDesperdicioTotal Start");
 
-            // 10 elementos : Aquí se filtran los Elementos con el Código
             if (floors.Count() != 0)
             {
                 foreach (Element sc in floors)
@@ -1183,7 +1254,7 @@ namespace AddinExportCDW
                 }
                 for (int i = 0; i < lista_sumaTotal_valor_porArea_Forjado.Count(); i++)
                 {
-                    desperdicioForjado = desperdicioForjado + lista_sumaTotal_valor_porArea_Forjado[i];// para Forjados
+                    desperdicioForjado += lista_sumaTotal_valor_porArea_Forjado[i];// para Forjados
                 }
                 lista_desperdicios.Add(desperdicioForjado);
             }
@@ -1200,7 +1271,7 @@ namespace AddinExportCDW
                 }
                 for (int i = 0; i < lista_sumaTotal_valor_porVolumen_PilarConcreto.Count(); i++)
                 {
-                    desperdicioPilarHormigon = desperdicioPilarHormigon + lista_sumaTotal_valor_porVolumen_PilarConcreto[i];// para pilar de hormigon
+                    desperdicioPilarHormigon += lista_sumaTotal_valor_porVolumen_PilarConcreto[i];// para pilar de hormigon
                 }
                 lista_desperdicios.Add(desperdicioPilarHormigon);
             }
@@ -1219,7 +1290,9 @@ namespace AddinExportCDW
                 }
                 for (int i = 0; i < lista_sumaTotal_valor_porArea_Concreto.Count(); i++)
                 {
+#pragma warning disable IDE0054 // Use compound assignment
                     desperdicioConcreto = desperdicioConcreto + lista_sumaTotal_valor_porArea_Concreto[i];// para Concreto
+#pragma warning restore IDE0054 // Use compound assignment
                 }
                 lista_desperdicios.Add(desperdicioConcreto);
             }
@@ -1238,7 +1311,9 @@ namespace AddinExportCDW
                 }
                 for (int i = 0; i < lista_sumaTotal_valor_porVolumen_Cimentaciones.Count(); i++)
                 {
+#pragma warning disable IDE0054 // Use compound assignment
                     desperdicioCimentacion = desperdicioCimentacion + lista_sumaTotal_valor_porVolumen_Cimentaciones[i];
+#pragma warning restore IDE0054 // Use compound assignment
                 }
                 lista_desperdicios.Add(desperdicioCimentacion);
             }
@@ -1257,7 +1332,9 @@ namespace AddinExportCDW
                 }
                 for (int i = 0; i < lista_sumaTotal_valor_porArea_ConcretoDeck.Count(); i++)
                 {
+#pragma warning disable IDE0054 // Use compound assignment
                     desperdicioConcretoDeck = desperdicioConcretoDeck + lista_sumaTotal_valor_porArea_ConcretoDeck[i];// para Concreto
+#pragma warning restore IDE0054 // Use compound assignment
                 }
                 lista_desperdicios.Add(desperdicioConcretoDeck);
             }
@@ -1274,7 +1351,9 @@ namespace AddinExportCDW
                 }
                 for (int i = 0; i < lista_sumaTotal_valor_porArea_Droppedbeam.Count(); i++)
                 {
+#pragma warning disable IDE0054 // Use compound assignment
                     desperdicio_Droppedbeam = desperdicio_Droppedbeam + lista_sumaTotal_valor_porArea_Droppedbeam[i];// para Concreto
+#pragma warning restore IDE0054 // Use compound assignment
                 }
                 lista_desperdicios.Add(desperdicio_Droppedbeam);
             }
@@ -1293,7 +1372,9 @@ namespace AddinExportCDW
                 }
                 for (int i = 0; i < lista_sumaTotal_valor_porArea_ConcreteSlab.Count(); i++)
                 {
+#pragma warning disable IDE0054 // Use compound assignment
                     desperdicio_ConcreteSlab = desperdicio_ConcreteSlab + lista_sumaTotal_valor_porArea_ConcreteSlab[i];// para Concreto
+#pragma warning restore IDE0054 // Use compound assignment
                 }
                 lista_desperdicios.Add(desperdicio_ConcreteSlab);
             }
@@ -1310,7 +1391,7 @@ namespace AddinExportCDW
                 }
                 for (int i = 0; i < lista_sumaTotal_valor_porArea_Beamembbededm.Count(); i++)
                 {
-                    desperdicio_Beamembbededm = desperdicio_Beamembbededm + lista_sumaTotal_valor_porArea_Beamembbededm[i];// para Concreto
+                    desperdicio_Beamembbededm += lista_sumaTotal_valor_porArea_Beamembbededm[i];// para Concreto
                 }
                 lista_desperdicios.Add(desperdicio_Beamembbededm);
             }
@@ -1329,7 +1410,9 @@ namespace AddinExportCDW
                 }
                 for (int i = 0; i < lista_sumaTotal_valor_porArea_ConcreteInclinedSlab.Count(); i++)
                 {
+#pragma warning disable IDE0054 // Use compound assignment
                     desperdicio_ConcreteInclinedSlab = desperdicio_ConcreteInclinedSlab + lista_sumaTotal_valor_porArea_ConcreteInclinedSlab[i];// para Concreto
+#pragma warning restore IDE0054 // Use compound assignment
                 }
                 lista_desperdicios.Add(desperdicio_ConcreteInclinedSlab);
             }
@@ -1348,7 +1431,9 @@ namespace AddinExportCDW
                 }
                 for (int i = 0; i < lista_sumaTotal_valor_porArea_walls_Concrete.Count(); i++)
                 {
+#pragma warning disable IDE0054 // Use compound assignment
                     desperdicio_walls_Concrete = desperdicio_walls_Concrete + lista_sumaTotal_valor_porArea_walls_Concrete[i];// para Concreto
+#pragma warning restore IDE0054 // Use compound assignment
                 }
                 lista_desperdicios.Add(desperdicio_walls_Concrete);
             }
@@ -1368,9 +1453,31 @@ namespace AddinExportCDW
                 }
                 for (int i = 0; i < lista_sumaTotal_valor_porVolumen_data_SteelColumns.Count(); i++)
                 {
+#pragma warning disable IDE0054 // Use compound assignment
                     desperdicio_SteelColumns = desperdicio_SteelColumns + lista_sumaTotal_valor_porVolumen_data_SteelColumns[i];// para Concreto
+#pragma warning restore IDE0054 // Use compound assignment
                 }
                 lista_desperdicios.Add(desperdicio_SteelColumns);
+            }
+            if (floors.Count() != 0)
+            {
+                foreach (Element sc in floors)
+                {
+                    ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                    Parameter pamType = type.LookupParameter("Material estructural");
+
+                    if ((pamType.AsValueString() == data_forjado35["Código"]))
+                    {
+                        Dictionary<string, string> data = data_forjado35;
+                        double sumaTotal_valor_porArea = CalcArea.Get(data, sc);
+                        lista_sumaTotal_valor_porArea_forjado35.Add(sumaTotal_valor_porArea);
+                    }
+                }
+                for (int i = 0; i < lista_sumaTotal_valor_porArea_forjado35.Count(); i++)
+                {
+                    desperdicio_forjado35 += lista_sumaTotal_valor_porArea_forjado35[i];// para Forjados
+                }
+                lista_desperdicios.Add(desperdicio_forjado35);
             }
 
             #region Desperdicio Total
@@ -1379,7 +1486,7 @@ namespace AddinExportCDW
             double desperdicioTotal = 0;
             for (int i = 0; i < lista_desperdicios.Count(); i++)
             {
-                desperdicioTotal = desperdicioTotal + lista_desperdicios[i];
+                desperdicioTotal += lista_desperdicios[i];
             }
 
             #endregion Desperdicio Total
@@ -1389,7 +1496,6 @@ namespace AddinExportCDW
             return desperdicioTotal;
         }
 
-        //entrega lista de listas de listas separadas por categoria
         public static List<List<List<double>>> GetListValoresSeparaadaPorDataElemento(ExternalCommandData commandData,
                         IList<Element> floors,
                         IList<Element> structuralColumns,
@@ -1404,16 +1510,11 @@ namespace AddinExportCDW
             UIApplication uiApp = commandData.Application;
             UIDocument uidoc = uiApp.ActiveUIDocument;
             Document doc = uiApp.ActiveUIDocument.Document;
-            Application app = uiApp.Application;
-            // Get Active View
-            View activeView = uidoc.ActiveView;
-            string ruta = App.ExecutingAssemblyPath;
+            ComandosEntrada(uiApp, uidoc);
 
             #endregion Comandos entrada
 
             #region Dictionarios
-
-            List<Dictionary<string, string>> lista_Dictionarios = new List<Dictionary<string, string>>();
 
             Dictionary<string, string> data_forjado = Dictionary.Get("data_forjado");
             Dictionary<string, string> data_pilar_hormigon = Dictionary.Get("data_pilar_hormigon");
@@ -1426,6 +1527,7 @@ namespace AddinExportCDW
             Dictionary<string, string> data_ConcreteInclinedSlab = Dictionary.Get("data_ConcreteInclinedSlab");
             Dictionary<string, string> data_walls = Dictionary.Get("data_walls");
             Dictionary<string, string> data_SteelColumns = Dictionary.Get("data_SteelColumns");
+            Dictionary<string, string> data_forjado35 = Dictionary.Get("data_forjado35");
 
             #endregion Dictionarios
 
@@ -1444,8 +1546,8 @@ namespace AddinExportCDW
             List<List<double>> salida_data_ConcreteInclinedSlab = new List<List<double>>();
             List<List<double>> salida_data_walls = new List<List<double>>();
             List<List<double>> salida_data_SteelColumns = new List<List<double>>();
+            List<List<double>> salida_data_forjado35 = new List<List<double>>();
 
-            // 10 elementos : Aquí se filtran los Elementos con el Código
             if (floors.Count() != 0)
             {
                 #region listas de valores
@@ -1913,7 +2015,9 @@ namespace AddinExportCDW
                 {
                     ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
                     Parameter pamType = type.LookupParameter("Material estructural");
+#pragma warning disable IDE0059 // Unnecessary assignment of a value
                     string valorSALIDA = pamType.AsValueString();
+#pragma warning restore IDE0059 // Unnecessary assignment of a value
                     if ((pamType.AsValueString() == data_walls["Código"]) || (pamType.AsValueString() == data_Cimentaciones["Código"]))
                     {
                         Dictionary<string, string> data = data_walls;
@@ -1992,11 +2096,61 @@ namespace AddinExportCDW
 
                 salida.Add(salida_data_SteelColumns);
             }
+            if (floors.Count() != 0)
+            {
+                #region listas de valores
+
+                // listas de valores
+                List<double> lista2_valor = new List<double>();
+                List<double> lista3_valor = new List<double>();
+                List<double> lista4_valor = new List<double>();
+                List<double> lista5_valor = new List<double>();
+                List<double> lista6_valor = new List<double>();
+                List<double> lista7_valor = new List<double>();
+                List<double> lista8_valor = new List<double>();
+                List<double> lista9_valor = new List<double>();
+                List<double> lista10_valor = new List<double>();
+                List<double> lista11_valor = new List<double>();
+
+                #endregion listas de valores
+
+                foreach (Element sc in floors)
+                {
+                    ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                    Parameter pamType = type.LookupParameter("Material estructural");
+
+                    if ((pamType.AsValueString() == data_forjado35["Código"]))
+                    {
+                        Dictionary<string, string> data = data_forjado35;
+                        lista2_valor.Add(CalcArea.GetByValueOfKey(data, sc, "2"));
+                        lista3_valor.Add(CalcArea.GetByValueOfKey(data, sc, "3"));
+                        lista4_valor.Add(CalcArea.GetByValueOfKey(data, sc, "4"));
+                        lista5_valor.Add(CalcArea.GetByValueOfKey(data, sc, "5"));
+                        lista6_valor.Add(CalcArea.GetByValueOfKey(data, sc, "6"));
+                        lista7_valor.Add(CalcArea.GetByValueOfKey(data, sc, "7"));
+                        lista8_valor.Add(CalcArea.GetByValueOfKey(data, sc, "8"));
+                        lista9_valor.Add(CalcArea.GetByValueOfKey(data, sc, "9"));
+                        lista10_valor.Add(CalcArea.GetByValueOfKey(data, sc, "10"));
+                        lista11_valor.Add(CalcArea.GetByValueOfKey(data, sc, "11"));
+                    }
+                }
+                salida_data_forjado35.Add(lista2_valor);//1
+                salida_data_forjado35.Add(lista3_valor);//2
+                salida_data_forjado35.Add(lista4_valor);//3
+                salida_data_forjado35.Add(lista5_valor);//4
+                salida_data_forjado35.Add(lista6_valor);//5
+                salida_data_forjado35.Add(lista7_valor);//6
+                salida_data_forjado35.Add(lista8_valor);//7
+                salida_data_forjado35.Add(lista9_valor);//8
+                salida_data_forjado35.Add(lista10_valor);//9
+                salida_data_forjado35.Add(lista11_valor);//10
+
+                salida.Add(salida_data_forjado35);
+            }//data_forjado
 
             StepLog.Write(commandData, "GetListValoresSeparaadaPorDataElemento Finish");
 
-            return salida;//salida_data_forjado, salida_pilar_hormigon, .. etc
-                          //en cada uno de las salidas de arriba van los 10 parametros valores 2,3,4,5,6,7,8,9,10,11
+            return salida;
         }
     }
 }

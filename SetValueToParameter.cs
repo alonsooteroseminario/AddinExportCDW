@@ -22,7 +22,7 @@ namespace AddinExportCDW
                         t.Commit();
                     }
                 }
-                i = i + 1;
+                i++;
             }
         }
 
@@ -43,7 +43,7 @@ namespace AddinExportCDW
                         t.Commit();
                     }
                 }
-                i = i + 1;
+                i++;
             }
         }
 
@@ -64,7 +64,7 @@ namespace AddinExportCDW
                         t.Commit();
                     }
                 }
-                i = i + 1;
+                i++;
             }
         }
     }

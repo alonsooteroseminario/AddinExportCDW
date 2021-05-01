@@ -22,9 +22,7 @@ namespace AddinExportCDW
             UIDocument uidoc = uiApp.ActiveUIDocument;
             Document doc = uiApp.ActiveUIDocument.Document;
             Application app = uiApp.Application;
-            // Get Active View
-            View activeView = uidoc.ActiveView;
-            string ruta = App.ExecutingAssemblyPath;
+            ComandoEntrada(uidoc);
 
             #endregion Comandos entrada
 
@@ -124,6 +122,18 @@ namespace AddinExportCDW
             }
         }
 
+        private static void ComandoEntrada(UIDocument uidoc)
+        {
+            _ = uidoc.ActiveView;
+        }
+
+        private static void ComandoEntrada(UIApplication uiApp, UIDocument uidoc)
+        {
+            _ = uiApp.ActiveUIDocument.Document;
+            _ = uiApp.Application;
+            _ = uidoc.ActiveView;
+        }
+
         public static void CreateParametersWithSharedParameterFile(ExternalCommandData commandData,
                                                                     Dictionary<string, string> dictionary)
         {
@@ -134,9 +144,7 @@ namespace AddinExportCDW
             UIDocument uidoc = uiApp.ActiveUIDocument;
             Document doc = uiApp.ActiveUIDocument.Document;
             Application app = uiApp.Application;
-            // Get Active View
-            View activeView = uidoc.ActiveView;
-            string ruta = App.ExecutingAssemblyPath;
+            ComandoEntrada(uidoc);
 
             #endregion Comandos entrada
 
@@ -206,24 +214,17 @@ namespace AddinExportCDW
         }
 
         public static void CreateParameters(ExternalCommandData commandData,
-                                    Dictionary<string, string> dictionary,
-                                    IList<Element> listaElementos)
+                                            Dictionary<string, string> dictionary)
         {
             #region Comandos entrada
 
             //Get application and document objects
             UIApplication uiApp = commandData.Application;
             UIDocument uidoc = uiApp.ActiveUIDocument;
-            Document doc = uiApp.ActiveUIDocument.Document;
-            Application app = uiApp.Application;
-            // Get Active View
-            View activeView = uidoc.ActiveView;
-            string ruta = App.ExecutingAssemblyPath;
+            ComandoEntrada(uiApp, uidoc);
 
             #endregion Comandos entrada
 
-            List<string> keys = Dictionary.DictionaryListKeys(dictionary);
-            string paramName = keys[0];
             // create shared parameter file
             String paramFile = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)
                              + "\\CDWParameters.txt";
@@ -248,11 +249,7 @@ namespace AddinExportCDW
             //Get application and document objects
             UIApplication uiApp = commandData.Application;
             UIDocument uidoc = uiApp.ActiveUIDocument;
-            Document doc = uiApp.ActiveUIDocument.Document;
-            Application app = uiApp.Application;
-            // Get Active View
-            View activeView = uidoc.ActiveView;
-            string ruta = App.ExecutingAssemblyPath;
+            ComandoEntrada(uiApp, uidoc);
 
             #endregion Comandos entrada
 

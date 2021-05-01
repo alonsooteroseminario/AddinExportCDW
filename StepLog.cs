@@ -1,6 +1,4 @@
-﻿using Autodesk.Revit.ApplicationServices;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
+﻿using Autodesk.Revit.UI;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -18,11 +16,7 @@ namespace AddinExportCDW
             //Get application and document objects
             UIApplication uiApp = commandData.Application;
             UIDocument uidoc = uiApp.ActiveUIDocument;
-            Document doc = uiApp.ActiveUIDocument.Document;
-            Application app = uiApp.Application;
-            // Get Active View
-            View activeView = uidoc.ActiveView;
-            string ruta = App.ExecutingAssemblyPath;
+            ComandoEntrada(uiApp, uidoc);
 
             #endregion Comandos entrada
 
@@ -34,6 +28,13 @@ namespace AddinExportCDW
             sw.Close();
         }
 
+        private static void ComandoEntrada(UIApplication uiApp, UIDocument uidoc)
+        {
+            _ = uiApp.ActiveUIDocument.Document;
+            _ = uiApp.Application;
+            _ = uidoc.ActiveView;
+        }
+
         public static void Write(ExternalCommandData commandData,
                                         List<string> lista_mensajes)
         {
@@ -42,11 +43,7 @@ namespace AddinExportCDW
             //Get application and document objects
             UIApplication uiApp = commandData.Application;
             UIDocument uidoc = uiApp.ActiveUIDocument;
-            Document doc = uiApp.ActiveUIDocument.Document;
-            Application app = uiApp.Application;
-            // Get Active View
-            View activeView = uidoc.ActiveView;
-            string ruta = App.ExecutingAssemblyPath;
+            ComandoEntrada(uiApp, uidoc);
 
             #endregion Comandos entrada
 

@@ -11,26 +11,18 @@ namespace AddinExportCDW.Views
 {
     public partial class ChartForm : Form
     {
-        private List<Dictionary<string, string>> lista_Dictionarios_NEW { get; set; }
-        private List<List<List<double>>> listaDe_listaN_valorSeparaadaPorDataElemento_NEW { get; set; }
+        private List<Dictionary<string, string>> Lista_Dictionarios_NEW { get; set; }
+        private List<List<List<double>>> ListaDe_listaN_valorSeparaadaPorDataElemento_NEW { get; set; }
+        private readonly ExternalCommandData commandData_NEW;
+        private int SelectedIndex { get; set; }
 
-        private double count_NEW { get; set; }
-
-        private ExternalCommandData commandData_NEW;
-
-        private int selectedIndex { get; set; }
-
-        public ChartForm(double count,
-                         ExternalCommandData commandData,
-                         List<double> listaN_valor,
+        public ChartForm(ExternalCommandData commandData,
                          List<Dictionary<string, string>> lista_Dictionarios,
-                         List<List<double>> listaDe_listaN_valor,
                          List<List<List<double>>> listaDe_listaN_valorSeparaadaPorDataElemento)
         {
             InitializeComponent();
-            lista_Dictionarios_NEW = lista_Dictionarios;
-            listaDe_listaN_valorSeparaadaPorDataElemento_NEW = listaDe_listaN_valorSeparaadaPorDataElemento;
-            count_NEW = count;
+            Lista_Dictionarios_NEW = lista_Dictionarios;
+            ListaDe_listaN_valorSeparaadaPorDataElemento_NEW = listaDe_listaN_valorSeparaadaPorDataElemento;
             commandData_NEW = commandData;
 
             cartesianChart1.Series = new SeriesCollection { };
@@ -58,21 +50,21 @@ namespace AddinExportCDW.Views
                         RowPadding = 2
                     });
 
-                    for (int ii = 0; ii < listaDe_listaN_valorSeparaadaPorDataElemento_NEW.Count(); ii++)
+                    for (int ii = 0; ii < ListaDe_listaN_valorSeparaadaPorDataElemento_NEW.Count(); ii++)
                     {
                         double suma = 0;
-                        foreach (var item in listaDe_listaN_valorSeparaadaPorDataElemento_NEW[ii][selectedIndex])
+                        foreach (var item in ListaDe_listaN_valorSeparaadaPorDataElemento_NEW[ii][selectedIndex])
                         {
-                            suma = suma + item;
+                            suma += item;
                         }
                         cartesianChart1.Series[0].Values.Add(new ObservablePoint(suma, ii));
                     }
 
                     List<string> array = new List<string>();
-                    for (int ii = 0; ii < lista_Dictionarios_NEW.Count(); ii++)
+                    for (int ii = 0; ii < Lista_Dictionarios_NEW.Count(); ii++)
                     {
-                        array.Add(lista_Dictionarios_NEW[ii]["Structural element"] + " / " + lista_Dictionarios_NEW[ii]["Código"]);
-                        StepLog.Write(commandData_NEW, lista_Dictionarios_NEW[ii]["Structural element"] + " / " + lista_Dictionarios_NEW[ii]["Código"]);
+                        array.Add(Lista_Dictionarios_NEW[ii]["Structural element"] + " / " + Lista_Dictionarios_NEW[ii]["Código"]);
+                        StepLog.Write(commandData_NEW, Lista_Dictionarios_NEW[ii]["Structural element"] + " / " + Lista_Dictionarios_NEW[ii]["Código"]);
                     }
                     cartesianChart1.AxisY.Clear();
                     cartesianChart1.AxisY.Add(new Axis
@@ -95,15 +87,15 @@ namespace AddinExportCDW.Views
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void Button1_Click(object sender, EventArgs e)
         {
-            selectedIndex = comboBox1.SelectedIndex;
-            CambiarChart(selectedIndex);
+            SelectedIndex = comboBox1.SelectedIndex;
+            CambiarChart(SelectedIndex);
         }
 
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        private void ComboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            selectedIndex = comboBox1.SelectedIndex;
+            SelectedIndex = comboBox1.SelectedIndex;
         }
     }
 }

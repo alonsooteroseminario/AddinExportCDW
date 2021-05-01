@@ -1,5 +1,4 @@
 ﻿using AddinExportCDW.Views;
-using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
@@ -22,10 +21,7 @@ namespace AddinExportCDW
             UIApplication uiApp = commandData.Application;
             UIDocument uidoc = uiApp.ActiveUIDocument;
             Document doc = uiApp.ActiveUIDocument.Document;
-            Application app = uiApp.Application;
-            // Get Active View
-            View activeView = uidoc.ActiveView;
-            string ruta = App.ExecutingAssemblyPath;
+            View activeView = ComandoEntrada(uiApp, uidoc);
 
             #endregion Comandos entrada
 
@@ -72,16 +68,15 @@ namespace AddinExportCDW
 
             List<Element> TodosLosElementosCDW = CollectorElement.FiltrarElementosCDW(commandData, TodoslosElemetosDelModelo);
 
-            if (CreateSchedule.ExistParameters(commandData, Dictionary.Get("data_forjado"), TodosLosElementosCDW))//si sí existen parametros
+            if (CreateSchedule.ExistParameters(commandData, Dictionary.Get("data_forjado"), TodosLosElementosCDW))
             {
                 if (existeSchedule)
                 {
-                    //CreateSchedule.CreateSchedules(commandData, Dictionary.Get("data_forjado"));
                 }
             }
             else
             {
-                CreateSchedule.CreateParameters(commandData, Dictionary.Get("data_forjado"), TodoslosElemetosDelModelo);
+                CreateSchedule.CreateParameters(commandData, Dictionary.Get("data_forjado"));
                 if (existeSchedule)
                 {
                     CreateSchedule.CreateSchedules(commandData, Dictionary.Get("data_forjado"));
@@ -118,8 +113,7 @@ namespace AddinExportCDW
                                                     strFramming,
                                                     walls,
                                                     columns);
-
-            List<List<double>> listaDe_listaN_valor = Core.GetListValoresByName(commandData,
+            _ = Core.GetListValoresByName(commandData,
                                                     floors,
                                                     structuralColumns,
                                                     strFoundation,
@@ -150,7 +144,6 @@ namespace AddinExportCDW
                                                           lista_Dictionarios,
                                                           lista_desperdicios,
                                                           desperdicioTotal,
-                                                          listaDe_listaN_valor,
                                                           listaDe_listaN_valorSeparaadaPorDataElemento);
             MainMensaje.ShowDialog();
 
@@ -161,12 +154,20 @@ namespace AddinExportCDW
             return Result.Succeeded;
         }
 
+        private static View ComandoEntrada(UIApplication uiApp, UIDocument uidoc)
+        {
+            _ = uiApp.Application;
+            View activeView = uidoc.ActiveView;
+            return activeView;
+        }
+
         private static void DisplayInExcel(IEnumerable<Account> accounts, IEnumerable<Account> accounts2)
         {
-            Excel.Application excelApp = new Excel.Application();
-
-            // Make the object visible.
-            excelApp.Visible = true;
+            Excel.Application excelApp = new Excel.Application
+            {
+                // Make the object visible.
+                Visible = true
+            };
 
             // Create a new, empty workbook and add it to the collection returned
             // by property Workbooks. The new workbook becomes the active workbook.
@@ -215,11 +216,21 @@ namespace AddinExportCDW
 
         public Result OnStartup(UIControlledApplication application)
         {
+            if (application is null)
+            {
+                throw new ArgumentNullException(nameof(application));
+            }
+
             return Result.Succeeded;
         }
 
         public Result OnShutdown(UIControlledApplication application)
         {
+            if (application is null)
+            {
+                throw new ArgumentNullException(nameof(application));
+            }
+
             return Result.Succeeded;
         }
     }
