@@ -28,10 +28,11 @@ namespace AddinExportCDW
                 string valor = c;
                 string key = dictionary.FirstOrDefault(x => x.Value == valor).Key;
                 double valor_porVolumen = double.Parse(valor) * Math.Round(param.AsDouble() / 35.3147, 4);
-                sumaTotal_valor_porVolumen = sumaTotal_valor_porVolumen + valor_porVolumen;
+                sumaTotal_valor_porVolumen += valor_porVolumen;
             }
             return sumaTotal_valor_porVolumen;
         }
+
         public static double Get_SteelColumnSpecialCommand(Dictionary<string, string> dictionary, Element element)
         {
             //constante
@@ -39,14 +40,14 @@ namespace AddinExportCDW
             //constante
             Parameter paramAltura_SteelColumns = element.LookupParameter("Desfase superior");// 3.940 m pero revit api lo entrega en pies (1 m = 3.28084 pie )
             double altura_SteelColumns = (paramAltura_SteelColumns.AsDouble() / 3.28084);// convertimos pies a m
-            double paramVolumenCalculated = areaSeccion_SteelColumns* altura_SteelColumns;// m2 * m = m3
+            double paramVolumenCalculated = areaSeccion_SteelColumns * altura_SteelColumns;// m2 * m = m3
 
             List<string> entrada = DictionaryListValues(dictionary);
             double sumaTotal_valor_porVolumen = 0;
             foreach (string valor in entrada)
             {
                 double valor_porVolumen = double.Parse(valor) * Math.Round(paramVolumenCalculated, 4);
-                sumaTotal_valor_porVolumen = sumaTotal_valor_porVolumen + valor_porVolumen;
+                sumaTotal_valor_porVolumen += valor_porVolumen;
             }
             return sumaTotal_valor_porVolumen;
         }
@@ -79,7 +80,7 @@ namespace AddinExportCDW
             //constante
             Parameter paramAltura_SteelColumns = element.LookupParameter("Desfase superior");// 3.940 m pero revit api lo entrega en pies (1 m = 3.28084 pie )
             double altura_SteelColumns = (paramAltura_SteelColumns.AsDouble() / 3.28084);// convertimos pies a m
-            double paramVolumenCalculated = areaSeccion_SteelColumns* altura_SteelColumns;// m2 * m = m3
+            double paramVolumenCalculated = areaSeccion_SteelColumns * altura_SteelColumns;// m2 * m = m3
 
             List<string> lista_keys = new List<string>()
             {

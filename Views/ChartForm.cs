@@ -16,6 +16,8 @@ namespace AddinExportCDW.Views
 
         private double count_NEW { get; set; }
 
+        private ExternalCommandData commandData_NEW;
+
         private int selectedIndex { get; set; }
 
         public ChartForm(double count,
@@ -29,6 +31,7 @@ namespace AddinExportCDW.Views
             lista_Dictionarios_NEW = lista_Dictionarios;
             listaDe_listaN_valorSeparaadaPorDataElemento_NEW = listaDe_listaN_valorSeparaadaPorDataElemento;
             count_NEW = count;
+            commandData_NEW = commandData;
 
             cartesianChart1.Series = new SeriesCollection { };
             cartesianChart1.Series.Add(new RowSeries
@@ -69,6 +72,7 @@ namespace AddinExportCDW.Views
                     for (int ii = 0; ii < lista_Dictionarios_NEW.Count(); ii++)
                     {
                         array.Add(lista_Dictionarios_NEW[ii]["Structural element"] + " / " + lista_Dictionarios_NEW[ii]["Código"]);
+                        StepLog.Write(commandData_NEW, lista_Dictionarios_NEW[ii]["Structural element"] + " / " + lista_Dictionarios_NEW[ii]["Código"]);
                     }
                     cartesianChart1.AxisY.Clear();
                     cartesianChart1.AxisY.Add(new Axis

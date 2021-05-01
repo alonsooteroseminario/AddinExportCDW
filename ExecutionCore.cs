@@ -62,6 +62,8 @@ namespace AddinExportCDW
 
             #endregion listas de valores
 
+            StepLog.Write(commandData, "GetListValoresByName Start");
+
             // 10 elementos : Aquí se filtran los Elementos con el Código
             if (floors.Count() != 0)
             {
@@ -326,6 +328,8 @@ namespace AddinExportCDW
             salida.Add(lista10_valor);
             salida.Add(lista11_valor);
 
+            StepLog.Write(commandData, "GetListValoresByName Finish");
+
             return salida;
         }
 
@@ -384,6 +388,8 @@ namespace AddinExportCDW
             List<double> lista11_valor = new List<double>();
 
             #endregion listas de valores
+
+            StepLog.Write(commandData, "GetListValores Start");
 
             // 10 elementos : Aquí se filtran los Elementos con el Código
             if (floors.Count() != 0)
@@ -701,6 +707,8 @@ namespace AddinExportCDW
 
             #endregion Suma de todos los valores de las listas
 
+            StepLog.Write(commandData, "GetListValores Finish");
+
             return salida;
         }
 
@@ -743,6 +751,8 @@ namespace AddinExportCDW
             Dictionary<string, string> data_SteelColumns = Dictionary.Get("data_SteelColumns");
 
             #endregion Dictionarios
+
+            StepLog.Write(commandData, "GetListDictionary Start");
 
             // 10 elementos : Aquí se filtran los Elementos con el Código
             if (floors.Count() != 0)
@@ -790,10 +800,12 @@ namespace AddinExportCDW
                 lista_Dictionarios.Add(data_SteelColumns);
             }
 
+            StepLog.Write(commandData, "GetListDictionary Finish");
+
             return lista_Dictionarios;
         }
 
-        //entrega la lista de despecidios de los elementos presentes separados por categoria
+        //entrega la lista de desperdicio de los elementos presentes separados por categoria
         public static List<double> GetListDesperdicio(ExternalCommandData commandData,
                                 IList<Element> floors,
                                 IList<Element> structuralColumns,
@@ -866,6 +878,8 @@ namespace AddinExportCDW
             double desperdicio_SteelColumns = 0;
 
             #endregion desperdicios
+
+            StepLog.Write(commandData, "GetListDesperdicio Start");
 
             // 10 elementos : Aquí se filtran los Elementos con el Código
             if (floors.Count() != 0)
@@ -1073,10 +1087,12 @@ namespace AddinExportCDW
                 lista_desperdicios.Add(desperdicio_SteelColumns);
             }
 
+            StepLog.Write(commandData, "GetListDesperdicio Finish");
+
             return lista_desperdicios;
         }
 
-        //entrega el despecidio total de todos sumados
+        //entrega el desperdicio total de todos sumados
         public static double GetDesperdicioTotal(ExternalCommandData commandData,
                         IList<Element> floors,
                         IList<Element> structuralColumns,
@@ -1147,6 +1163,8 @@ namespace AddinExportCDW
             double desperdicio_SteelColumns = 0;
 
             #endregion desperdicios
+
+            StepLog.Write(commandData, "GetDesperdicioTotal Start");
 
             // 10 elementos : Aquí se filtran los Elementos con el Código
             if (floors.Count() != 0)
@@ -1340,7 +1358,7 @@ namespace AddinExportCDW
                 {
                     ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
                     Parameter pamType = type.LookupParameter("Material");
-                   
+
                     if ((pamType.AsValueString() == data_SteelColumns["Código"]))
                     {
                         Dictionary<string, string> data = data_SteelColumns;
@@ -1365,6 +1383,8 @@ namespace AddinExportCDW
             }
 
             #endregion Desperdicio Total
+
+            StepLog.Write(commandData, "GetDesperdicioTotal Finish");
 
             return desperdicioTotal;
         }
@@ -1408,6 +1428,8 @@ namespace AddinExportCDW
             Dictionary<string, string> data_SteelColumns = Dictionary.Get("data_SteelColumns");
 
             #endregion Dictionarios
+
+            StepLog.Write(commandData, "GetListValoresSeparaadaPorDataElemento Start");
 
             List<List<List<double>>> salida = new List<List<List<double>>>();
 
@@ -1970,6 +1992,8 @@ namespace AddinExportCDW
 
                 salida.Add(salida_data_SteelColumns);
             }
+
+            StepLog.Write(commandData, "GetListValoresSeparaadaPorDataElemento Finish");
 
             return salida;//salida_data_forjado, salida_pilar_hormigon, .. etc
                           //en cada uno de las salidas de arriba van los 10 parametros valores 2,3,4,5,6,7,8,9,10,11

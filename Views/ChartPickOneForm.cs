@@ -3,12 +3,7 @@ using LiveCharts.Defaults;
 using LiveCharts.Wpf;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace AddinExportCDW.Views
@@ -19,7 +14,11 @@ namespace AddinExportCDW.Views
         private List<Dictionary<string, string>> lista_Dictionarios_NEW { get; set; }
         private List<double> lista_desperdicios_NEW { get; set; }
         private double desperdicioTotal_NEW { get; set; }
-        public ChartPickOneForm(List<double> listaN_valor,
+
+        private bool pasoPorAqui_NEW { get; set; }
+
+        public ChartPickOneForm(bool pasoPorAqui,
+                             List<double> listaN_valor,
                              List<Dictionary<string, string>> lista_Dictionarios,
                              List<double> lista_desperdicios,
                              double desperdicioTotal)
@@ -29,6 +28,7 @@ namespace AddinExportCDW.Views
             lista_Dictionarios_NEW = lista_Dictionarios;
             lista_desperdicios_NEW = lista_desperdicios;
             desperdicioTotal_NEW = desperdicioTotal;
+            pasoPorAqui_NEW = pasoPorAqui;
         }
 
         private void ChartPickOneForm_Load(object sender, EventArgs e)
@@ -40,13 +40,17 @@ namespace AddinExportCDW.Views
                 MaxRowHeigth = 15,
                 RowPadding = 2
             });
-            //listaN_valor_NEW.Reverse();
+
+            if (!pasoPorAqui_NEW)
+            {
+                listaN_valor_NEW.Reverse();
+            }
             for (int i = 0; i < listaN_valor_NEW.Count(); i++)
             {
                 cartesianChart1.Series[0].Values.Add(new ObservablePoint(listaN_valor_NEW[i], i));
             }
             List<string> array = Dictionary.DictionaryListKeys(Dictionary.Get("data_forjado"));
-            //array.Reverse();
+            array.Reverse();
             cartesianChart1.AxisY.Add(new Axis
             {
                 Title = "Código",
@@ -55,7 +59,7 @@ namespace AddinExportCDW.Views
             cartesianChart1.AxisX.Add(new Axis
             {
                 Title = "Cantidad",
-                LabelFormatter = value => (value).ToString("N") + " m3"
+                LabelFormatter = value => value.ToString("N") + " m3"
             });
             var tooltip = new DefaultTooltip
             {

@@ -41,7 +41,9 @@ namespace AddinExportCDW
             string paramName10 = keys[9];
 
             DefinitionFile myDefinitionFile = app.OpenSharedParameterFile();
+            StepLog.Write(commandData, myDefinitionFile.ToString());
             DefinitionGroup myGroup = myDefinitionFile.Groups.Create("Create CDW Parameters");
+            StepLog.Write(commandData, myGroup.ToString());
 
             ExternalDefinitionCreationOptions option = new ExternalDefinitionCreationOptions(paramName, ParameterType.Text);
             ExternalDefinitionCreationOptions option2 = new ExternalDefinitionCreationOptions(paramName2, ParameterType.Text);
@@ -117,6 +119,7 @@ namespace AddinExportCDW
                 doc.ParameterBindings.Insert(myDefinition_ProductDate8, instanceBinding8, BuiltInParameterGroup.PG_CONSTRAINTS);
                 doc.ParameterBindings.Insert(myDefinition_ProductDate9, instanceBinding9, BuiltInParameterGroup.PG_CONSTRAINTS);
                 doc.ParameterBindings.Insert(myDefinition_ProductDate10, instanceBinding10, BuiltInParameterGroup.PG_CONSTRAINTS);
+                StepLog.Write(commandData, "Create CDW Parameters");
                 t.Commit();
             }
         }
@@ -219,11 +222,10 @@ namespace AddinExportCDW
 
             #endregion Comandos entrada
 
-
             List<string> keys = Dictionary.DictionaryListKeys(dictionary);
             string paramName = keys[0];
             // create shared parameter file
-            String paramFile = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) 
+            String paramFile = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)
                              + "\\CDWParameters.txt";
             if (File.Exists(paramFile))
             {
@@ -234,6 +236,7 @@ namespace AddinExportCDW
             // prepare shared parameter file
             commandData.Application.Application.SharedParametersFilename = paramFile;
             CreateSharedParameterFile(commandData, dictionary);
+            StepLog.Write(commandData, "CreateSharedParameterFile");
         }
 
         public static bool ExistParameters(ExternalCommandData commandData,
@@ -252,15 +255,17 @@ namespace AddinExportCDW
             string ruta = App.ExecutingAssemblyPath;
 
             #endregion Comandos entrada
+
             bool salida = false;
             string key = Dictionary.DictionaryListKeys(dictionary).First();
             if (TodosLosElementosCDW.First().LookupParameter(key) == null)//no existe parametro
             {
-
+                StepLog.Write(commandData, "TodosLosElementosCDW.First().LookupParameter(key) == null");
             }
             else//si existe parametro
             {
                 salida = true;
+                StepLog.Write(commandData, "TodosLosElementosCDW.First().LookupParameter(key) !== null");
             }
             return salida;
         }
@@ -304,10 +309,11 @@ namespace AddinExportCDW
             foreach (BuiltInCategory bic in bics)
             {
                 ViewSchedule clashSchedule = null;
-                using (Transaction transaction = new Transaction(doc, "Creating CLASH Schedule"))
+                using (Transaction transaction = new Transaction(doc, "Creating CDW Schedule"))
                 {
                     transaction.Start();
                     clashSchedule = ViewSchedule.CreateSchedule(doc, new ElementId(bic));
+                    StepLog.Write(commandData, "Creating CDW Schedule");
                     doc.Regenerate();
                     ScheduleDefinition definition = clashSchedule.Definition;
                     IList<SchedulableField> schedulableFields = definition.GetSchedulableFields(); // [a,b,c,s,d,f,....]
@@ -317,6 +323,7 @@ namespace AddinExportCDW
                         if (element.ParameterId.IntegerValue > 0)
                         {
                             listashparam.Add(element);
+                            StepLog.Write(commandData, listashparam.Count().ToString());
                         }
                     }
                     clashSchedule.Definition.AddField(schedulableFields.FirstOrDefault(o => o.GetName(doc).ToString() == "Familia y tipo"));
@@ -425,6 +432,7 @@ namespace AddinExportCDW
                     }
                     using (Transaction tran = new Transaction(doc, "Cambiar nombre"))
                     {
+                        StepLog.Write(commandData, "Cambiar nombre Schedule");
                         tran.Start();
                         TableData td = clashSchedule.GetTableData(); // get viewschedule table data
                         TableSectionData tsd = td.GetSectionData(SectionType.Header); // get header section data

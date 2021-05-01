@@ -41,8 +41,6 @@ namespace AddinExportCDW
             bankAccounts.Add(nuevo1);
             bankAccounts.Add(nuevo2);
 
-            
-
             var bankAccounts2 = new List<Account> {
                     new Account {
                                       ID = "07 07 01 aqueous washing liquids",
@@ -98,6 +96,7 @@ namespace AddinExportCDW
 
             #endregion Obtener Excel
         }
+
         private static void DisplayInExcel(IEnumerable<Account> accounts, IEnumerable<Account> accounts2)
         {
             Excel.Application excelApp = new Excel.Application();
@@ -135,7 +134,6 @@ namespace AddinExportCDW
             ((Excel.Range)workSheet.Columns[2]).AutoFit();
             ((Excel.Range)workSheet.Columns[3]).AutoFit();
 
-
             Excel.Sheets worksheets = xlWorkBook.Worksheets;
 
             var xlNewSheet = (Excel.Worksheet)worksheets.Add(worksheets[1], Type.Missing, Type.Missing, Type.Missing);
@@ -156,6 +154,7 @@ namespace AddinExportCDW
             ((Excel.Range)xlNewSheet.Columns[2]).AutoFit();
         }
     }
+
     internal class Account
     {
         public string ID { get; set; }

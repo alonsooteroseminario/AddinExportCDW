@@ -76,7 +76,7 @@ namespace AddinExportCDW
             ElementCategoryFilter Categoryfilter_strFramming = new ElementCategoryFilter(BuiltInCategory.OST_StructuralFraming);
             // walls
             ElementCategoryFilter Categoryfilter_walls = new ElementCategoryFilter(BuiltInCategory.OST_Walls);
-            //Pilar 
+            //Pilar
             ElementCategoryFilter Categoryfilter_Columns = new ElementCategoryFilter(BuiltInCategory.OST_Columns);
 
             LogicalAndFilter DUInstancesFilter_floors = new LogicalAndFilter(elemFilter_floor, Categoryfilter_floors);

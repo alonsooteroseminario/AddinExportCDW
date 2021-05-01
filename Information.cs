@@ -3,17 +3,12 @@ using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AddinExportCDW
 {
     [TransactionAttribute(TransactionMode.Manual)]
     [RegenerationAttribute(RegenerationOption.Manual)]
-    class Information : IExternalCommand
+    internal class Information : IExternalCommand
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
@@ -35,6 +30,7 @@ namespace AddinExportCDW
 
             return Result.Succeeded;
         }
+
         public Result OnStartup(UIControlledApplication application)
         {
             return Result.Succeeded;

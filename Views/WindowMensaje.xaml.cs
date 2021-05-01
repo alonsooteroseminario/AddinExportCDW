@@ -11,6 +11,7 @@ namespace AddinExportCDW.Views
     /// </summary>
     public partial class WindowMensaje : Window
     {
+        private bool pasoPorAqui = false;
         private List<double> listaN_valor_NEW { get; set; }
         private List<Dictionary<string, string>> lista_Dictionarios_NEW { get; set; }
         private List<double> lista_desperdicios_NEW { get; set; }
@@ -93,11 +94,25 @@ namespace AddinExportCDW.Views
         {
             if (count_NEW == 1)
             {
-                ChartPickOneForm chartPickOneForm = new ChartPickOneForm(listaN_valor_NEW,
-                                                                     lista_Dictionarios_NEW,
-                                                                     lista_desperdicios_NEW,
-                                                                     desperdicioTotal_NEW);
-                chartPickOneForm.ShowDialog();
+                if (!pasoPorAqui)
+                {
+                    ChartPickOneForm chartPickOneForm = new ChartPickOneForm(pasoPorAqui,
+                                                     listaN_valor_NEW,
+                                                     lista_Dictionarios_NEW,
+                                                     lista_desperdicios_NEW,
+                                                     desperdicioTotal_NEW);
+                    chartPickOneForm.ShowDialog();
+                    pasoPorAqui = true;
+                }
+                else
+                {
+                    ChartPickOneForm chartPickOneForm = new ChartPickOneForm(pasoPorAqui,
+                                                     listaN_valor_NEW,
+                                                     lista_Dictionarios_NEW,
+                                                     lista_desperdicios_NEW,
+                                                     desperdicioTotal_NEW);
+                    chartPickOneForm.ShowDialog();
+                }
             }
             else
             {

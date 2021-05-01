@@ -190,7 +190,7 @@ namespace AddinExportCDW
                                         columns);
 
             #region mensaje en Pantalla
-            
+
             double count = lista_SelectElements.Count();
 
             WindowMensaje MainMensaje = new WindowMensaje(count,
@@ -202,7 +202,6 @@ namespace AddinExportCDW
                                                           listaDe_listaN_valor,
                                                           listaDe_listaN_valorSeparaadaPorDataElemento);
             MainMensaje.ShowDialog();
-            
 
             #endregion mensaje en Pantalla
 

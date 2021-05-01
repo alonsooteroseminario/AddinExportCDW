@@ -7,6 +7,7 @@ namespace AddinExportCDW
         public static Dictionary<string, string> Get(string elementName)
         {
             #region Dictionarios
+
             //(25+5 cm)
             Dictionary<string, string> data_forjado = new Dictionary<string, string>(){
                 {"Structural element", "Concrete waffle slab "},

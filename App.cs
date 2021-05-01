@@ -32,7 +32,6 @@ namespace AddinExportCDW
             //button3.ToolTip = "Information";
             button3.LongDescription = "Application designed for the quantification of construction waste in the design phase. The types and quantities of CDW are estimated and managed according to EU guidelines, identified and quantified waste is classified according to the European List of Wastes (LoW).";
 
-
             return Result.Succeeded;
         }
 
