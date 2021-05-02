@@ -25,22 +25,30 @@ namespace AddinExportCDW
         public static double Get(Dictionary<string, string> dictionary, Element element)
         {
             Parameter param = element.LookupParameter("Área");
+            if (param == null)
+            {
+                param = element.LookupParameter("Area");
+            }
             List<string> entrada = DictionaryListValues(dictionary);
             double sumaTotal_valor_porArea = 0;
             foreach (string c in entrada)
             {
                 string valor = c;
                 string key = dictionary.FirstOrDefault(x => x.Value == valor).Key;
-                double valor_porArea = double.Parse(valor) * Math.Round(param.AsDouble() / 10.7639, 4);//"17 09 04 - mixed"  X AREA
-                sumaTotal_valor_porArea = sumaTotal_valor_porArea + valor_porArea;
+                double valor_porArea = double.Parse(valor) * Math.Round(param.AsDouble() / 10.7639, 4);
+                sumaTotal_valor_porArea += valor_porArea;
             }
             return sumaTotal_valor_porArea;
         }
 
-        public static double GetByValueOfKey(Dictionary<string, string> dictionary, Element element, string numeroKey) // key del 2 al 11
+        public static double GetByValueOfKey(Dictionary<string, string> dictionary, Element element, string numeroKey)
         {
             double salida = 0;
             Parameter param = element.LookupParameter("Área");//en revit aparece en m2 pero en la api te entrega el valor en pies2
+            if (param == null)
+            {
+                param = element.LookupParameter("Area");
+            }
             List<string> lista_keys = new List<string>()
             {
                 "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"

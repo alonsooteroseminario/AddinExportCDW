@@ -63,7 +63,7 @@ namespace AddinExportCDW.Views
             this.groupBox1.Size = new System.Drawing.Size(1497, 118);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Elige una opción";
+            this.groupBox1.Text = "Pick one option";
             // 
             // button1
             // 
@@ -72,7 +72,7 @@ namespace AddinExportCDW.Views
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(144, 35);
             this.button1.TabIndex = 1;
-            this.button1.Text = "Aplicar";
+            this.button1.Text = "Apply";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.Button1_Click);
             // 

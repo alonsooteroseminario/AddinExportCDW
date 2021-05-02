@@ -47,7 +47,7 @@ namespace AddinExportCDW
             bool existeSchedule = true;
             foreach (Element viewSche in viewSchedulesAllProject)// Existe?
             {
-                if (viewSche.Name.Contains(" CDW ESTIMACIÓN SCHEDULE"))
+                if (viewSche.Name.Contains(" CDW ESTIMATION SCHEDULE"))
                 {
                     existeSchedule = false;
                     break;
@@ -113,14 +113,6 @@ namespace AddinExportCDW
                                                     strFramming,
                                                     walls,
                                                     columns);
-            _ = Core.GetListValoresByName(commandData,
-                                                    floors,
-                                                    structuralColumns,
-                                                    strFoundation,
-                                                    strFramming,
-                                                    walls,
-                                                    columns);
-
             List<List<List<double>>> listaDe_listaN_valorSeparaadaPorDataElemento = Core.GetListValoresSeparaadaPorDataElemento(commandData,
                                                     floors,
                                                     structuralColumns,

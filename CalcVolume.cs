@@ -20,7 +20,11 @@ namespace AddinExportCDW
 
         public static double Get(Dictionary<string, string> dictionary, Element element)
         {
-            Parameter param = element.LookupParameter("Volumen");
+            Parameter param = element.LookupParameter("Volume");
+            if (param == null)
+            {
+                param = element.LookupParameter("Volumen");
+            }
             List<string> entrada = DictionaryListValues(dictionary);
             double sumaTotal_valor_porVolumen = 0;
             foreach (string c in entrada)
@@ -39,6 +43,10 @@ namespace AddinExportCDW
             double areaSeccion_SteelColumns = 0.00271; //m2
             //constante
             Parameter paramAltura_SteelColumns = element.LookupParameter("Desfase superior");// 3.940 m pero revit api lo entrega en pies (1 m = 3.28084 pie )
+            if (paramAltura_SteelColumns == null)
+            {
+                paramAltura_SteelColumns = element.LookupParameter("Top Offset");
+            }
             double altura_SteelColumns = (paramAltura_SteelColumns.AsDouble() / 3.28084);// convertimos pies a m
             double paramVolumenCalculated = areaSeccion_SteelColumns * altura_SteelColumns;// m2 * m = m3
 
@@ -52,10 +60,14 @@ namespace AddinExportCDW
             return sumaTotal_valor_porVolumen;
         }
 
-        public static double GetByValueOfKey(Dictionary<string, string> dictionary, Element element, string numeroKey) // key del 2 al 11
+        public static double GetByValueOfKey(Dictionary<string, string> dictionary, Element element, string numeroKey)
         {
             double salida = 0;
-            Parameter param = element.LookupParameter("Volumen");
+            Parameter param = element.LookupParameter("Volume");
+            if (param == null)
+            {
+                param = element.LookupParameter("Volumen");
+            }
             List<string> lista_keys = new List<string>()
             {
                 "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"
@@ -72,13 +84,17 @@ namespace AddinExportCDW
             return salida;
         }
 
-        public static double GetByValueOfKey_SteelColumnSpecialCommand(Dictionary<string, string> dictionary, Element element, string numeroKey) // key del 2 al 11
+        public static double GetByValueOfKey_SteelColumnSpecialCommand(Dictionary<string, string> dictionary, Element element, string numeroKey)
         {
             double salida = 0;
             //constante
             double areaSeccion_SteelColumns = 0.00271; //m2
             //constante
             Parameter paramAltura_SteelColumns = element.LookupParameter("Desfase superior");// 3.940 m pero revit api lo entrega en pies (1 m = 3.28084 pie )
+            if (paramAltura_SteelColumns == null)
+            {
+                paramAltura_SteelColumns = element.LookupParameter("Top Offset");
+            }
             double altura_SteelColumns = (paramAltura_SteelColumns.AsDouble() / 3.28084);// convertimos pies a m
             double paramVolumenCalculated = areaSeccion_SteelColumns * altura_SteelColumns;// m2 * m = m3
 

@@ -69,13 +69,13 @@ namespace AddinExportCDW.Views
                     cartesianChart1.AxisY.Clear();
                     cartesianChart1.AxisY.Add(new Axis
                     {
-                        Title = "Código",
+                        Title = "Structural element/Code",
                         Labels = array.ToArray()
                     });
                     cartesianChart1.AxisX.Clear();
                     cartesianChart1.AxisX.Add(new Axis
                     {
-                        Title = "Cantidad",
+                        Title = "Quantity",
                         LabelFormatter = value => (value).ToString("N") + " m3"
                     });
                     var tooltip = new DefaultTooltip

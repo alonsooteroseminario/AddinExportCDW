@@ -44,12 +44,12 @@ namespace AddinExportCDW.Views
             array.Reverse();
             cartesianChart1.AxisY.Add(new Axis
             {
-                Title = "Código",
+                Title = "Code",
                 Labels = array
             });
             cartesianChart1.AxisX.Add(new Axis
             {
-                Title = "Cantidad",
+                Title = "Quantity",
                 LabelFormatter = value => value.ToString("N") + " m3"
             });
             var tooltip = new DefaultTooltip

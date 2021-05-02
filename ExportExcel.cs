@@ -15,7 +15,6 @@ namespace AddinExportCDW
             #region Obtener Excel
 
             var bankAccounts = new List<Account>();
-            // aqui solo los elementos que se usan . No deberian ser todos.
             for (int i = 0; i < lista_Dictionarios.Count(); i++)
             {
                 Account cuenta = new Account
@@ -44,12 +43,12 @@ namespace AddinExportCDW
             var bankAccounts2 = new List<Account> {
                     new Account {
                                       ID = "07 07 01 aqueous washing liquids",
-                                      Balance = listaN_valor[0]//valor_porAres solo hormigon
-				                },
+                                      Balance = listaN_valor[0]
+                                },
                     new Account {
                                       ID = "15 01 02 plastic packaging",
-                                      Balance = listaN_valor[1]// valor_porArea solo suelos por defecto
-				                },
+                                      Balance = listaN_valor[1]
+                                },
                     new Account {
                                     ID = "15 01 03 wooden packaging",
                                     Balance = listaN_valor[2]

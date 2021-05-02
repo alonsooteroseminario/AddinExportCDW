@@ -33,7 +33,7 @@ namespace AddinExportCDW
             List<Element> lista_SelectElements = new List<Element>();
             try
             {
-                IList<Reference> references = uidoc.Selection.PickObjects(ObjectType.Element, "Seleccionar el Elemento que se quiere analizar");
+                IList<Reference> references = uidoc.Selection.PickObjects(ObjectType.Element, "Select the Element you want to analyze");
                 foreach (Reference reference in references)
                 {
                     Element e = doc.GetElement(reference);
@@ -96,7 +96,7 @@ namespace AddinExportCDW
             bool existeSchedule = true;
             foreach (Element viewSche in viewSchedulesAllProject)// Existe?
             {
-                if (viewSche.Name.Contains(" CDW ESTIMACIÓN SCHEDULE"))
+                if (viewSche.Name.Contains(" CDW ESTIMATION SCHEDULE"))
                 {
                     existeSchedule = false;
                     break;
@@ -162,14 +162,6 @@ namespace AddinExportCDW
                                                     strFramming,
                                                     walls,
                                                     columns);
-            _ = Core.GetListValoresByName(commandData,
-                                                    floors,
-                                                    structuralColumns,
-                                                    strFoundation,
-                                                    strFramming,
-                                                    walls,
-                                                    columns);
-
             List<List<List<double>>> listaDe_listaN_valorSeparaadaPorDataElemento = Core.GetListValoresSeparaadaPorDataElemento(commandData,
                                                     floors,
                                                     structuralColumns,

@@ -11,7 +11,6 @@ namespace AddinExportCDW
 {
     public static class CreateSchedule
     {
-        //Crea desde cero el SharedParameterFile
         public static void CreateSharedParameterFile(ExternalCommandData commandData,
                                                         Dictionary<string, string> dictionary)
         {
@@ -294,7 +293,7 @@ namespace AddinExportCDW
             string paramName8 = keys[7];
             string paramName9 = keys[8];
             string paramName10 = keys[9];
-            BuiltInCategory[] bics = new BuiltInCategory[]  // lista de BuiltInCategory
+            BuiltInCategory[] bics = new BuiltInCategory[]
             {
                     BuiltInCategory.OST_Floors,
                     BuiltInCategory.OST_StructuralColumns,
@@ -313,7 +312,7 @@ namespace AddinExportCDW
                     StepLog.Write(commandData, "Creating CDW Schedule");
                     doc.Regenerate();
                     ScheduleDefinition definition = clashSchedule.Definition;
-                    IList<SchedulableField> schedulableFields = definition.GetSchedulableFields(); // [a,b,c,s,d,f,....]
+                    IList<SchedulableField> schedulableFields = definition.GetSchedulableFields();
                     List<SchedulableField> listashparam = new List<SchedulableField>();
                     foreach (SchedulableField element in schedulableFields)
                     {
@@ -323,7 +322,13 @@ namespace AddinExportCDW
                             StepLog.Write(commandData, listashparam.Count().ToString());
                         }
                     }
-                    clashSchedule.Definition.AddField(schedulableFields.FirstOrDefault(o => o.GetName(doc).ToString() == "Familia y tipo"));
+
+                    SchedulableField familiaytipo = schedulableFields.FirstOrDefault(o => o.GetName(doc).ToString() == "Familia y tipo");
+                    if (familiaytipo == null)
+                    {
+                        familiaytipo = schedulableFields.FirstOrDefault(o => o.GetName(doc).ToString() == "Family and Type");
+                    }
+                    clashSchedule.Definition.AddField(familiaytipo);
 
                     bool verificarSiPasoPorAqui = false;
                     bool verificarSiPasoPorAqui2 = false;
@@ -427,14 +432,14 @@ namespace AddinExportCDW
                     {
                         transaction.RollBack();
                     }
-                    using (Transaction tran = new Transaction(doc, "Cambiar nombre"))
+                    using (Transaction tran = new Transaction(doc, "Schedule Name"))
                     {
-                        StepLog.Write(commandData, "Cambiar nombre Schedule");
+                        StepLog.Write(commandData, "Schedule Name");
                         tran.Start();
-                        TableData td = clashSchedule.GetTableData(); // get viewschedule table data
-                        TableSectionData tsd = td.GetSectionData(SectionType.Header); // get header section data
+                        TableData td = clashSchedule.GetTableData();
+                        TableSectionData tsd = td.GetSectionData(SectionType.Header);
                         string text = tsd.GetCellText(0, 0);
-                        string nombreBorrado_OST = (bic.ToString() + " CDW ESTIMACIÓN SCHEDULE").Remove(0, 4);
+                        string nombreBorrado_OST = (bic.ToString() + " CDW ESTIMATION SCHEDULE").Remove(0, 4);
                         tsd.SetCellText(0, 0, nombreBorrado_OST);
                         clashSchedule.Name = nombreBorrado_OST;
                         tsd.InsertColumn(0);

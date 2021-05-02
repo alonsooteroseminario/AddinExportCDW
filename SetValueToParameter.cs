@@ -15,7 +15,7 @@ namespace AddinExportCDW
                 Parameter parametro = sc.LookupParameter(key);
                 if (parametro != null)
                 {
-                    using (Transaction t = new Transaction(doc, "Agregar valor CDW a cada Elemento"))
+                    using (Transaction t = new Transaction(doc, "Add CDW value to each Element"))
                     {
                         t.Start();
                         parametro.Set(CalcArea.GetByValueOfKey(data, sc, i.ToString()).ToString());
@@ -36,7 +36,7 @@ namespace AddinExportCDW
                 Parameter parametro = sc.LookupParameter(key);
                 if (parametro != null)
                 {
-                    using (Transaction t = new Transaction(doc, "Agregar valor CDW a cada Elemento"))
+                    using (Transaction t = new Transaction(doc, "Add CDW value to each Element"))
                     {
                         t.Start();
                         parametro.Set(CalcVolume.GetByValueOfKey(data, sc, i.ToString()).ToString());
@@ -57,7 +57,7 @@ namespace AddinExportCDW
                 Parameter parametro = sc.LookupParameter(key);
                 if (parametro != null)
                 {
-                    using (Transaction t = new Transaction(doc, "Agregar valor CDW a cada Elemento"))
+                    using (Transaction t = new Transaction(doc, "Add CDW value to each Element"))
                     {
                         t.Start();
                         parametro.Set(CalcVolume.GetByValueOfKey_SteelColumnSpecialCommand(data, sc, i.ToString()).ToString());
