@@ -9,7 +9,7 @@ namespace AddinExportCDW
             #region Dictionarios
 
             Dictionary<string, string> data_forjado = new Dictionary<string, string>(){
-                {"Structural element", "Concrete waffle slab "},
+                {"Structural element", "Concrete waffle slab (20+5) cm"},
                 {"Código", "05WCH80110N"},
                 {"07 07 01 aqueous washing liquids", "0,000008"},
                 {"15 01 02 plastic packaging", "0,000554"},//
@@ -51,7 +51,7 @@ namespace AddinExportCDW
                 {"17 09 04 mixed", "0,000221"},//
             };
             Dictionary<string, string> data_Cimentaciones = new Dictionary<string, string>(){
-                {"Structural element", "Losa de cimentación 650 mm"},
+                {"Structural element", "Foundation wall"},
                 {"Código", "03HRM80080"},//
                 {"07 07 01 aqueous washing liquids", "0,000017"},//
 				{"15 01 02 plastic packaging", "0"},
@@ -148,6 +148,34 @@ namespace AddinExportCDW
                 {"17 04 05 iron and steel", "0,000146"},//
                 {"17 09 04 mixed", "0,000225"},//
             };
+            Dictionary<string, string> data_SteelColumns = new Dictionary<string, string>(){
+                {"Structural element", "Steel column"},
+                {"Código", "05ACS00000"},
+                {"07 07 01 aqueous washing liquids", "0"},
+                {"15 01 02 plastic packaging", "0"},
+                {"15 01 03 wooden packaging", "0"},
+                {"15 01 04 metallic packaging", "0"},
+                {"15 01 06 mixed packaging", "0"},
+                {"17 01 01 concrete", "0"},
+                {"17 02 01 wood", "0"},
+                {"17 02 03 plastic", "0"},
+                {"17 04 05 iron and steel", "0,000001"},//
+                {"17 09 04 mixed", "0,00000001"},//
+            };
+            Dictionary<string, string> data_forjado35 = new Dictionary<string, string>(){
+                {"Structural element", "Concrete waffle slab (30+5) cm"},
+                {"Código", "05WCH80110"},
+                {"07 07 01 aqueous washing liquids", "0,000009"},//
+                {"15 01 02 plastic packaging", "0,000609"},//
+				{"15 01 03 wooden packaging", "0,005081"},//
+				{"15 01 04 metallic packaging", "0,000515"},//
+                {"15 01 06 mixed packaging", "0,000062"},//
+                {"17 01 01 concrete", "0,004477"},//
+                {"17 02 01 wood", "0,001122"},//
+				{"17 02 03 plastic", "0,004824"},//
+				{"17 04 05 iron and steel", "0,000061"},//
+                {"17 09 04 mixed", "0,000105"},//
+            };
 
             #endregion Dictionarios
 
@@ -191,6 +219,14 @@ namespace AddinExportCDW
             if (elementName == "data_walls")
             {
                 DictionaryOutPut = data_walls;
+            }
+            if (elementName == "data_SteelColumns")
+            {
+                DictionaryOutPut = data_SteelColumns;
+            }
+            if (elementName == "data_forjado35")
+            {
+                DictionaryOutPut = data_forjado35;
             }
             return DictionaryOutPut;
         }

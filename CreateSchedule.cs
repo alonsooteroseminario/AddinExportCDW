@@ -21,9 +21,7 @@ namespace AddinExportCDW
             UIDocument uidoc = uiApp.ActiveUIDocument;
             Document doc = uiApp.ActiveUIDocument.Document;
             Application app = uiApp.Application;
-            // Get Active View
-            View activeView = uidoc.ActiveView;
-            string ruta = App.ExecutingAssemblyPath;
+            ComandoEntrada(uidoc);
 
             #endregion Comandos entrada
 
@@ -40,7 +38,9 @@ namespace AddinExportCDW
             string paramName10 = keys[9];
 
             DefinitionFile myDefinitionFile = app.OpenSharedParameterFile();
+            StepLog.Write(commandData, myDefinitionFile.ToString());
             DefinitionGroup myGroup = myDefinitionFile.Groups.Create("Create CDW Parameters");
+            StepLog.Write(commandData, myGroup.ToString());
 
             ExternalDefinitionCreationOptions option = new ExternalDefinitionCreationOptions(paramName, ParameterType.Text);
             ExternalDefinitionCreationOptions option2 = new ExternalDefinitionCreationOptions(paramName2, ParameterType.Text);
@@ -84,6 +84,7 @@ namespace AddinExportCDW
                     BuiltInCategory.OST_StructuralFraming,
                     BuiltInCategory.OST_Walls,
                     BuiltInCategory.OST_StructuralFoundation,
+                    BuiltInCategory.OST_Columns,
             };
             foreach (BuiltInCategory bic in bics)
             {
@@ -115,8 +116,21 @@ namespace AddinExportCDW
                 doc.ParameterBindings.Insert(myDefinition_ProductDate8, instanceBinding8, BuiltInParameterGroup.PG_CONSTRAINTS);
                 doc.ParameterBindings.Insert(myDefinition_ProductDate9, instanceBinding9, BuiltInParameterGroup.PG_CONSTRAINTS);
                 doc.ParameterBindings.Insert(myDefinition_ProductDate10, instanceBinding10, BuiltInParameterGroup.PG_CONSTRAINTS);
+                StepLog.Write(commandData, "Create CDW Parameters");
                 t.Commit();
             }
+        }
+
+        private static void ComandoEntrada(UIDocument uidoc)
+        {
+            _ = uidoc.ActiveView;
+        }
+
+        private static void ComandoEntrada(UIApplication uiApp, UIDocument uidoc)
+        {
+            _ = uiApp.ActiveUIDocument.Document;
+            _ = uiApp.Application;
+            _ = uidoc.ActiveView;
         }
 
         public static void CreateParametersWithSharedParameterFile(ExternalCommandData commandData,
@@ -129,9 +143,7 @@ namespace AddinExportCDW
             UIDocument uidoc = uiApp.ActiveUIDocument;
             Document doc = uiApp.ActiveUIDocument.Document;
             Application app = uiApp.Application;
-            // Get Active View
-            View activeView = uidoc.ActiveView;
-            string ruta = App.ExecutingAssemblyPath;
+            ComandoEntrada(uidoc);
 
             #endregion Comandos entrada
 
@@ -166,6 +178,7 @@ namespace AddinExportCDW
                     BuiltInCategory.OST_StructuralFraming,
                     BuiltInCategory.OST_Walls,
                     BuiltInCategory.OST_StructuralFoundation,
+                    BuiltInCategory.OST_Columns,
             };
             foreach (BuiltInCategory bic in bics)
             {
@@ -200,27 +213,20 @@ namespace AddinExportCDW
         }
 
         public static void CreateParameters(ExternalCommandData commandData,
-                                    Dictionary<string, string> dictionary,
-                                    IList<Element> listaElementos)
+                                            Dictionary<string, string> dictionary)
         {
             #region Comandos entrada
 
             //Get application and document objects
             UIApplication uiApp = commandData.Application;
             UIDocument uidoc = uiApp.ActiveUIDocument;
-            Document doc = uiApp.ActiveUIDocument.Document;
-            Application app = uiApp.Application;
-            // Get Active View
-            View activeView = uidoc.ActiveView;
-            string ruta = App.ExecutingAssemblyPath;
+            ComandoEntrada(uiApp, uidoc);
 
             #endregion Comandos entrada
 
-            List<string> keys = Dictionary.DictionaryListKeys(dictionary);
-            string paramName = keys[0];
             // create shared parameter file
-            String modulePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            String paramFile = modulePath + "\\CDWParameters.txt";
+            String paramFile = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)
+                             + "\\CDWParameters.txt";
             if (File.Exists(paramFile))
             {
                 File.Delete(paramFile);
@@ -229,51 +235,8 @@ namespace AddinExportCDW
             fs.Close();
             // prepare shared parameter file
             commandData.Application.Application.SharedParametersFilename = paramFile;
-            DefinitionFile sharedParameterFile = app.OpenSharedParameterFile(); // Abrimos el archivo .txt de shared parameters
-
-            if (sharedParameterFile == null)
-            {
-                CreateSharedParameterFile(commandData, dictionary);
-            }
-            else
-            {
-                List<DefinitionGroup> defGroups = new List<DefinitionGroup>();
-                foreach (DefinitionGroup dg in sharedParameterFile.Groups)
-                {
-                    defGroups.Add(dg);
-                }
-                if (defGroups.Count() == 0) // No existe
-                {
-                    CreateSharedParameterFile(commandData, dictionary);
-                }
-                else
-                {
-                    for (int i = 0; i < defGroups.Count(); i++) // Sí existe
-                    {
-                        DefinitionGroup dg = defGroups[i];
-                        if (dg.Name.ToString() == "Create CDW Parameters")
-                        {
-                            //Existe parametro entonces no hacer nada
-                            Element elemento = listaElementos.First();
-                            Parameter parameter = elemento.LookupParameter(paramName);
-                            if (parameter != null)// Sí existen los parametros y si existe el archio de parametros compartidos "Create CDW Parameters"
-                            {
-                                //No hacer nada porque ya existen los parametros
-                            }
-                            else
-                            {
-                                // No existen parametros pero si existe archivo de parametros compartidos
-                                CreateParametersWithSharedParameterFile(commandData, dictionary);
-                                i = i + defGroups.Count();
-                            }
-                        }
-                        else // No existen parametros ytampoco existe archivo de parametros compartidos "Create CDW Parameters"
-                        {
-                            CreateSharedParameterFile(commandData, dictionary);
-                        }
-                    }
-                }
-            }
+            CreateSharedParameterFile(commandData, dictionary);
+            StepLog.Write(commandData, "CreateSharedParameterFile");
         }
 
         public static bool ExistParameters(ExternalCommandData commandData,
@@ -285,63 +248,20 @@ namespace AddinExportCDW
             //Get application and document objects
             UIApplication uiApp = commandData.Application;
             UIDocument uidoc = uiApp.ActiveUIDocument;
-            Document doc = uiApp.ActiveUIDocument.Document;
-            Application app = uiApp.Application;
-            // Get Active View
-            View activeView = uidoc.ActiveView;
-            string ruta = App.ExecutingAssemblyPath;
+            ComandoEntrada(uiApp, uidoc);
 
             #endregion Comandos entrada
 
-            List<string> keys = Dictionary.DictionaryListKeys(dictionary);
-            string paramName = keys[0];
             bool salida = false;
-            DefinitionFile sharedParameterFile = app.OpenSharedParameterFile(); // Abrimos el archivo .txt de shared parameters
-            if (sharedParameterFile == null)
+            string key = Dictionary.DictionaryListKeys(dictionary).First();
+            if (TodosLosElementosCDW.First().LookupParameter(key) == null)//no existe parametro
             {
+                StepLog.Write(commandData, "TodosLosElementosCDW.First().LookupParameter(key) == null");
             }
-            else
+            else//si existe parametro
             {
-                List<DefinitionGroup> defGroups = new List<DefinitionGroup>();
-                foreach (DefinitionGroup dg in sharedParameterFile.Groups)
-                {
-                    defGroups.Add(dg);
-                }
-                if (defGroups.Count() == 0) // No existe
-                {
-                    CreateSharedParameterFile(commandData, dictionary);
-                }
-                else
-                {
-                    for (int i = 0; i < defGroups.Count(); i++) // Sí existe
-                    {
-                        DefinitionGroup dg = defGroups[i];
-                        if (dg.Name.ToString() == "Create CDW Parameters")
-                        {
-                            //Existe parametro entonces no hacer nada
-                            Element elemento = TodosLosElementosCDW.First();
-                            Parameter parameter = elemento.LookupParameter(paramName);
-                            if (parameter != null)// Sí existen los parametros
-                            {
-                                //No hacer nada porque ya existen los parametros
-                                i = i + defGroups.Count();
-                                salida = true;
-                            }
-                            else
-                            {
-                                // No existen parametros pero si existe archivo de parametros compartidos
-                                //CreateParametersWithSharedParameterFile(commandData, dictionary);
-                                i = i + defGroups.Count();
-                                salida = false;
-                            }
-                        }
-                        else // no existe "Create CDW Parameters"
-                        {
-                            //CreateSharedParameterFile(commandData, dictionary);
-                            salida = false;
-                        }
-                    }
-                }
+                salida = true;
+                StepLog.Write(commandData, "TodosLosElementosCDW.First().LookupParameter(key) !== null");
             }
             return salida;
         }
@@ -373,75 +293,135 @@ namespace AddinExportCDW
             string paramName8 = keys[7];
             string paramName9 = keys[8];
             string paramName10 = keys[9];
-            BuiltInCategory[] bics = new BuiltInCategory[]  // lista de BuiltInCategory
+            BuiltInCategory[] bics = new BuiltInCategory[]
             {
                     BuiltInCategory.OST_Floors,
                     BuiltInCategory.OST_StructuralColumns,
                     BuiltInCategory.OST_StructuralFraming,
                     BuiltInCategory.OST_Walls,
                     BuiltInCategory.OST_StructuralFoundation,
+                    BuiltInCategory.OST_Columns,
             };
             foreach (BuiltInCategory bic in bics)
             {
                 ViewSchedule clashSchedule = null;
-                using (Transaction transaction = new Transaction(doc, "Creating CLASH Schedule"))
+                using (Transaction transaction = new Transaction(doc, "Creating CDW Schedule"))
                 {
                     transaction.Start();
                     clashSchedule = ViewSchedule.CreateSchedule(doc, new ElementId(bic));
+                    StepLog.Write(commandData, "Creating CDW Schedule");
                     doc.Regenerate();
                     ScheduleDefinition definition = clashSchedule.Definition;
-                    IList<SchedulableField> schedulableFields = definition.GetSchedulableFields(); // [a,b,c,s,d,f,....]
+                    IList<SchedulableField> schedulableFields = definition.GetSchedulableFields();
                     List<SchedulableField> listashparam = new List<SchedulableField>();
                     foreach (SchedulableField element in schedulableFields)
                     {
                         if (element.ParameterId.IntegerValue > 0)
                         {
                             listashparam.Add(element);
+                            StepLog.Write(commandData, listashparam.Count().ToString());
                         }
                     }
-                    clashSchedule.Definition.AddField(schedulableFields.FirstOrDefault(o => o.GetName(doc).ToString() == "Familia y tipo"));
-                    double nro_items_listahpram = listashparam.Count();
+
+                    SchedulableField familiaytipo = schedulableFields.FirstOrDefault(o => o.GetName(doc).ToString() == "Familia y tipo");
+                    if (familiaytipo == null)
+                    {
+                        familiaytipo = schedulableFields.FirstOrDefault(o => o.GetName(doc).ToString() == "Family and Type");
+                    }
+                    clashSchedule.Definition.AddField(familiaytipo);
+
+                    bool verificarSiPasoPorAqui = false;
+                    bool verificarSiPasoPorAqui2 = false;
+                    bool verificarSiPasoPorAqui3 = false;
+                    bool verificarSiPasoPorAqui4 = false;
+                    bool verificarSiPasoPorAqui5 = false;
+                    bool verificarSiPasoPorAqui6 = false;
+                    bool verificarSiPasoPorAqui7 = false;
+                    bool verificarSiPasoPorAqui8 = false;
+                    bool verificarSiPasoPorAqui9 = false;
+                    bool verificarSiPasoPorAqui10 = false;
+
                     for (int i = 0; i < listashparam.Count(); i++)
                     {
                         if (listashparam[i].GetName(doc).ToString() == paramName)
                         {
-                            clashSchedule.Definition.AddField(listashparam[i]);
+                            if (!verificarSiPasoPorAqui)
+                            {
+                                clashSchedule.Definition.AddField(listashparam[i]);
+                                verificarSiPasoPorAqui = true;
+                            }
                         }
                         if (listashparam[i].GetName(doc).ToString() == paramName2)
                         {
-                            clashSchedule.Definition.AddField(listashparam[i]);
+                            if (!verificarSiPasoPorAqui2)
+                            {
+                                clashSchedule.Definition.AddField(listashparam[i]);
+                                verificarSiPasoPorAqui2 = true;
+                            }
                         }
                         if (listashparam[i].GetName(doc).ToString() == paramName3)
                         {
-                            clashSchedule.Definition.AddField(listashparam[i]);
+                            if (!verificarSiPasoPorAqui3)
+                            {
+                                clashSchedule.Definition.AddField(listashparam[i]);
+                                verificarSiPasoPorAqui3 = true;
+                            }
                         }
                         if (listashparam[i].GetName(doc).ToString() == paramName4)
                         {
-                            clashSchedule.Definition.AddField(listashparam[i]);
+                            if (!verificarSiPasoPorAqui4)
+                            {
+                                clashSchedule.Definition.AddField(listashparam[i]);
+                                verificarSiPasoPorAqui4 = true;
+                            }
                         }
                         if (listashparam[i].GetName(doc).ToString() == paramName5)
                         {
-                            clashSchedule.Definition.AddField(listashparam[i]);
+                            if (!verificarSiPasoPorAqui5)
+                            {
+                                clashSchedule.Definition.AddField(listashparam[i]);
+                                verificarSiPasoPorAqui5 = true;
+                            }
                         }
                         if (listashparam[i].GetName(doc).ToString() == paramName6)
                         {
-                            clashSchedule.Definition.AddField(listashparam[i]);
+                            if (!verificarSiPasoPorAqui6)
+                            {
+                                clashSchedule.Definition.AddField(listashparam[i]);
+                                verificarSiPasoPorAqui6 = true;
+                            }
                         }
                         if (listashparam[i].GetName(doc).ToString() == paramName7)
                         {
-                            clashSchedule.Definition.AddField(listashparam[i]);
+                            if (!verificarSiPasoPorAqui7)
+                            {
+                                clashSchedule.Definition.AddField(listashparam[i]);
+                                verificarSiPasoPorAqui7 = true;
+                            }
                         }
                         if (listashparam[i].GetName(doc).ToString() == paramName8)
                         {
-                            clashSchedule.Definition.AddField(listashparam[i]);
+                            if (!verificarSiPasoPorAqui8)
+                            {
+                                clashSchedule.Definition.AddField(listashparam[i]);
+                                verificarSiPasoPorAqui8 = true;
+                            }
                         }
                         if (listashparam[i].GetName(doc).ToString() == paramName9)
                         {
-                            clashSchedule.Definition.AddField(listashparam[i]);
+                            if (!verificarSiPasoPorAqui9)
+                            {
+                                clashSchedule.Definition.AddField(listashparam[i]);
+                                verificarSiPasoPorAqui9 = true;
+                            }
                         }
                         if (listashparam[i].GetName(doc).ToString() == paramName10)
                         {
-                            clashSchedule.Definition.AddField(listashparam[i]);
+                            if (!verificarSiPasoPorAqui10)
+                            {
+                                clashSchedule.Definition.AddField(listashparam[i]);
+                                verificarSiPasoPorAqui10 = true;
+                            }
                         }
                     }
                     if (null != clashSchedule)
@@ -452,13 +432,14 @@ namespace AddinExportCDW
                     {
                         transaction.RollBack();
                     }
-                    using (Transaction tran = new Transaction(doc, "Cambiar nombre"))
+                    using (Transaction tran = new Transaction(doc, "Schedule Name"))
                     {
+                        StepLog.Write(commandData, "Schedule Name");
                         tran.Start();
-                        TableData td = clashSchedule.GetTableData(); // get viewschedule table data
-                        TableSectionData tsd = td.GetSectionData(SectionType.Header); // get header section data
+                        TableData td = clashSchedule.GetTableData();
+                        TableSectionData tsd = td.GetSectionData(SectionType.Header);
                         string text = tsd.GetCellText(0, 0);
-                        string nombreBorrado_OST = (bic.ToString() + " CDW ESTIMACIÓN SCHEDULE").Remove(0, 4);
+                        string nombreBorrado_OST = (bic.ToString() + " CDW ESTIMATION SCHEDULE").Remove(0, 4);
                         tsd.SetCellText(0, 0, nombreBorrado_OST);
                         clashSchedule.Name = nombreBorrado_OST;
                         tsd.InsertColumn(0);

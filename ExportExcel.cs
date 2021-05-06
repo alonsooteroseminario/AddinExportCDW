@@ -15,12 +15,12 @@ namespace AddinExportCDW
             #region Obtener Excel
 
             var bankAccounts = new List<Account>();
-            // aqui solo los elementos que se usan . No deberian ser todos.
             for (int i = 0; i < lista_Dictionarios.Count(); i++)
             {
                 Account cuenta = new Account
                 {
-                    ID = lista_Dictionarios[i]["Structural element"] + " / " + lista_Dictionarios[i]["Código"],
+                    ID = lista_Dictionarios[i]["Structural element"],
+                    Code = lista_Dictionarios[i]["Código"],
                     Balance = lista_desperdicios[i]
                 };
                 bankAccounts.Add(cuenta);
@@ -28,24 +28,27 @@ namespace AddinExportCDW
             Account nuevo1 = new Account
             {
                 ID = "",
+                Code = "",
                 Balance = 0
             };
             Account nuevo2 = new Account
             {
                 ID = "Total",
+                Code = "",
                 Balance = desperdicioTotal
             };
             bankAccounts.Add(nuevo1);
             bankAccounts.Add(nuevo2);
+
             var bankAccounts2 = new List<Account> {
                     new Account {
                                       ID = "07 07 01 aqueous washing liquids",
-                                      Balance = listaN_valor[0]//valor_porAres solo hormigon
-				                },
+                                      Balance = listaN_valor[0]
+                                },
                     new Account {
                                       ID = "15 01 02 plastic packaging",
-                                      Balance = listaN_valor[1]// valor_porArea solo suelos por defecto
-				                },
+                                      Balance = listaN_valor[1]
+                                },
                     new Account {
                                     ID = "15 01 03 wooden packaging",
                                     Balance = listaN_valor[2]
@@ -87,6 +90,7 @@ namespace AddinExportCDW
                                     Balance =  desperdicioTotal
                     }
                 };
+
             DisplayInExcel(bankAccounts, bankAccounts2);
 
             #endregion Obtener Excel
@@ -94,10 +98,11 @@ namespace AddinExportCDW
 
         private static void DisplayInExcel(IEnumerable<Account> accounts, IEnumerable<Account> accounts2)
         {
-            Excel.Application excelApp = new Excel.Application();
-
-            // Make the object visible.
-            excelApp.Visible = true;
+            Excel.Application excelApp = new Excel.Application
+            {
+                // Make the object visible.
+                Visible = true
+            };
 
             // Create a new, empty workbook and add it to the collection returned
             // by property Workbooks. The new workbook becomes the active workbook.
@@ -109,26 +114,33 @@ namespace AddinExportCDW
             // removed in a later procedure.
             Excel._Worksheet workSheet = (Excel.Worksheet)excelApp.ActiveSheet;
 
+            workSheet.Name = "CDW by type of waste";
+
             // Establish column headings in cells A1 and B1.
-            workSheet.Cells[1, "A"] = "Elemento";
-            workSheet.Cells[1, "B"] = "RCD (m³)";
+            workSheet.Cells[1, "A"] = "Building element";
+            workSheet.Cells[1, "B"] = "Code";
+            workSheet.Cells[1, "C"] = "CDW (m3)";
 
             var row = 1;
             foreach (var acct in accounts)
             {
                 row++;
                 workSheet.Cells[row, "A"] = acct.ID;
-                workSheet.Cells[row, "B"] = acct.Balance;
+                workSheet.Cells[row, "B"] = acct.Code;
+                workSheet.Cells[row, "C"] = acct.Balance;
             }
 
             ((Excel.Range)workSheet.Columns[1]).AutoFit();
             ((Excel.Range)workSheet.Columns[2]).AutoFit();
+            ((Excel.Range)workSheet.Columns[3]).AutoFit();
 
             Excel.Sheets worksheets = xlWorkBook.Worksheets;
+
             var xlNewSheet = (Excel.Worksheet)worksheets.Add(worksheets[1], Type.Missing, Type.Missing, Type.Missing);
-            xlNewSheet.Name = "Hoja2";
-            xlNewSheet.Cells[1, "A"] = "Código LER";
-            xlNewSheet.Cells[1, "B"] = "RCD (m³)";
+            xlNewSheet.Name = "CDW by building element";
+
+            xlNewSheet.Cells[1, "A"] = "European Waste Code (EWC)";
+            xlNewSheet.Cells[1, "B"] = "CDW (m3)";
 
             var row2 = 1;
             foreach (var acct in accounts2)
@@ -141,5 +153,12 @@ namespace AddinExportCDW
             ((Excel.Range)xlNewSheet.Columns[1]).AutoFit();
             ((Excel.Range)xlNewSheet.Columns[2]).AutoFit();
         }
+    }
+
+    internal class Account
+    {
+        public string ID { get; set; }
+        public string Code { get; set; }
+        public double Balance { get; set; }
     }
 }

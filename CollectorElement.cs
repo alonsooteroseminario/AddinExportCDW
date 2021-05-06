@@ -1,5 +1,4 @@
-﻿using Autodesk.Revit.ApplicationServices;
-using Autodesk.Revit.DB;
+﻿using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,8 +7,6 @@ namespace AddinExportCDW
 {
     public static class CollectorElement
     {
-        #region Get all model elements
-
         /// <summary>
         /// Return all model elements, cf.
         /// http://forums.autodesk.com/t5/revit-api/traverse-all-model-elements-in-a-project-top-down-approach/m-p/5815247
@@ -57,8 +54,6 @@ namespace AddinExportCDW
             return modelElements;
         }
 
-        #endregion Get all model elements
-
         public static IList<Element> Get(Document doc, View activeView, string categoryElement)
         {
             #region Colectores de Elementos
@@ -66,38 +61,33 @@ namespace AddinExportCDW
             ElementClassFilter elemFilter_floor = new ElementClassFilter(typeof(Floor));
             ElementClassFilter elemFilter_familyInstance = new ElementClassFilter(typeof(FamilyInstance));
             ElementClassFilter elemFilter_walls = new ElementClassFilter(typeof(Wall));
-            //Forjado y Concreto
+
             ElementCategoryFilter Categoryfilter_floors = new ElementCategoryFilter(BuiltInCategory.OST_Floors);
-            //Pilar Hormigon
             ElementCategoryFilter Categoryfilter_strColumns = new ElementCategoryFilter(BuiltInCategory.OST_StructuralColumns);
-            //Cimentaciones
             ElementCategoryFilter Categoryfilter_strFoundation = new ElementCategoryFilter(BuiltInCategory.OST_StructuralFoundation);
-            // Structural framing
             ElementCategoryFilter Categoryfilter_strFramming = new ElementCategoryFilter(BuiltInCategory.OST_StructuralFraming);
-            // walls
             ElementCategoryFilter Categoryfilter_walls = new ElementCategoryFilter(BuiltInCategory.OST_Walls);
+            ElementCategoryFilter Categoryfilter_Columns = new ElementCategoryFilter(BuiltInCategory.OST_Columns);
 
             LogicalAndFilter DUInstancesFilter_floors = new LogicalAndFilter(elemFilter_floor, Categoryfilter_floors);
             LogicalAndFilter DUInstancesFilter_strColumns = new LogicalAndFilter(elemFilter_familyInstance, Categoryfilter_strColumns);
             LogicalAndFilter DUInstancesFilter_strFoundation = new LogicalAndFilter(elemFilter_floor, Categoryfilter_strFoundation);
             LogicalAndFilter DUInstancesFilter_strFramming = new LogicalAndFilter(elemFilter_familyInstance, Categoryfilter_strFramming);
             LogicalAndFilter DUInstancesFilter_walls = new LogicalAndFilter(elemFilter_walls, Categoryfilter_walls);
+            LogicalAndFilter DUInstancesFilter_Columns = new LogicalAndFilter(elemFilter_familyInstance, Categoryfilter_Columns);
 
-            //Forjado y Concreto
             FilteredElementCollector DUcoll = new FilteredElementCollector(doc, activeView.Id);
             IList<Element> floors = DUcoll.WherePasses(DUInstancesFilter_floors).ToElements();
-            //Pilar Hormigon
             FilteredElementCollector DUcoll2 = new FilteredElementCollector(doc, activeView.Id);
             IList<Element> structuralColumns = DUcoll2.WherePasses(DUInstancesFilter_strColumns).ToElements();
-            //Cimentaciones
             FilteredElementCollector DUcoll3 = new FilteredElementCollector(doc, activeView.Id);
             IList<Element> strFoundation = DUcoll3.WherePasses(DUInstancesFilter_strFoundation).ToElements();
-            // Structural framming
             FilteredElementCollector DUcoll4 = new FilteredElementCollector(doc, activeView.Id);
             IList<Element> strFramming = DUcoll4.WherePasses(DUInstancesFilter_strFramming).ToElements();
-            //  walls
             FilteredElementCollector DUcoll5 = new FilteredElementCollector(doc, activeView.Id);
             IList<Element> walls = DUcoll5.WherePasses(DUInstancesFilter_walls).ToElements();
+            FilteredElementCollector DUcoll6 = new FilteredElementCollector(doc, activeView.Id);
+            IList<Element> columns = DUcoll6.WherePasses(DUInstancesFilter_Columns).ToElements();
 
             #endregion Colectores de Elementos
 
@@ -121,6 +111,10 @@ namespace AddinExportCDW
             {
                 return walls;
             }
+            if (categoryElement == "columns")
+            {
+                return columns;
+            }
             return null;
         }
 
@@ -132,11 +126,7 @@ namespace AddinExportCDW
             //Get application and document objects
             UIApplication uiApp = commandData.Application;
             UIDocument uidoc = uiApp.ActiveUIDocument;
-            Document doc = uiApp.ActiveUIDocument.Document;
-            Application app = uiApp.Application;
-            // Get Active View
-            View activeView = uidoc.ActiveView;
-            string ruta = App.ExecutingAssemblyPath;
+            ComandoEntrada(uiApp, uidoc);
 
             #endregion Comandos entrada
 
@@ -167,8 +157,19 @@ namespace AddinExportCDW
                 {
                     salida.Add(sc);
                 }
+                if (builtCategory == BuiltInCategory.OST_Columns)
+                {
+                    salida.Add(sc);
+                }
             }
             return salida;
+        }
+
+        private static void ComandoEntrada(UIApplication uiApp, UIDocument uidoc)
+        {
+            _ = uiApp.ActiveUIDocument.Document;
+            _ = uiApp.Application;
+            _ = uidoc.ActiveView;
         }
     }
 }

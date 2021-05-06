@@ -11,36 +11,35 @@ namespace AddinExportCDW.Views
     /// </summary>
     public partial class WindowMensaje : Window
     {
-        private List<double> listaN_valor_NEW { get; set; }
-        private List<Dictionary<string, string>> lista_Dictionarios_NEW { get; set; }
-        private List<double> lista_desperdicios_NEW { get; set; }
-        private double desperdicioTotal_NEW { get; set; }
+        private bool pasoPorAqui = false;
+        private List<double> ListaN_valor_NEW { get; set; }
+        private List<Dictionary<string, string>> Lista_Dictionarios_NEW { get; set; }
+        private List<double> Lista_desperdicios_NEW { get; set; }
+        private double DesperdicioTotal_NEW { get; set; }
+        private List<List<List<double>>> ListaDe_listaN_valorSeparaadaPorDataElemento_NEW { get; set; }
+        private ExternalCommandData CommandData_NEW { get; set; }
 
-        private List<List<List<double>>> listaDe_listaN_valorSeparaadaPorDataElemento_NEW { get; set; }
+        private double Count_NEW { get; set; }
 
-        private ExternalCommandData commandData_NEW { get; set; }
-
-        private List<List<double>> listaDe_listaN_valor_NEW { get; set; }
-
-        public WindowMensaje(ExternalCommandData commandData,
+        public WindowMensaje(double count,
+                             ExternalCommandData commandData,
                              List<double> listaN_valor,
                              List<Dictionary<string, string>> lista_Dictionarios,
                              List<double> lista_desperdicios,
                              double desperdicioTotal,
-                             List<List<double>> listaDe_listaN_valor,
                              List<List<List<double>>> listaDe_listaN_valorSeparaadaPorDataElemento)
         {
             InitializeComponent();
 
-            commandData_NEW = commandData;
-            listaDe_listaN_valor_NEW = listaDe_listaN_valor;
+            CommandData_NEW = commandData;
+            Count_NEW = count;
 
             Dictionary<string, string> dictionary = Dictionary.Get("data_forjado");
             List<string> ListKeys = Dictionary.DictionaryListKeys(dictionary);
 
             DataTable dt = new DataTable();
-            DataColumn CodLer = new DataColumn("Código LER", typeof(string));
-            DataColumn rcd = new DataColumn("RCD (m³)", typeof(string));
+            DataColumn CodLer = new DataColumn("European Waste Code (EWC)", typeof(string));
+            DataColumn rcd = new DataColumn("CDW (m3)", typeof(string));
 
             dt.Columns.Add(CodLer);
             dt.Columns.Add(rcd);
@@ -67,32 +66,49 @@ namespace AddinExportCDW.Views
 
             ExcelDataGrid.GridLinesVisibility = System.Windows.Controls.DataGridGridLinesVisibility.None;
 
-            listaN_valor_NEW = listaN_valor;
-            lista_Dictionarios_NEW = lista_Dictionarios;
-            lista_desperdicios_NEW = lista_desperdicios;
-            desperdicioTotal_NEW = desperdicioTotal;
-            listaDe_listaN_valorSeparaadaPorDataElemento_NEW = listaDe_listaN_valorSeparaadaPorDataElemento;
+            ListaN_valor_NEW = listaN_valor;
+            Lista_Dictionarios_NEW = lista_Dictionarios;
+            Lista_desperdicios_NEW = lista_desperdicios;
+            DesperdicioTotal_NEW = desperdicioTotal;
+            ListaDe_listaN_valorSeparaadaPorDataElemento_NEW = listaDe_listaN_valorSeparaadaPorDataElemento;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            PieChartForm pieChartForm = new PieChartForm(listaN_valor_NEW, lista_Dictionarios_NEW, lista_desperdicios_NEW, desperdicioTotal_NEW);
+            PieChartForm pieChartForm = new PieChartForm(ListaN_valor_NEW);
             pieChartForm.ShowDialog();
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            ExportExcel.Export(listaN_valor_NEW, lista_Dictionarios_NEW, lista_desperdicios_NEW, desperdicioTotal_NEW);
+            ExportExcel.Export(ListaN_valor_NEW, Lista_Dictionarios_NEW, Lista_desperdicios_NEW, DesperdicioTotal_NEW);
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            ChartForm chartForm = new ChartForm(commandData_NEW,
-                                                listaN_valor_NEW,
-                                                lista_Dictionarios_NEW,
-                                                listaDe_listaN_valor_NEW,
-                                                listaDe_listaN_valorSeparaadaPorDataElemento_NEW);
-            chartForm.ShowDialog();
+            if (Count_NEW == 1)
+            {
+                if (!pasoPorAqui)
+                {
+                    ChartPickOneForm chartPickOneForm = new ChartPickOneForm(pasoPorAqui,
+                                                     ListaN_valor_NEW);
+                    chartPickOneForm.ShowDialog();
+                    pasoPorAqui = true;
+                }
+                else
+                {
+                    ChartPickOneForm chartPickOneForm = new ChartPickOneForm(pasoPorAqui,
+                                                     ListaN_valor_NEW);
+                    chartPickOneForm.ShowDialog();
+                }
+            }
+            else
+            {
+                ChartForm chartForm = new ChartForm(CommandData_NEW,
+                                    Lista_Dictionarios_NEW,
+                                    ListaDe_listaN_valorSeparaadaPorDataElemento_NEW);
+                chartForm.ShowDialog();
+            }
         }
     }
 }

@@ -1,10 +1,10 @@
 ﻿using AddinExportCDW.Views;
-using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Excel = Microsoft.Office.Interop.Excel;
 
 namespace AddinExportCDW
@@ -21,10 +21,7 @@ namespace AddinExportCDW
             UIApplication uiApp = commandData.Application;
             UIDocument uidoc = uiApp.ActiveUIDocument;
             Document doc = uiApp.ActiveUIDocument.Document;
-            Application app = uiApp.Application;
-            // Get Active View
-            View activeView = uidoc.ActiveView;
-            string ruta = App.ExecutingAssemblyPath;
+            View activeView = ComandoEntrada(uiApp, uidoc);
 
             #endregion Comandos entrada
 
@@ -39,6 +36,7 @@ namespace AddinExportCDW
             IList<Element> strFoundation = CollectorElement.Get(doc, activeView, "strFoundation");
             IList<Element> strFramming = CollectorElement.Get(doc, activeView, "strFramming");
             IList<Element> walls = CollectorElement.Get(doc, activeView, "walls");
+            IList<Element> columns = CollectorElement.Get(doc, activeView, "columns");
 
             #endregion Collector de Elementos
 
@@ -49,7 +47,7 @@ namespace AddinExportCDW
             bool existeSchedule = true;
             foreach (Element viewSche in viewSchedulesAllProject)// Existe?
             {
-                if (viewSche.Name.Contains(" CDW ESTIMACIÓN SCHEDULE"))
+                if (viewSche.Name.Contains(" CDW ESTIMATION SCHEDULE"))
                 {
                     existeSchedule = false;
                     break;
@@ -67,18 +65,18 @@ namespace AddinExportCDW
             {
                 TodoslosElemetosDelModelo.Add(elemento);
             }
+
             List<Element> TodosLosElementosCDW = CollectorElement.FiltrarElementosCDW(commandData, TodoslosElemetosDelModelo);
 
-            if (CreateSchedule.ExistParameters(commandData, Dictionary.Get("data_forjado"), TodosLosElementosCDW))//si sí existen parametros
+            if (CreateSchedule.ExistParameters(commandData, Dictionary.Get("data_forjado"), TodosLosElementosCDW))
             {
                 if (existeSchedule)
                 {
-                    CreateSchedule.CreateSchedules(commandData, Dictionary.Get("data_forjado"));
                 }
             }
             else
             {
-                CreateSchedule.CreateParameters(commandData, Dictionary.Get("data_forjado"), TodoslosElemetosDelModelo);
+                CreateSchedule.CreateParameters(commandData, Dictionary.Get("data_forjado"));
                 if (existeSchedule)
                 {
                     CreateSchedule.CreateSchedules(commandData, Dictionary.Get("data_forjado"));
@@ -92,48 +90,52 @@ namespace AddinExportCDW
                                                                 structuralColumns,
                                                                 strFoundation,
                                                                 strFramming,
-                                                                walls);
+                                                                walls,
+                                                                columns);
             List<Dictionary<string, string>> lista_Dictionarios = Core.GetListDictionary(commandData,
                                                     floors,
                                                     structuralColumns,
                                                     strFoundation,
                                                     strFramming,
-                                                    walls);
+                                                    walls,
+                                                    columns);
             List<double> lista_desperdicios = Core.GetListDesperdicio(commandData,
                                                     floors,
                                                     structuralColumns,
                                                     strFoundation,
                                                     strFramming,
-                                                    walls);
+                                                    walls,
+                                                    columns);
             double desperdicioTotal = Core.GetDesperdicioTotal(commandData,
                                                     floors,
                                                     structuralColumns,
                                                     strFoundation,
                                                     strFramming,
-                                                    walls);
-
-            List<List<double>> listaDe_listaN_valor = Core.GetListValoresByName(commandData,
-                                                    floors,
-                                                    structuralColumns,
-                                                    strFoundation,
-                                                    strFramming,
-                                                    walls);
-
+                                                    walls,
+                                                    columns);
             List<List<List<double>>> listaDe_listaN_valorSeparaadaPorDataElemento = Core.GetListValoresSeparaadaPorDataElemento(commandData,
                                                     floors,
                                                     structuralColumns,
                                                     strFoundation,
                                                     strFramming,
-                                                    walls);
+                                                    walls,
+                                                    columns);
 
             #region mensaje en Pantalla
 
-            WindowMensaje MainMensaje = new WindowMensaje(commandData,
+            double count = floors.Count()
+                        + structuralColumns.Count()
+                        + strFoundation.Count()
+                        + strFramming.Count()
+                        + walls.Count()
+                        + columns.Count();
+
+            WindowMensaje MainMensaje = new WindowMensaje(count,
+                                                          commandData,
                                                           listaN_valor,
                                                           lista_Dictionarios,
                                                           lista_desperdicios,
                                                           desperdicioTotal,
-                                                          listaDe_listaN_valor,
                                                           listaDe_listaN_valorSeparaadaPorDataElemento);
             MainMensaje.ShowDialog();
 
@@ -144,12 +146,20 @@ namespace AddinExportCDW
             return Result.Succeeded;
         }
 
+        private static View ComandoEntrada(UIApplication uiApp, UIDocument uidoc)
+        {
+            _ = uiApp.Application;
+            View activeView = uidoc.ActiveView;
+            return activeView;
+        }
+
         private static void DisplayInExcel(IEnumerable<Account> accounts, IEnumerable<Account> accounts2)
         {
-            Excel.Application excelApp = new Excel.Application();
-
-            // Make the object visible.
-            excelApp.Visible = true;
+            Excel.Application excelApp = new Excel.Application
+            {
+                // Make the object visible.
+                Visible = true
+            };
 
             // Create a new, empty workbook and add it to the collection returned
             // by property Workbooks. The new workbook becomes the active workbook.
@@ -198,18 +208,22 @@ namespace AddinExportCDW
 
         public Result OnStartup(UIControlledApplication application)
         {
+            if (application is null)
+            {
+                throw new ArgumentNullException(nameof(application));
+            }
+
             return Result.Succeeded;
         }
 
         public Result OnShutdown(UIControlledApplication application)
         {
+            if (application is null)
+            {
+                throw new ArgumentNullException(nameof(application));
+            }
+
             return Result.Succeeded;
         }
-    }
-
-    internal class Account
-    {
-        public string ID { get; set; }
-        public double Balance { get; set; }
     }
 }
