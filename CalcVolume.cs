@@ -31,7 +31,7 @@ namespace AddinExportCDW
             {
                 string valor = c;
                 string key = dictionary.FirstOrDefault(x => x.Value == valor).Key;
-                double valor_porVolumen = double.Parse(valor) * Math.Round(param.AsDouble() / 35.3147, 4);
+                double valor_porVolumen = double.Parse(valor) * Math.Round(param.AsDouble() / 35.3147, 8);
                 sumaTotal_valor_porVolumen += valor_porVolumen;
             }
             return sumaTotal_valor_porVolumen;
@@ -54,7 +54,7 @@ namespace AddinExportCDW
             double sumaTotal_valor_porVolumen = 0;
             foreach (string valor in entrada)
             {
-                double valor_porVolumen = double.Parse(valor) * Math.Round(paramVolumenCalculated, 4);
+                double valor_porVolumen = double.Parse(valor) * Math.Round(paramVolumenCalculated, 8);
                 sumaTotal_valor_porVolumen += valor_porVolumen;
             }
             return sumaTotal_valor_porVolumen;
@@ -78,7 +78,7 @@ namespace AddinExportCDW
                 if (numeroKey == lista_keys[i])
                 {
                     string valor = entrada[i];
-                    salida = double.Parse(valor) * Math.Round(param.AsDouble() / 35.3147, 4);
+                    salida = double.Parse(valor) * Math.Round(param.AsDouble() / 35.3147, 8);
                 }
             }
             return salida;
@@ -108,7 +108,7 @@ namespace AddinExportCDW
                 if (numeroKey == lista_keys[i])
                 {
                     string valor = entrada[i];
-                    salida = double.Parse(valor) * Math.Round(paramVolumenCalculated, 4);
+                    salida = double.Parse(valor) * Math.Round(paramVolumenCalculated, 8);
                 }
             }
             return salida;

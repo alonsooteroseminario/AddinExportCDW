@@ -2,6 +2,7 @@
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
 
 namespace AddinExportCDW
 {
@@ -11,19 +12,27 @@ namespace AddinExportCDW
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
-            #region Comandos entrada
+            try
+            {
+                #region Comandos entrada
 
-            //Get application and document objects
-            UIApplication uiApp = commandData.Application;
-            UIDocument uidoc = uiApp.ActiveUIDocument;
-            ComandoEntrada(uiApp, uidoc);
+                //Get application and document objects
+                UIApplication uiApp = commandData.Application;
+                UIDocument uidoc = uiApp.ActiveUIDocument;
+                ComandoEntrada(uiApp, uidoc);
 
-            #endregion Comandos entrada
+                #endregion Comandos entrada
 
-            InformationForm mainInformationForm = new InformationForm();
-            mainInformationForm.ShowDialog();
+                InformationForm mainInformationForm = new InformationForm();
+                mainInformationForm.ShowDialog();
 
-            return Result.Succeeded;
+                return Result.Succeeded;
+            }
+            catch (Exception e)
+            {
+                StepLog.Write(commandData, e.Message.ToString());
+                throw;
+            }
         }
 
         private static void ComandoEntrada(UIApplication uiApp, UIDocument uidoc)

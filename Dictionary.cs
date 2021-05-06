@@ -21,7 +21,7 @@ namespace AddinExportCDW
 				{"17 02 03 plastic", "0,004385"},//
 				{"17 04 05 iron and steel", "0,000055"},
                 {"17 09 04 mixed", "0,000095"},
-            };
+            };//OK floors
             Dictionary<string, string> data_pilar_hormigon = new Dictionary<string, string>(){
                 {"Structural element", "Concrete column"},
                 {"Código", "05HRP80020"},
@@ -35,7 +35,7 @@ namespace AddinExportCDW
 				{"17 02 03 plastic", "0"},//
 				{"17 04 05 iron and steel", "0,000990"},
                 {"17 09 04 mixed", "0,000233"},
-            };
+            };//OK structural column
             Dictionary<string, string> data_floors_concreto = new Dictionary<string, string>(){
                 {"Structural element", "Concrete ground slab"},
                 {"Código", "03HRL80090"},//
@@ -49,7 +49,7 @@ namespace AddinExportCDW
                 {"17 02 03 plastic", "0"},
                 {"17 04 05 iron and steel", "0,000050"},//
                 {"17 09 04 mixed", "0,000221"},//
-            };
+            };//OK floors ---------------> Este no existe en el modelo!!!!!
             Dictionary<string, string> data_Cimentaciones = new Dictionary<string, string>(){
                 {"Structural element", "Foundation wall"},
                 {"Código", "03HRM80080"},//
@@ -63,9 +63,9 @@ namespace AddinExportCDW
 				{"17 02 03 plastic", "0"},
                 {"17 04 05 iron and steel", "0,000193"},//
                 {"17 09 04 mixed", "0,000262"},//
-            };
+            };//OK structuralfoundation? ---------------> Este codigo está mal escrito en el modelo!!!!!
             Dictionary<string, string> data_ConcretoDeck = new Dictionary<string, string>(){
-                {"Structural element", "Concrete deck "},//
+                {"Structural element", "Concrete deck"},//
 				{"Código", "05HRL80020"},//
                 {"07 07 01 aqueous washing liquids", "0,000049"},//
 				{"15 01 02 plastic packaging", "0"},
@@ -77,7 +77,7 @@ namespace AddinExportCDW
 				{"17 02 03 plastic", "0"},
                 {"17 04 05 iron and steel", "0,000378"},//
                 {"17 09 04 mixed", "0,000308"},//
-            };
+            };//OK floors
             Dictionary<string, string> data_Droppedbeam = new Dictionary<string, string>(){
                 {"Structural element", "Dropped beam"},//
 				{"Código", "05HRJ80110"},//
@@ -91,21 +91,7 @@ namespace AddinExportCDW
 				{"17 02 03 plastic", "0"},
                 {"17 04 05 iron and steel", "0,000078"},//
                 {"17 09 04 mixed", "0,000310"},//
-            };
-            Dictionary<string, string> data_ConcreteSlab = new Dictionary<string, string>(){
-                {"Structural element", "Concrete waffle slab"},//
-				{"Código", "05HRJ80110"},
-                {"07 07 01 aqueous washing liquids", "0,000009"},//
-				{"15 01 02 plastic packaging", "0,000609"},//
-				{"15 01 03 wooden packaging", "0,005081"},//
-				{"15 01 04 metallic packaging", "0,000515"},//
-				{"15 01 06 mixed packaging", "0,000062"},//
-				{"17 01 01 concrete", "0,004477"},//
-                {"17 02 01 wood", "0,001122"},//
-				{"17 02 03 plastic", "0,004824"},//
-				{"17 04 05 iron and steel", "0,000061"},//
-                {"17 09 04 mixed", "0,000105"},//
-            };
+            };//OK structural framing -------------------> exiten elementos sin codigo en el modelo!!!!!!!!!
             Dictionary<string, string> data_Beamembbeded = new Dictionary<string, string>(){
                 {"Structural element", "Beam embbeded floor"},//
 				{"Código", "05HRJ80020"},//
@@ -119,7 +105,7 @@ namespace AddinExportCDW
 				{"17 02 03 plastic", "0"},
                 {"17 04 05 iron and steel", "0,000078"},//
                 {"17 09 04 mixed", "0,000306"},//
-            };
+            };//OK structural framing
             Dictionary<string, string> data_ConcreteInclinedSlab = new Dictionary<string, string>(){
                 {"Structural element", "Concrete inclined slab"},//
 				{"Código", "05HRL80080"},//
@@ -133,7 +119,7 @@ namespace AddinExportCDW
 				{"17 02 03 plastic", "0"},
                 {"17 04 05 iron and steel", "0,000403"},//
                 {"17 09 04 mixed", "0,000339"},//
-            };
+            };//OK floors ---------------> Este no existe en el modelo!!!!!
             Dictionary<string, string> data_walls = new Dictionary<string, string>(){
                 {"Structural element", "Concrete wall"},//
 				{"Código", "05HRM80050"},//
@@ -147,7 +133,7 @@ namespace AddinExportCDW
                 {"17 02 03 plastic", "0"},
                 {"17 04 05 iron and steel", "0,000146"},//
                 {"17 09 04 mixed", "0,000225"},//
-            };
+            };//OK walls
             Dictionary<string, string> data_SteelColumns = new Dictionary<string, string>(){
                 {"Structural element", "Steel column"},
                 {"Código", "05ACS00000"},
@@ -161,7 +147,7 @@ namespace AddinExportCDW
                 {"17 02 03 plastic", "0"},
                 {"17 04 05 iron and steel", "0,000001"},//
                 {"17 09 04 mixed", "0,00000001"},//
-            };
+            };//OK column
             Dictionary<string, string> data_forjado35 = new Dictionary<string, string>(){
                 {"Structural element", "Concrete waffle slab (30+5) cm"},
                 {"Código", "05WCH80110"},
@@ -175,7 +161,7 @@ namespace AddinExportCDW
 				{"17 02 03 plastic", "0,004824"},//
 				{"17 04 05 iron and steel", "0,000061"},//
                 {"17 09 04 mixed", "0,000105"},//
-            };
+            };//OK floors
 
             #endregion Dictionarios
 
@@ -203,10 +189,6 @@ namespace AddinExportCDW
             if (elementName == "data_Droppedbeam")
             {
                 DictionaryOutPut = data_Droppedbeam;
-            }
-            if (elementName == "data_ConcreteSlab")
-            {
-                DictionaryOutPut = data_ConcreteSlab;
             }
             if (elementName == "data_Beamembbeded")
             {
