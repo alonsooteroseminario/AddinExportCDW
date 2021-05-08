@@ -49,7 +49,7 @@ namespace AddinExportCDW
                 {"17 02 03 plastic", "0"},
                 {"17 04 05 iron and steel", "0,000050"},//
                 {"17 09 04 mixed", "0,000221"},//
-            };//OK---------------> Este codigo en el modelo esta colocado en la familia structural foundations
+            };//OK
             Dictionary<string, string> data_Cimentaciones = new Dictionary<string, string>(){
                 {"Structural element", "Foundation wall"},
                 {"Código", "03HRM80080"},//
@@ -63,7 +63,7 @@ namespace AddinExportCDW
 				{"17 02 03 plastic", "0"},
                 {"17 04 05 iron and steel", "0,000193"},//
                 {"17 09 04 mixed", "0,000262"},//
-            };//OK structuralfoundation & walls ---------------> Se agregó doble familia!!!!!
+            };//OK
             Dictionary<string, string> data_ConcretoDeck = new Dictionary<string, string>(){
                 {"Structural element", "Concrete deck"},//
 				{"Código", "05HRL80020"},//
@@ -91,7 +91,7 @@ namespace AddinExportCDW
 				{"17 02 03 plastic", "0"},
                 {"17 04 05 iron and steel", "0,000078"},//
                 {"17 09 04 mixed", "0,000310"},//
-            };//OK-------------------> existen elementos sin codigo en el modelo!!!!!!!!!
+            };//OK
             Dictionary<string, string> data_Beamembbeded = new Dictionary<string, string>(){
                 {"Structural element", "Beam embbeded floor"},//
 				{"Código", "05HRJ80020"},//
@@ -119,7 +119,7 @@ namespace AddinExportCDW
 				{"17 02 03 plastic", "0"},
                 {"17 04 05 iron and steel", "0,000403"},//
                 {"17 09 04 mixed", "0,000339"},//
-            };//OK---------------> Este no existe en el modelo!!!!!
+            };//OK
             Dictionary<string, string> data_walls = new Dictionary<string, string>(){
                 {"Structural element", "Concrete wall"},//
 				{"Código", "05HRM80050"},//

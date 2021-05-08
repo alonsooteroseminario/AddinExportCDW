@@ -118,7 +118,7 @@ namespace AddinExportCDW
                     }
                 }
             }
-            if (floors.Count() != 0)
+            if ((floors.Count() != 0) || (strFoundation.Count() != 0))
             {
                 foreach (Element sc in floors)
                 {
@@ -144,8 +144,32 @@ namespace AddinExportCDW
                         lista11_valor.Add(CalcArea.GetByValueOfKey(data, sc, "11"));
                     }
                 }
+                foreach (Element sc in strFoundation)
+                {
+                    ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                    Parameter pamType = type.LookupParameter("Material estructural");
+                    if (pamType == null)
+                    {
+                        pamType = type.LookupParameter("Structural Material");
+                    }
+                    if ((pamType.AsValueString() == data_floors_concreto["Código"]))
+                    {
+                        Dictionary<string, string> data = data_floors_concreto;
+                        SetValueToParameter.SetArea(data, sc, doc);
+                        lista2_valor.Add(CalcArea.GetByValueOfKey(data, sc, "2"));
+                        lista3_valor.Add(CalcArea.GetByValueOfKey(data, sc, "3"));
+                        lista4_valor.Add(CalcArea.GetByValueOfKey(data, sc, "4"));
+                        lista5_valor.Add(CalcArea.GetByValueOfKey(data, sc, "5"));
+                        lista6_valor.Add(CalcArea.GetByValueOfKey(data, sc, "6"));
+                        lista7_valor.Add(CalcArea.GetByValueOfKey(data, sc, "7"));
+                        lista8_valor.Add(CalcArea.GetByValueOfKey(data, sc, "8"));
+                        lista9_valor.Add(CalcArea.GetByValueOfKey(data, sc, "9"));
+                        lista10_valor.Add(CalcArea.GetByValueOfKey(data, sc, "10"));
+                        lista11_valor.Add(CalcArea.GetByValueOfKey(data, sc, "11"));
+                    }
+                }
             }
-            if ( (strFoundation.Count() != 0) || (walls.Count() != 0) )
+            if ((strFoundation.Count() != 0) || (walls.Count() != 0))
             {
                 foreach (Element sc in strFoundation)
                 {
@@ -529,8 +553,9 @@ namespace AddinExportCDW
                     }
                 }
             }
-            if (floors.Count() != 0)
+            if ((floors.Count() != 0) || (strFoundation.Count() != 0))
             {
+                bool pasoPorAqui = false;
                 foreach (Element sc in floors)
                 {
                     ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
@@ -542,12 +567,31 @@ namespace AddinExportCDW
                     if ((pamType.AsValueString() == data_floors_concreto["Código"]))
                     {
                         lista_Dictionarios.Add(data_floors_concreto);
+                        pasoPorAqui = true;
                         break;
+                    }
+                }
+                foreach (Element sc in strFoundation)
+                {
+                    ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                    Parameter pamType = type.LookupParameter("Material estructural");
+                    if (pamType == null)
+                    {
+                        pamType = type.LookupParameter("Structural Material");
+                    }
+                    if ((pamType.AsValueString() == data_floors_concreto["Código"]))
+                    {
+                        if (!pasoPorAqui)
+                        {
+                            lista_Dictionarios.Add(data_floors_concreto);
+                            break;
+                        }
                     }
                 }
             }
             if ((strFoundation.Count() != 0) || (walls.Count() != 0))
             {
+                bool pasoPorAqui = false;
                 foreach (Element sc in strFoundation)
                 {
                     ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
@@ -559,6 +603,7 @@ namespace AddinExportCDW
                     if ((pamType.AsValueString() == data_Cimentaciones["Código"]))
                     {
                         lista_Dictionarios.Add(data_Cimentaciones);
+                        pasoPorAqui = true;
                         break;
                     }
                 }
@@ -572,8 +617,11 @@ namespace AddinExportCDW
                     }
                     if ((pamType.AsValueString() == data_Cimentaciones["Código"]))
                     {
-                        lista_Dictionarios.Add(data_Cimentaciones);
-                        break;
+                        if (!pasoPorAqui)
+                        {
+                            lista_Dictionarios.Add(data_Cimentaciones);
+                            break;
+                        }
                     }
                 }
             }
@@ -841,9 +889,24 @@ namespace AddinExportCDW
                     }
                 }
             }
-            if (floors.Count() != 0)
+            if ((floors.Count() != 0) || (strFoundation.Count() != 0))
             {
                 foreach (Element sc in floors)
+                {
+                    ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                    Parameter pamType = type.LookupParameter("Material estructural");
+                    if (pamType == null)
+                    {
+                        pamType = type.LookupParameter("Structural Material");
+                    }
+                    if ((pamType.AsValueString() == data_floors_concreto["Código"]))
+                    {
+                        Dictionary<string, string> data = data_floors_concreto;
+                        double sumaTotal_valor_porArea = CalcArea.Get(data, sc);
+                        lista_sumaTotal_valor_porArea_Concreto.Add(sumaTotal_valor_porArea);
+                    }
+                }
+                foreach (Element sc in strFoundation)
                 {
                     ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
                     Parameter pamType = type.LookupParameter("Material estructural");
@@ -862,6 +925,7 @@ namespace AddinExportCDW
                 {
                     desperdicioConcreto += lista_sumaTotal_valor_porArea_Concreto[i];
                 }
+                bool pasoPorAqui = false;
                 foreach (Element sc in floors)
                 {
                     ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
@@ -873,7 +937,25 @@ namespace AddinExportCDW
                     if ((pamType.AsValueString() == data_floors_concreto["Código"]))
                     {
                         lista_desperdicios.Add(desperdicioConcreto);
+                        pasoPorAqui = true;
                         break;
+                    }
+                }
+                foreach (Element sc in strFoundation)
+                {
+                    ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                    Parameter pamType = type.LookupParameter("Material estructural");
+                    if (pamType == null)
+                    {
+                        pamType = type.LookupParameter("Structural Material");
+                    }
+                    if ((pamType.AsValueString() == data_floors_concreto["Código"]))
+                    {
+                        if (!pasoPorAqui)
+                        {
+                            lista_desperdicios.Add(desperdicioConcreto);
+                            break;
+                        }
                     }
                 }
             }
@@ -1317,7 +1399,7 @@ namespace AddinExportCDW
                 }
                 lista_desperdicios.Add(desperdicioPilarHormigon);
             }
-            if (floors.Count() != 0)
+            if ((floors.Count() != 0) || (strFoundation.Count() != 0))
             {
                 foreach (Element sc in floors)
                 {
@@ -1334,11 +1416,24 @@ namespace AddinExportCDW
                         lista_sumaTotal_valor_porArea_Concreto.Add(sumaTotal_valor_porArea);
                     }
                 }
+                foreach (Element sc in strFoundation)
+                {
+                    ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                    Parameter pamType = type.LookupParameter("Material estructural");
+                    if (pamType == null)
+                    {
+                        pamType = type.LookupParameter("Structural Material");
+                    }
+                    if ((pamType.AsValueString() == data_floors_concreto["Código"]))
+                    {
+                        Dictionary<string, string> data = data_floors_concreto;
+                        double sumaTotal_valor_porArea = CalcArea.Get(data, sc);
+                        lista_sumaTotal_valor_porArea_Concreto.Add(sumaTotal_valor_porArea);
+                    }
+                }
                 for (int i = 0; i < lista_sumaTotal_valor_porArea_Concreto.Count(); i++)
                 {
-#pragma warning disable IDE0054 // Use compound assignment
-                    desperdicioConcreto = desperdicioConcreto + lista_sumaTotal_valor_porArea_Concreto[i];// para Concreto
-#pragma warning restore IDE0054 // Use compound assignment
+                    desperdicioConcreto += lista_sumaTotal_valor_porArea_Concreto[i];// para Concreto
                 }
                 lista_desperdicios.Add(desperdicioConcreto);
             }
@@ -1739,7 +1834,7 @@ namespace AddinExportCDW
                     }
                 }
             }
-            if (floors.Count() != 0)
+            if ((floors.Count() != 0) || (strFoundation.Count() != 0))
             {
                 #region listas de valores
 
@@ -1780,6 +1875,29 @@ namespace AddinExportCDW
                         lista11_valor.Add(CalcArea.GetByValueOfKey(data, sc, "11"));
                     }
                 }
+                foreach (Element sc in strFoundation)
+                {
+                    ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                    Parameter pamType = type.LookupParameter("Material estructural");
+                    if (pamType == null)
+                    {
+                        pamType = type.LookupParameter("Structural Material");
+                    }
+                    if ((pamType.AsValueString() == data_floors_concreto["Código"]))
+                    {
+                        Dictionary<string, string> data = data_floors_concreto;
+                        lista2_valor.Add(CalcArea.GetByValueOfKey(data, sc, "2"));
+                        lista3_valor.Add(CalcArea.GetByValueOfKey(data, sc, "3"));
+                        lista4_valor.Add(CalcArea.GetByValueOfKey(data, sc, "4"));
+                        lista5_valor.Add(CalcArea.GetByValueOfKey(data, sc, "5"));
+                        lista6_valor.Add(CalcArea.GetByValueOfKey(data, sc, "6"));
+                        lista7_valor.Add(CalcArea.GetByValueOfKey(data, sc, "7"));
+                        lista8_valor.Add(CalcArea.GetByValueOfKey(data, sc, "8"));
+                        lista9_valor.Add(CalcArea.GetByValueOfKey(data, sc, "9"));
+                        lista10_valor.Add(CalcArea.GetByValueOfKey(data, sc, "10"));
+                        lista11_valor.Add(CalcArea.GetByValueOfKey(data, sc, "11"));
+                    }
+                }
                 salida_data_floors_concreto.Add(lista2_valor);
                 salida_data_floors_concreto.Add(lista3_valor);
                 salida_data_floors_concreto.Add(lista4_valor);
@@ -1790,6 +1908,7 @@ namespace AddinExportCDW
                 salida_data_floors_concreto.Add(lista9_valor);
                 salida_data_floors_concreto.Add(lista10_valor);
                 salida_data_floors_concreto.Add(lista11_valor);
+                bool pasoPorAqui = false;
                 foreach (Element sc in floors)
                 {
                     ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
@@ -1801,7 +1920,25 @@ namespace AddinExportCDW
                     if ((pamType.AsValueString() == data_floors_concreto["Código"]))
                     {
                         salida.Add(salida_data_floors_concreto);
+                        pasoPorAqui = true;
                         break;
+                    }
+                }
+                foreach (Element sc in strFoundation)
+                {
+                    ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                    Parameter pamType = type.LookupParameter("Material estructural");
+                    if (pamType == null)
+                    {
+                        pamType = type.LookupParameter("Structural Material");
+                    }
+                    if ((pamType.AsValueString() == data_floors_concreto["Código"]))
+                    {
+                        if (!pasoPorAqui)
+                        {
+                            salida.Add(salida_data_floors_concreto);
+                            break;
+                        }
                     }
                 }
             }
