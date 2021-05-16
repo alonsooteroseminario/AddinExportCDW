@@ -118,7 +118,7 @@ namespace AddinExportCDW
                     }
                 }
             }
-            if ((floors.Count() != 0) || (strFoundation.Count() != 0))
+            if ((floors.Count() != 0) || (strFoundation.Count() != 0))//m3 volumen
             {
                 foreach (Element sc in floors)
                 {
@@ -131,17 +131,18 @@ namespace AddinExportCDW
                     if ((pamType.AsValueString() == data_floors_concreto["Código"]))
                     {
                         Dictionary<string, string> data = data_floors_concreto;
-                        SetValueToParameter.SetArea(data, sc, doc);
-                        lista2_valor.Add(CalcArea.GetByValueOfKey(data, sc, "2"));
-                        lista3_valor.Add(CalcArea.GetByValueOfKey(data, sc, "3"));
-                        lista4_valor.Add(CalcArea.GetByValueOfKey(data, sc, "4"));
-                        lista5_valor.Add(CalcArea.GetByValueOfKey(data, sc, "5"));
-                        lista6_valor.Add(CalcArea.GetByValueOfKey(data, sc, "6"));
-                        lista7_valor.Add(CalcArea.GetByValueOfKey(data, sc, "7"));
-                        lista8_valor.Add(CalcArea.GetByValueOfKey(data, sc, "8"));
-                        lista9_valor.Add(CalcArea.GetByValueOfKey(data, sc, "9"));
-                        lista10_valor.Add(CalcArea.GetByValueOfKey(data, sc, "10"));
-                        lista11_valor.Add(CalcArea.GetByValueOfKey(data, sc, "11"));
+
+                        SetValueToParameter.SetVolume(commandData, data, sc, doc);
+                        lista2_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "2"));
+                        lista3_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "3"));
+                        lista4_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "4"));
+                        lista5_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "5"));
+                        lista6_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "6"));
+                        lista7_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "7"));
+                        lista8_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "8"));
+                        lista9_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "9"));
+                        lista10_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "10"));
+                        lista11_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "11"));
                     }
                 }
                 foreach (Element sc in strFoundation)
@@ -155,17 +156,18 @@ namespace AddinExportCDW
                     if ((pamType.AsValueString() == data_floors_concreto["Código"]))
                     {
                         Dictionary<string, string> data = data_floors_concreto;
-                        SetValueToParameter.SetArea(data, sc, doc);
-                        lista2_valor.Add(CalcArea.GetByValueOfKey(data, sc, "2"));
-                        lista3_valor.Add(CalcArea.GetByValueOfKey(data, sc, "3"));
-                        lista4_valor.Add(CalcArea.GetByValueOfKey(data, sc, "4"));
-                        lista5_valor.Add(CalcArea.GetByValueOfKey(data, sc, "5"));
-                        lista6_valor.Add(CalcArea.GetByValueOfKey(data, sc, "6"));
-                        lista7_valor.Add(CalcArea.GetByValueOfKey(data, sc, "7"));
-                        lista8_valor.Add(CalcArea.GetByValueOfKey(data, sc, "8"));
-                        lista9_valor.Add(CalcArea.GetByValueOfKey(data, sc, "9"));
-                        lista10_valor.Add(CalcArea.GetByValueOfKey(data, sc, "10"));
-                        lista11_valor.Add(CalcArea.GetByValueOfKey(data, sc, "11"));
+
+                        SetValueToParameter.SetVolume(commandData, data, sc, doc);
+                        lista2_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "2"));
+                        lista3_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "3"));
+                        lista4_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "4"));
+                        lista5_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "5"));
+                        lista6_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "6"));
+                        lista7_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "7"));
+                        lista8_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "8"));
+                        lista9_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "9"));
+                        lista10_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "10"));
+                        lista11_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "11"));
                     }
                 }
             }
@@ -220,7 +222,7 @@ namespace AddinExportCDW
                     }
                 }
             }
-            if (floors.Count() != 0)
+            if (floors.Count() != 0)//m3 volumen
             {
                 foreach (Element sc in floors)
                 {
@@ -233,17 +235,18 @@ namespace AddinExportCDW
                     if ((pamType.AsValueString() == data_ConcretoDeck["Código"]))
                     {
                         Dictionary<string, string> data = data_ConcretoDeck;
-                        SetValueToParameter.SetArea(data, sc, doc);
-                        lista2_valor.Add(CalcArea.GetByValueOfKey(data, sc, "2"));
-                        lista3_valor.Add(CalcArea.GetByValueOfKey(data, sc, "3"));
-                        lista4_valor.Add(CalcArea.GetByValueOfKey(data, sc, "4"));
-                        lista5_valor.Add(CalcArea.GetByValueOfKey(data, sc, "5"));
-                        lista6_valor.Add(CalcArea.GetByValueOfKey(data, sc, "6"));
-                        lista7_valor.Add(CalcArea.GetByValueOfKey(data, sc, "7"));
-                        lista8_valor.Add(CalcArea.GetByValueOfKey(data, sc, "8"));
-                        lista9_valor.Add(CalcArea.GetByValueOfKey(data, sc, "9"));
-                        lista10_valor.Add(CalcArea.GetByValueOfKey(data, sc, "10"));
-                        lista11_valor.Add(CalcArea.GetByValueOfKey(data, sc, "11"));
+
+                        SetValueToParameter.SetVolume(commandData, data, sc, doc);
+                        lista2_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "2"));
+                        lista3_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "3"));
+                        lista4_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "4"));
+                        lista5_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "5"));
+                        lista6_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "6"));
+                        lista7_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "7"));
+                        lista8_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "8"));
+                        lista9_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "9"));
+                        lista10_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "10"));
+                        lista11_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "11"));
                     }
                 }
             }
@@ -299,7 +302,7 @@ namespace AddinExportCDW
                     }
                 }
             }
-            if (floors.Count() != 0)
+            if (floors.Count() != 0)//m3 volumen
             {
                 foreach (Element sc in floors)
                 {
@@ -312,17 +315,17 @@ namespace AddinExportCDW
                     if ((pamType.AsValueString() == data_ConcreteInclinedSlab["Código"]))
                     {
                         Dictionary<string, string> data = data_ConcreteInclinedSlab;
-                        SetValueToParameter.SetArea(data, sc, doc);
-                        lista2_valor.Add(CalcArea.GetByValueOfKey(data, sc, "2"));
-                        lista3_valor.Add(CalcArea.GetByValueOfKey(data, sc, "3"));
-                        lista4_valor.Add(CalcArea.GetByValueOfKey(data, sc, "4"));
-                        lista5_valor.Add(CalcArea.GetByValueOfKey(data, sc, "5"));
-                        lista6_valor.Add(CalcArea.GetByValueOfKey(data, sc, "6"));
-                        lista7_valor.Add(CalcArea.GetByValueOfKey(data, sc, "7"));
-                        lista8_valor.Add(CalcArea.GetByValueOfKey(data, sc, "8"));
-                        lista9_valor.Add(CalcArea.GetByValueOfKey(data, sc, "9"));
-                        lista10_valor.Add(CalcArea.GetByValueOfKey(data, sc, "10"));
-                        lista11_valor.Add(CalcArea.GetByValueOfKey(data, sc, "11"));
+                        SetValueToParameter.SetVolume(commandData, data, sc, doc);
+                        lista2_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "2"));
+                        lista3_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "3"));
+                        lista4_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "4"));
+                        lista5_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "5"));
+                        lista6_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "6"));
+                        lista7_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "7"));
+                        lista8_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "8"));
+                        lista9_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "9"));
+                        lista10_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "10"));
+                        lista11_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "11"));
                     }
                 }
             }
@@ -889,7 +892,7 @@ namespace AddinExportCDW
                     }
                 }
             }
-            if ((floors.Count() != 0) || (strFoundation.Count() != 0))
+            if ((floors.Count() != 0) || (strFoundation.Count() != 0))//m3 volumen
             {
                 foreach (Element sc in floors)
                 {
@@ -902,7 +905,7 @@ namespace AddinExportCDW
                     if ((pamType.AsValueString() == data_floors_concreto["Código"]))
                     {
                         Dictionary<string, string> data = data_floors_concreto;
-                        double sumaTotal_valor_porArea = CalcArea.Get(data, sc);
+                        double sumaTotal_valor_porArea = CalcVolume.Get(commandData, data, sc);
                         lista_sumaTotal_valor_porArea_Concreto.Add(sumaTotal_valor_porArea);
                     }
                 }
@@ -917,7 +920,7 @@ namespace AddinExportCDW
                     if ((pamType.AsValueString() == data_floors_concreto["Código"]))
                     {
                         Dictionary<string, string> data = data_floors_concreto;
-                        double sumaTotal_valor_porArea = CalcArea.Get(data, sc);
+                        double sumaTotal_valor_porArea = CalcVolume.Get(commandData, data, sc);
                         lista_sumaTotal_valor_porArea_Concreto.Add(sumaTotal_valor_porArea);
                     }
                 }
@@ -1029,7 +1032,7 @@ namespace AddinExportCDW
                     }
                 }
             }
-            if (floors.Count() != 0)
+            if (floors.Count() != 0)//m3 volumen
             {
                 foreach (Element sc in floors)
                 {
@@ -1042,7 +1045,7 @@ namespace AddinExportCDW
                     if ((pamType.AsValueString() == data_ConcretoDeck["Código"]))
                     {
                         Dictionary<string, string> data = data_ConcretoDeck;
-                        double sumaTotal_valor_porArea = CalcArea.Get(data, sc);
+                        double sumaTotal_valor_porArea = CalcVolume.Get(commandData, data, sc);
                         lista_sumaTotal_valor_porArea_ConcretoDeck.Add(sumaTotal_valor_porArea);
                     }
                 }
@@ -1133,7 +1136,7 @@ namespace AddinExportCDW
                     }
                 }
             }
-            if (floors.Count() != 0)
+            if (floors.Count() != 0)//m3 volumen
             {
                 foreach (Element sc in floors)
                 {
@@ -1146,7 +1149,7 @@ namespace AddinExportCDW
                     if ((pamType.AsValueString() == data_ConcreteInclinedSlab["Código"]))
                     {
                         Dictionary<string, string> data = data_ConcreteInclinedSlab;
-                        double sumaTotal_valor_porArea = CalcArea.Get(data, sc);
+                        double sumaTotal_valor_porArea = CalcVolume.Get(commandData, data, sc);
                         lista_sumaTotal_valor_porArea_ConcreteInclinedSlab.Add(sumaTotal_valor_porArea);
                     }
                 }
@@ -1399,7 +1402,7 @@ namespace AddinExportCDW
                 }
                 lista_desperdicios.Add(desperdicioPilarHormigon);
             }
-            if ((floors.Count() != 0) || (strFoundation.Count() != 0))
+            if ((floors.Count() != 0) || (strFoundation.Count() != 0))//m3 volumen
             {
                 foreach (Element sc in floors)
                 {
@@ -1412,7 +1415,7 @@ namespace AddinExportCDW
                     if ((pamType.AsValueString() == data_floors_concreto["Código"]))
                     {
                         Dictionary<string, string> data = data_floors_concreto;
-                        double sumaTotal_valor_porArea = CalcArea.Get(data, sc);
+                        double sumaTotal_valor_porArea = CalcVolume.Get(commandData, data, sc);
                         lista_sumaTotal_valor_porArea_Concreto.Add(sumaTotal_valor_porArea);
                     }
                 }
@@ -1427,7 +1430,7 @@ namespace AddinExportCDW
                     if ((pamType.AsValueString() == data_floors_concreto["Código"]))
                     {
                         Dictionary<string, string> data = data_floors_concreto;
-                        double sumaTotal_valor_porArea = CalcArea.Get(data, sc);
+                        double sumaTotal_valor_porArea = CalcVolume.Get(commandData, data, sc);
                         lista_sumaTotal_valor_porArea_Concreto.Add(sumaTotal_valor_porArea);
                     }
                 }
@@ -1475,7 +1478,7 @@ namespace AddinExportCDW
                 }
                 lista_desperdicios.Add(desperdicioCimentacion);
             }
-            if (floors.Count() != 0)
+            if (floors.Count() != 0)//m3 volumen
             {
                 foreach (Element sc in floors)
                 {
@@ -1488,15 +1491,13 @@ namespace AddinExportCDW
                     if ((pamType.AsValueString() == data_ConcretoDeck["Código"]))
                     {
                         Dictionary<string, string> data = data_ConcretoDeck;
-                        double sumaTotal_valor_porArea = CalcArea.Get(data, sc);
+                        double sumaTotal_valor_porArea = CalcVolume.Get(commandData, data, sc);
                         lista_sumaTotal_valor_porArea_ConcretoDeck.Add(sumaTotal_valor_porArea);
                     }
                 }
                 for (int i = 0; i < lista_sumaTotal_valor_porArea_ConcretoDeck.Count(); i++)
                 {
-#pragma warning disable IDE0054 // Use compound assignment
-                    desperdicioConcretoDeck = desperdicioConcretoDeck + lista_sumaTotal_valor_porArea_ConcretoDeck[i];// para Concreto
-#pragma warning restore IDE0054 // Use compound assignment
+                    desperdicioConcretoDeck += lista_sumaTotal_valor_porArea_ConcretoDeck[i];// para Concreto
                 }
                 lista_desperdicios.Add(desperdicioConcretoDeck);
             }
@@ -1544,7 +1545,7 @@ namespace AddinExportCDW
                 }
                 lista_desperdicios.Add(desperdicio_Beamembbededm);
             }
-            if (floors.Count() != 0)
+            if (floors.Count() != 0)//m3 volumen
             {
                 foreach (Element sc in floors)
                 {
@@ -1557,7 +1558,7 @@ namespace AddinExportCDW
                     if ((pamType.AsValueString() == data_ConcreteInclinedSlab["Código"]))
                     {
                         Dictionary<string, string> data = data_ConcreteInclinedSlab;
-                        double sumaTotal_valor_porArea = CalcArea.Get(data, sc);
+                        double sumaTotal_valor_porArea = CalcVolume.Get(commandData, data, sc);
                         lista_sumaTotal_valor_porArea_ConcreteInclinedSlab.Add(sumaTotal_valor_porArea);
                     }
                 }
@@ -1834,7 +1835,7 @@ namespace AddinExportCDW
                     }
                 }
             }
-            if ((floors.Count() != 0) || (strFoundation.Count() != 0))
+            if ((floors.Count() != 0) || (strFoundation.Count() != 0))//m3 volumen
             {
                 #region listas de valores
 
@@ -1863,16 +1864,16 @@ namespace AddinExportCDW
                     if ((pamType.AsValueString() == data_floors_concreto["Código"]))
                     {
                         Dictionary<string, string> data = data_floors_concreto;
-                        lista2_valor.Add(CalcArea.GetByValueOfKey(data, sc, "2"));
-                        lista3_valor.Add(CalcArea.GetByValueOfKey(data, sc, "3"));
-                        lista4_valor.Add(CalcArea.GetByValueOfKey(data, sc, "4"));
-                        lista5_valor.Add(CalcArea.GetByValueOfKey(data, sc, "5"));
-                        lista6_valor.Add(CalcArea.GetByValueOfKey(data, sc, "6"));
-                        lista7_valor.Add(CalcArea.GetByValueOfKey(data, sc, "7"));
-                        lista8_valor.Add(CalcArea.GetByValueOfKey(data, sc, "8"));
-                        lista9_valor.Add(CalcArea.GetByValueOfKey(data, sc, "9"));
-                        lista10_valor.Add(CalcArea.GetByValueOfKey(data, sc, "10"));
-                        lista11_valor.Add(CalcArea.GetByValueOfKey(data, sc, "11"));
+                        lista2_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "2"));
+                        lista3_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "3"));
+                        lista4_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "4"));
+                        lista5_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "5"));
+                        lista6_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "6"));
+                        lista7_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "7"));
+                        lista8_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "8"));
+                        lista9_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "9"));
+                        lista10_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "10"));
+                        lista11_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "11"));
                     }
                 }
                 foreach (Element sc in strFoundation)
@@ -1886,16 +1887,16 @@ namespace AddinExportCDW
                     if ((pamType.AsValueString() == data_floors_concreto["Código"]))
                     {
                         Dictionary<string, string> data = data_floors_concreto;
-                        lista2_valor.Add(CalcArea.GetByValueOfKey(data, sc, "2"));
-                        lista3_valor.Add(CalcArea.GetByValueOfKey(data, sc, "3"));
-                        lista4_valor.Add(CalcArea.GetByValueOfKey(data, sc, "4"));
-                        lista5_valor.Add(CalcArea.GetByValueOfKey(data, sc, "5"));
-                        lista6_valor.Add(CalcArea.GetByValueOfKey(data, sc, "6"));
-                        lista7_valor.Add(CalcArea.GetByValueOfKey(data, sc, "7"));
-                        lista8_valor.Add(CalcArea.GetByValueOfKey(data, sc, "8"));
-                        lista9_valor.Add(CalcArea.GetByValueOfKey(data, sc, "9"));
-                        lista10_valor.Add(CalcArea.GetByValueOfKey(data, sc, "10"));
-                        lista11_valor.Add(CalcArea.GetByValueOfKey(data, sc, "11"));
+                        lista2_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "2"));
+                        lista3_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "3"));
+                        lista4_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "4"));
+                        lista5_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "5"));
+                        lista6_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "6"));
+                        lista7_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "7"));
+                        lista8_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "8"));
+                        lista9_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "9"));
+                        lista10_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "10"));
+                        lista11_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "11"));
                     }
                 }
                 salida_data_floors_concreto.Add(lista2_valor);
@@ -2050,7 +2051,7 @@ namespace AddinExportCDW
                     }
                 }
             }
-            if (floors.Count() != 0)
+            if (floors.Count() != 0)//m3 volumen
             {
                 #region listas de valores
 
@@ -2079,16 +2080,16 @@ namespace AddinExportCDW
                     if ((pamType.AsValueString() == data_ConcretoDeck["Código"]))
                     {
                         Dictionary<string, string> data = data_ConcretoDeck;
-                        lista2_valor.Add(CalcArea.GetByValueOfKey(data, sc, "2"));
-                        lista3_valor.Add(CalcArea.GetByValueOfKey(data, sc, "3"));
-                        lista4_valor.Add(CalcArea.GetByValueOfKey(data, sc, "4"));
-                        lista5_valor.Add(CalcArea.GetByValueOfKey(data, sc, "5"));
-                        lista6_valor.Add(CalcArea.GetByValueOfKey(data, sc, "6"));
-                        lista7_valor.Add(CalcArea.GetByValueOfKey(data, sc, "7"));
-                        lista8_valor.Add(CalcArea.GetByValueOfKey(data, sc, "8"));
-                        lista9_valor.Add(CalcArea.GetByValueOfKey(data, sc, "9"));
-                        lista10_valor.Add(CalcArea.GetByValueOfKey(data, sc, "10"));
-                        lista11_valor.Add(CalcArea.GetByValueOfKey(data, sc, "11"));
+                        lista2_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "2"));
+                        lista3_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "3"));
+                        lista4_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "4"));
+                        lista5_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "5"));
+                        lista6_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "6"));
+                        lista7_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "7"));
+                        lista8_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "8"));
+                        lista9_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "9"));
+                        lista10_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "10"));
+                        lista11_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "11"));
                     }
                 }
                 salida_data_ConcretoDeck.Add(lista2_valor);
@@ -2244,7 +2245,7 @@ namespace AddinExportCDW
                     }
                 }
             }
-            if (floors.Count() != 0)
+            if (floors.Count() != 0)//m3 volumen
             {
                 #region listas de valores
 
@@ -2273,16 +2274,16 @@ namespace AddinExportCDW
                     if ((pamType.AsValueString() == data_ConcreteInclinedSlab["Código"]))
                     {
                         Dictionary<string, string> data = data_ConcreteInclinedSlab;
-                        lista2_valor.Add(CalcArea.GetByValueOfKey(data, sc, "2"));
-                        lista3_valor.Add(CalcArea.GetByValueOfKey(data, sc, "3"));
-                        lista4_valor.Add(CalcArea.GetByValueOfKey(data, sc, "4"));
-                        lista5_valor.Add(CalcArea.GetByValueOfKey(data, sc, "5"));
-                        lista6_valor.Add(CalcArea.GetByValueOfKey(data, sc, "6"));
-                        lista7_valor.Add(CalcArea.GetByValueOfKey(data, sc, "7"));
-                        lista8_valor.Add(CalcArea.GetByValueOfKey(data, sc, "8"));
-                        lista9_valor.Add(CalcArea.GetByValueOfKey(data, sc, "9"));
-                        lista10_valor.Add(CalcArea.GetByValueOfKey(data, sc, "10"));
-                        lista11_valor.Add(CalcArea.GetByValueOfKey(data, sc, "11"));
+                        lista2_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "2"));
+                        lista3_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "3"));
+                        lista4_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "4"));
+                        lista5_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "5"));
+                        lista6_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "6"));
+                        lista7_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "7"));
+                        lista8_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "8"));
+                        lista9_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "9"));
+                        lista10_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "10"));
+                        lista11_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "11"));
                     }
                 }
                 salida_data_ConcreteInclinedSlab.Add(lista2_valor);
