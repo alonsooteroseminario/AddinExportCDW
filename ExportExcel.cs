@@ -118,7 +118,7 @@ namespace AddinExportCDW
 
             // Establish column headings in cells A1 and B1.
             workSheet.Cells[1, "A"] = "Building element";
-            workSheet.Cells[1, "B"] = "Code";
+            workSheet.Cells[1, "B"] = "BCCA Code";
             workSheet.Cells[1, "C"] = "CDW (m3)";
 
             var row = 1;

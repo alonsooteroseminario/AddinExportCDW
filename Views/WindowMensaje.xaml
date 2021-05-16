@@ -8,7 +8,7 @@
     <Grid Margin="0,0,2,0">
         <DataGrid x:Name="ExcelDataGrid" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="400" Width="420" />
         <Button Content="PieChart" HorizontalAlignment="Left" Margin="21,427,0,0" VerticalAlignment="Top" Width="129" Height="30" Click="Button_Click" />
-        <Button Content="Exporta hacia Excel" HorizontalAlignment="Left" Margin="155,427,0,0" VerticalAlignment="Top" Width="129" Height="30" Click="Button_Click_1" />
+        <Button Content="Export to Excel" HorizontalAlignment="Left" Margin="155,427,0,0" VerticalAlignment="Top" Width="129" Height="30" Click="Button_Click_1" />
         <Button Content="Chart" HorizontalAlignment="Left" Margin="289,427,0,0" VerticalAlignment="Top" Width="129" Height="30" Click="Button_Click_2" />
     </Grid>
 </Window>

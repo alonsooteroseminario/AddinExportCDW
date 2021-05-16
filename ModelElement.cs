@@ -15,135 +15,119 @@ namespace AddinExportCDW
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
-            #region Comandos entrada
-
-            //Get application and document objects
-            UIApplication uiApp = commandData.Application;
-            UIDocument uidoc = uiApp.ActiveUIDocument;
-            Document doc = uiApp.ActiveUIDocument.Document;
-            View activeView = ComandoEntrada(uiApp, uidoc);
-
-            #endregion Comandos entrada
-
-            #region Macro Code
-
-            #region Collector de Elementos
-
-            // llamada a Class Collectora
-
-            IList<Element> floors = CollectorElement.Get(doc, activeView, "floors");
-            IList<Element> structuralColumns = CollectorElement.Get(doc, activeView, "structuralColumns");
-            IList<Element> strFoundation = CollectorElement.Get(doc, activeView, "strFoundation");
-            IList<Element> strFramming = CollectorElement.Get(doc, activeView, "strFramming");
-            IList<Element> walls = CollectorElement.Get(doc, activeView, "walls");
-            IList<Element> columns = CollectorElement.Get(doc, activeView, "columns");
-
-            #endregion Collector de Elementos
-
-            #region Crear Tablas Schedules
-
-            FilteredElementCollector collector = new FilteredElementCollector(doc);
-            IList<Element> viewSchedulesAllProject = collector.OfClass(typeof(ViewSchedule)).ToElements();
-            bool existeSchedule = true;
-            foreach (Element viewSche in viewSchedulesAllProject)// Existe?
+            try
             {
-                if (viewSche.Name.Contains(" CDW ESTIMATION SCHEDULE"))
+                #region Comandos entrada
+
+                //Get application and document objects
+                UIApplication uiApp = commandData.Application;
+                UIDocument uidoc = uiApp.ActiveUIDocument;
+                Document doc = uiApp.ActiveUIDocument.Document;
+                View activeView = ComandoEntrada(uiApp, uidoc);
+
+                #endregion Comandos entrada
+
+                #region Macro Code
+
+                #region Collector de Elementos
+
+                // llamada a Class Collectora
+
+                IList<Element> floors = CollectorElement.Get(doc, activeView, "floors");
+                IList<Element> structuralColumns = CollectorElement.Get(doc, activeView, "structuralColumns");
+                IList<Element> strFoundation = CollectorElement.Get(doc, activeView, "strFoundation");
+                IList<Element> strFramming = CollectorElement.Get(doc, activeView, "strFramming");
+                IList<Element> walls = CollectorElement.Get(doc, activeView, "walls");
+                IList<Element> columns = CollectorElement.Get(doc, activeView, "columns");
+
+                #endregion Collector de Elementos
+
+                #region Crear Tablas Schedules
+
+                List<Element> TodoslosElemetosDelModelo = new List<Element>();
+                IEnumerable<Element> elementosProyecto = CollectorElement.GetAllModelElements(doc);
+                foreach (Element elemento in elementosProyecto)
                 {
-                    existeSchedule = false;
-                    break;
+                    TodoslosElemetosDelModelo.Add(elemento);
                 }
-            }
-
-            List<Element> TodoslosElemetosDelModelo = new List<Element>();
-            IEnumerable<Element> elementosProyecto = CollectorElement.GetAllModelElements(doc);
-            foreach (Element elemento in elementosProyecto)
-            {
-                TodoslosElemetosDelModelo.Add(elemento);
-            }
-            IEnumerable<Element> familiasInstanciaProyecto = CollectorElement.GetFamilyInstanceModelElements(doc);
-            foreach (Element elemento in familiasInstanciaProyecto)
-            {
-                TodoslosElemetosDelModelo.Add(elemento);
-            }
-
-            List<Element> TodosLosElementosCDW = CollectorElement.FiltrarElementosCDW(commandData, TodoslosElemetosDelModelo);
-
-            if (CreateSchedule.ExistParameters(commandData, Dictionary.Get("data_forjado"), TodosLosElementosCDW))
-            {
-                if (existeSchedule)
+                IEnumerable<Element> familiasInstanciaProyecto = CollectorElement.GetFamilyInstanceModelElements(doc);
+                foreach (Element elemento in familiasInstanciaProyecto)
                 {
+                    TodoslosElemetosDelModelo.Add(elemento);
                 }
+
+                List<Element> TodosLosElementosCDW = CollectorElement.FiltrarElementosCDW(commandData, TodoslosElemetosDelModelo);
+
+                CreateSchedule.CreateParameters(commandData, Dictionary.Get("data_forjado"), TodosLosElementosCDW);
+                CreateSchedule.CreateSchedules(commandData, Dictionary.Get("data_forjado"));
+
+                #endregion Crear Tablas Schedules
+
+                List<double> listaN_valor = Core.GetListValores(commandData,
+                                                                    floors,
+                                                                    structuralColumns,
+                                                                    strFoundation,
+                                                                    strFramming,
+                                                                    walls,
+                                                                    columns);
+                List<Dictionary<string, string>> lista_Dictionarios = Core.GetListDictionary(commandData,
+                                                        floors,
+                                                        structuralColumns,
+                                                        strFoundation,
+                                                        strFramming,
+                                                        walls,
+                                                        columns);
+                List<double> lista_desperdicios = Core.GetListDesperdicio(commandData,
+                                                        floors,
+                                                        structuralColumns,
+                                                        strFoundation,
+                                                        strFramming,
+                                                        walls,
+                                                        columns);
+                double desperdicioTotal = Core.GetDesperdicioTotal(commandData,
+                                                        floors,
+                                                        structuralColumns,
+                                                        strFoundation,
+                                                        strFramming,
+                                                        walls,
+                                                        columns);
+                List<List<List<double>>> listaDe_listaN_valorSeparaadaPorDataElemento = Core.GetListValoresSeparaadaPorDataElemento(commandData,
+                                                        floors,
+                                                        structuralColumns,
+                                                        strFoundation,
+                                                        strFramming,
+                                                        walls,
+                                                        columns);
+
+                #region mensaje en Pantalla
+
+                double count = floors.Count()
+                            + structuralColumns.Count()
+                            + strFoundation.Count()
+                            + strFramming.Count()
+                            + walls.Count()
+                            + columns.Count();
+
+                WindowMensaje MainMensaje = new WindowMensaje(count,
+                                                              commandData,
+                                                              listaN_valor,
+                                                              lista_Dictionarios,
+                                                              lista_desperdicios,
+                                                              desperdicioTotal,
+                                                              listaDe_listaN_valorSeparaadaPorDataElemento);
+                MainMensaje.ShowDialog();
+
+                #endregion mensaje en Pantalla
+
+                #endregion Macro Code
+
+                return Result.Succeeded;
             }
-            else
+            catch (Exception e)
             {
-                CreateSchedule.CreateParameters(commandData, Dictionary.Get("data_forjado"));
-                if (existeSchedule)
-                {
-                    CreateSchedule.CreateSchedules(commandData, Dictionary.Get("data_forjado"));
-                }
+                StepLog.Write(commandData, e.Message.ToString());
+                throw;
             }
-
-            #endregion Crear Tablas Schedules
-
-            List<double> listaN_valor = Core.GetListValores(commandData,
-                                                                floors,
-                                                                structuralColumns,
-                                                                strFoundation,
-                                                                strFramming,
-                                                                walls,
-                                                                columns);
-            List<Dictionary<string, string>> lista_Dictionarios = Core.GetListDictionary(commandData,
-                                                    floors,
-                                                    structuralColumns,
-                                                    strFoundation,
-                                                    strFramming,
-                                                    walls,
-                                                    columns);
-            List<double> lista_desperdicios = Core.GetListDesperdicio(commandData,
-                                                    floors,
-                                                    structuralColumns,
-                                                    strFoundation,
-                                                    strFramming,
-                                                    walls,
-                                                    columns);
-            double desperdicioTotal = Core.GetDesperdicioTotal(commandData,
-                                                    floors,
-                                                    structuralColumns,
-                                                    strFoundation,
-                                                    strFramming,
-                                                    walls,
-                                                    columns);
-            List<List<List<double>>> listaDe_listaN_valorSeparaadaPorDataElemento = Core.GetListValoresSeparaadaPorDataElemento(commandData,
-                                                    floors,
-                                                    structuralColumns,
-                                                    strFoundation,
-                                                    strFramming,
-                                                    walls,
-                                                    columns);
-
-            #region mensaje en Pantalla
-
-            double count = floors.Count()
-                        + structuralColumns.Count()
-                        + strFoundation.Count()
-                        + strFramming.Count()
-                        + walls.Count()
-                        + columns.Count();
-
-            WindowMensaje MainMensaje = new WindowMensaje(count,
-                                                          commandData,
-                                                          listaN_valor,
-                                                          lista_Dictionarios,
-                                                          lista_desperdicios,
-                                                          desperdicioTotal,
-                                                          listaDe_listaN_valorSeparaadaPorDataElemento);
-            MainMensaje.ShowDialog();
-
-            #endregion mensaje en Pantalla
-
-            #endregion Macro Code
-
-            return Result.Succeeded;
         }
 
         private static View ComandoEntrada(UIApplication uiApp, UIDocument uidoc)

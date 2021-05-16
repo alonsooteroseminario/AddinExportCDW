@@ -1,4 +1,5 @@
 ﻿using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
 using System.Collections.Generic;
 
 namespace AddinExportCDW
@@ -26,9 +27,10 @@ namespace AddinExportCDW
             }
         }
 
-        public static void SetVolume(Dictionary<string, string> data,
-                        Element sc,
-                        Document doc)
+        public static void SetVolume(ExternalCommandData commandData,
+                                    Dictionary<string, string> data,
+                                    Element sc,
+                                    Document doc)
         {
             int i = 2;
             foreach (string key in Dictionary.DictionaryListKeys(data))
@@ -39,7 +41,7 @@ namespace AddinExportCDW
                     using (Transaction t = new Transaction(doc, "Add CDW value to each Element"))
                     {
                         t.Start();
-                        parametro.Set(CalcVolume.GetByValueOfKey(data, sc, i.ToString()).ToString());
+                        parametro.Set(CalcVolume.GetByValueOfKey(commandData, data, sc, i.ToString()).ToString());
                         t.Commit();
                     }
                 }
@@ -47,9 +49,11 @@ namespace AddinExportCDW
             }
         }
 
-        public static void SetVolume_SteelColumnSpecialCommand(Dictionary<string, string> data,
-                Element sc,
-                Document doc)
+        public static void SetVolume_SteelColumnSpecialCommand(ExternalCommandData commandData,
+                                                                Dictionary<string,
+                                                                string> data,
+                                                                Element sc,
+                                                                Document doc)
         {
             int i = 2;
             foreach (string key in Dictionary.DictionaryListKeys(data))
@@ -60,7 +64,7 @@ namespace AddinExportCDW
                     using (Transaction t = new Transaction(doc, "Add CDW value to each Element"))
                     {
                         t.Start();
-                        parametro.Set(CalcVolume.GetByValueOfKey_SteelColumnSpecialCommand(data, sc, i.ToString()).ToString());
+                        parametro.Set(CalcVolume.GetByValueOfKey_SteelColumnSpecialCommand(commandData, data, sc, i.ToString()).ToString());
                         t.Commit();
                     }
                 }

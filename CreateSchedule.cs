@@ -213,7 +213,8 @@ namespace AddinExportCDW
         }
 
         public static void CreateParameters(ExternalCommandData commandData,
-                                            Dictionary<string, string> dictionary)
+                                            Dictionary<string, string> dictionary,
+                                            IList<Element> TodosLosElementosCDW)
         {
             #region Comandos entrada
 
@@ -235,8 +236,41 @@ namespace AddinExportCDW
             fs.Close();
             // prepare shared parameter file
             commandData.Application.Application.SharedParametersFilename = paramFile;
+            DeleteParameters(commandData, dictionary, TodosLosElementosCDW);
             CreateSharedParameterFile(commandData, dictionary);
             StepLog.Write(commandData, "CreateSharedParameterFile");
+        }
+
+        public static void DeleteParameters(ExternalCommandData commandData,
+                            Dictionary<string, string> dictionary,
+                            IList<Element> TodosLosElementosCDW)
+        {
+            #region Comandos entrada
+
+            //Get application and document objects
+            UIApplication uiApp = commandData.Application;
+            UIDocument uidoc = uiApp.ActiveUIDocument;
+            Document doc = uiApp.ActiveUIDocument.Document;
+            ComandoEntrada(uiApp, uidoc);
+
+            #endregion Comandos entrada
+
+            foreach (string key in Dictionary.DictionaryListKeys(dictionary))
+            {
+                if (TodosLosElementosCDW.First().LookupParameter(key) == null)//no existe parametro
+                {
+                }
+                else
+                {
+                    using (Transaction t = new Transaction(doc, "Delete key parameter"))
+                    {
+                        t.Start();
+                        Parameter parameter = TodosLosElementosCDW.First().LookupParameter(key);
+                        doc.Delete(parameter.Id);
+                        t.Commit();
+                    }
+                }
+            }
         }
 
         public static bool ExistParameters(ExternalCommandData commandData,
@@ -302,6 +336,7 @@ namespace AddinExportCDW
                     BuiltInCategory.OST_StructuralFoundation,
                     BuiltInCategory.OST_Columns,
             };
+            DeleteSchedules(commandData);
             foreach (BuiltInCategory bic in bics)
             {
                 ViewSchedule clashSchedule = null;
@@ -439,11 +474,38 @@ namespace AddinExportCDW
                         TableData td = clashSchedule.GetTableData();
                         TableSectionData tsd = td.GetSectionData(SectionType.Header);
                         string text = tsd.GetCellText(0, 0);
-                        string nombreBorrado_OST = (bic.ToString() + " CDW ESTIMATION SCHEDULE").Remove(0, 4);
+                        string nombreBorrado_OST = (bic.ToString() + " CDW ESTIMATE SCHEDULE").Remove(0, 4);
                         tsd.SetCellText(0, 0, nombreBorrado_OST);
                         clashSchedule.Name = nombreBorrado_OST;
                         tsd.InsertColumn(0);
                         tran.Commit();
+                    }
+                }
+            }
+        }
+
+        public static void DeleteSchedules(ExternalCommandData commandData)
+        {
+            #region Comandos entrada
+
+            //Get application and document objects
+            UIApplication uiApp = commandData.Application;
+            Document doc = uiApp.ActiveUIDocument.Document;
+
+            #endregion Comandos entrada
+
+            FilteredElementCollector collector = new FilteredElementCollector(doc);
+            IList<Element> viewSchedulesAllProject = collector.OfClass(typeof(ViewSchedule)).ToElements();
+
+            foreach (Element viewSche in viewSchedulesAllProject)// Existe?
+            {
+                if (viewSche.Name.Contains("CDW ESTIMATE SCHEDULE"))
+                {
+                    using (Transaction t = new Transaction(doc, "Delete CDW ESTIMATION SCHEDULE"))
+                    {
+                        t.Start();
+                        doc.Delete(viewSche.Id);
+                        t.Commit();
                     }
                 }
             }
