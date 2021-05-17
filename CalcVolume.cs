@@ -93,7 +93,7 @@ namespace AddinExportCDW
             double sumaTotal_valor_porVolumen = 0;
             foreach (string valor in entrada)
             {
-                double valor_porVolumen = double.Parse(valor) * Math.Round((volume / 35.3147), 8);
+                double valor_porVolumen = double.Parse(valor) * Math.Round((volume / 35.3147), 8) * (7850);
                 sumaTotal_valor_porVolumen += valor_porVolumen;
                 StepLog.Write(commandData, sumaTotal_valor_porVolumen.ToString());
             }
@@ -126,7 +126,7 @@ namespace AddinExportCDW
                 if (numeroKey == lista_keys[i])
                 {
                     string valor = entrada[i];
-                    salida = double.Parse(valor) * Math.Round((volume / 35.3147), 8);
+                    salida = double.Parse(valor) * Math.Round((volume / 35.3147), 8) * (7850);
                     StepLog.Write(commandData, salida.ToString());
                 }
             }
