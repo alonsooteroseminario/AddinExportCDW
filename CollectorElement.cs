@@ -54,7 +54,7 @@ namespace AddinExportCDW
             return modelElements;
         }
 
-        public static IList<Element> Get(Document doc, View activeView, string categoryElement)
+        public static IList<Element> Get(Document doc, string categoryElement)
         {
             #region Colectores de Elementos
 
@@ -76,17 +76,17 @@ namespace AddinExportCDW
             LogicalAndFilter DUInstancesFilter_walls = new LogicalAndFilter(elemFilter_walls, Categoryfilter_walls);
             LogicalAndFilter DUInstancesFilter_Columns = new LogicalAndFilter(elemFilter_familyInstance, Categoryfilter_Columns);
 
-            FilteredElementCollector DUcoll = new FilteredElementCollector(doc, activeView.Id);
+            FilteredElementCollector DUcoll = new FilteredElementCollector(doc);
             IList<Element> floors = DUcoll.WherePasses(DUInstancesFilter_floors).ToElements();
-            FilteredElementCollector DUcoll2 = new FilteredElementCollector(doc, activeView.Id);
+            FilteredElementCollector DUcoll2 = new FilteredElementCollector(doc);
             IList<Element> structuralColumns = DUcoll2.WherePasses(DUInstancesFilter_strColumns).ToElements();
-            FilteredElementCollector DUcoll3 = new FilteredElementCollector(doc, activeView.Id);
+            FilteredElementCollector DUcoll3 = new FilteredElementCollector(doc);
             IList<Element> strFoundation = DUcoll3.WherePasses(DUInstancesFilter_strFoundation).ToElements();
-            FilteredElementCollector DUcoll4 = new FilteredElementCollector(doc, activeView.Id);
+            FilteredElementCollector DUcoll4 = new FilteredElementCollector(doc);
             IList<Element> strFramming = DUcoll4.WherePasses(DUInstancesFilter_strFramming).ToElements();
-            FilteredElementCollector DUcoll5 = new FilteredElementCollector(doc, activeView.Id);
+            FilteredElementCollector DUcoll5 = new FilteredElementCollector(doc);
             IList<Element> walls = DUcoll5.WherePasses(DUInstancesFilter_walls).ToElements();
-            FilteredElementCollector DUcoll6 = new FilteredElementCollector(doc, activeView.Id);
+            FilteredElementCollector DUcoll6 = new FilteredElementCollector(doc);
             IList<Element> columns = DUcoll6.WherePasses(DUInstancesFilter_Columns).ToElements();
 
             #endregion Colectores de Elementos
