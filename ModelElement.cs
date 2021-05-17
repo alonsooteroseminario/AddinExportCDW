@@ -23,7 +23,6 @@ namespace AddinExportCDW
                 UIApplication uiApp = commandData.Application;
                 UIDocument uidoc = uiApp.ActiveUIDocument;
                 Document doc = uiApp.ActiveUIDocument.Document;
-                View activeView = ComandoEntrada(uiApp, uidoc);
 
                 #endregion Comandos entrada
 
@@ -33,12 +32,12 @@ namespace AddinExportCDW
 
                 // llamada a Class Collectora
 
-                IList<Element> floors = CollectorElement.Get(doc, activeView, "floors");
-                IList<Element> structuralColumns = CollectorElement.Get(doc, activeView, "structuralColumns");
-                IList<Element> strFoundation = CollectorElement.Get(doc, activeView, "strFoundation");
-                IList<Element> strFramming = CollectorElement.Get(doc, activeView, "strFramming");
-                IList<Element> walls = CollectorElement.Get(doc, activeView, "walls");
-                IList<Element> columns = CollectorElement.Get(doc, activeView, "columns");
+                IList<Element> floors = CollectorElement.Get(doc, "floors");
+                IList<Element> structuralColumns = CollectorElement.Get(doc, "structuralColumns");
+                IList<Element> strFoundation = CollectorElement.Get(doc, "strFoundation");
+                IList<Element> strFramming = CollectorElement.Get(doc, "strFramming");
+                IList<Element> walls = CollectorElement.Get(doc, "walls");
+                IList<Element> columns = CollectorElement.Get(doc, "columns");
 
                 #endregion Collector de Elementos
 
@@ -126,7 +125,8 @@ namespace AddinExportCDW
             catch (Exception e)
             {
                 StepLog.Write(commandData, e.Message.ToString());
-                throw;
+                TaskDialog.Show("InformationForm", "To run this command you need to go back to a 3D Model View, it cannot be executed within the active Schedule View. ");
+                return Result.Cancelled;
             }
         }
 
