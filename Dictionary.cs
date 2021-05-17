@@ -21,7 +21,7 @@ namespace AddinExportCDW
 				{"17 02 03 plastic", "0,004385"},//
 				{"17 04 05 iron and steel", "0,000055"},
                 {"17 09 04 mixed", "0,000095"},
-            };//OK -------> m2 AREA
+            };
             Dictionary<string, string> data_pilar_hormigon = new Dictionary<string, string>(){
                 {"Structural element", "Concrete column"},
                 {"Código", "05HRP80020"},
@@ -35,7 +35,7 @@ namespace AddinExportCDW
 				{"17 02 03 plastic", "0"},//
 				{"17 04 05 iron and steel", "0,000990"},
                 {"17 09 04 mixed", "0,000233"},
-            };//OK -------> m3 VOLUMEN
+            };
             Dictionary<string, string> data_floors_concreto = new Dictionary<string, string>(){
                 {"Structural element", "Concrete ground slab"},
                 {"Código", "03HRL80090"},//
@@ -49,7 +49,7 @@ namespace AddinExportCDW
                 {"17 02 03 plastic", "0"},
                 {"17 04 05 iron and steel", "0,000050"},//
                 {"17 09 04 mixed", "0,000221"},//
-            };//OK -------> m3 VOLUMEN
+            };
             Dictionary<string, string> data_Cimentaciones = new Dictionary<string, string>(){
                 {"Structural element", "Foundation wall"},
                 {"Código", "03HRM80080"},//
@@ -63,7 +63,7 @@ namespace AddinExportCDW
 				{"17 02 03 plastic", "0"},
                 {"17 04 05 iron and steel", "0,000193"},//
                 {"17 09 04 mixed", "0,000262"},//
-            };//OK -------> m3 VOLUMEN
+            };
             Dictionary<string, string> data_ConcretoDeck = new Dictionary<string, string>(){
                 {"Structural element", "Concrete deck"},//
 				{"Código", "05HRL80020"},//
@@ -77,7 +77,7 @@ namespace AddinExportCDW
 				{"17 02 03 plastic", "0"},
                 {"17 04 05 iron and steel", "0,000378"},//
                 {"17 09 04 mixed", "0,000308"},//
-            };//OK -------> m3 VOLUMEN
+            };
             Dictionary<string, string> data_Droppedbeam = new Dictionary<string, string>(){
                 {"Structural element", "Dropped beam"},//
 				{"Código", "05HRJ80110"},//
@@ -91,7 +91,7 @@ namespace AddinExportCDW
 				{"17 02 03 plastic", "0"},
                 {"17 04 05 iron and steel", "0,000078"},//
                 {"17 09 04 mixed", "0,000310"},//
-            };//OK -------> m3 VOLUMEN
+            };
             Dictionary<string, string> data_Beamembbeded = new Dictionary<string, string>(){
                 {"Structural element", "Beam embbeded floor"},//
 				{"Código", "05HRJ80020"},//
@@ -105,7 +105,7 @@ namespace AddinExportCDW
 				{"17 02 03 plastic", "0"},
                 {"17 04 05 iron and steel", "0,000078"},//
                 {"17 09 04 mixed", "0,000306"},//
-            };//OK -------> m3 VOLUMEN
+            };
             Dictionary<string, string> data_ConcreteInclinedSlab = new Dictionary<string, string>(){
                 {"Structural element", "Concrete inclined slab"},//
 				{"Código", "05HRL80080"},//
@@ -119,7 +119,7 @@ namespace AddinExportCDW
 				{"17 02 03 plastic", "0"},
                 {"17 04 05 iron and steel", "0,000403"},//
                 {"17 09 04 mixed", "0,000339"},//
-            };//OK -------> m3 VOLUMEN
+            };
             Dictionary<string, string> data_walls = new Dictionary<string, string>(){
                 {"Structural element", "Concrete wall"},//
 				{"Código", "05HRM80050"},//
@@ -133,7 +133,7 @@ namespace AddinExportCDW
                 {"17 02 03 plastic", "0"},
                 {"17 04 05 iron and steel", "0,000146"},//
                 {"17 09 04 mixed", "0,000225"},//
-            };//OK -------> m3 VOLUMEN
+            };
             Dictionary<string, string> data_SteelColumns = new Dictionary<string, string>(){
                 {"Structural element", "Steel column"},
                 {"Código", "05ACS00000"},
@@ -147,7 +147,7 @@ namespace AddinExportCDW
                 {"17 02 03 plastic", "0"},
                 {"17 04 05 iron and steel", "0,000001"},//
                 {"17 09 04 mixed", "0,00000001"},//
-            };//OK  -------> m3 VOLUMEN
+            };
             Dictionary<string, string> data_forjado35 = new Dictionary<string, string>(){
                 {"Structural element", "Concrete waffle slab (30+5) cm"},
                 {"Código", "05WCH80110"},
@@ -161,7 +161,7 @@ namespace AddinExportCDW
 				{"17 02 03 plastic", "0,004824"},//
 				{"17 04 05 iron and steel", "0,000061"},//
                 {"17 09 04 mixed", "0,000105"},//
-            };//OK -------> m2 AREA
+            };
 
             #endregion Dictionarios
 
