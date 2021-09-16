@@ -45,6 +45,10 @@ namespace AddinExportCDW
             Dictionary<string, string> data_SteelColumns = Dictionary.Get("data_SteelColumns");
             Dictionary<string, string> data_forjado35 = Dictionary.Get("data_forjado35");
 
+            Dictionary<string, string> data_foundation = Dictionary.Get("data_foundation");
+            Dictionary<string, string> data_CollaboratingSheetMetal = Dictionary.Get("data_CollaboratingSheetMetal");
+            Dictionary<string, string> data_Steelbeam = Dictionary.Get("data_Steelbeam");
+
             #endregion Dictionarios
 
             #region listas de valores
@@ -153,6 +157,14 @@ namespace AddinExportCDW
                     {
                         pamType = type.LookupParameter("Structural Material");
                     }
+                    if (pamType == null)
+                    {
+                        pamType = sc.LookupParameter("Material estructural");
+                    }
+                    if (pamType == null)
+                    {
+                        pamType = sc.LookupParameter("Structural Material");
+                    }
                     if ((pamType.AsValueString() == data_floors_concreto["Código"]))
                     {
                         Dictionary<string, string> data = data_floors_concreto;
@@ -180,6 +192,14 @@ namespace AddinExportCDW
                     if (pamType == null)
                     {
                         pamType = type.LookupParameter("Structural Material");
+                    }
+                    if (pamType == null)
+                    {
+                        pamType = sc.LookupParameter("Material estructural");
+                    }
+                    if (pamType == null)
+                    {
+                        pamType = sc.LookupParameter("Structural Material");
                     }
                     if ((pamType.AsValueString() == data_Cimentaciones["Código"]))
                     {
@@ -259,6 +279,16 @@ namespace AddinExportCDW
                     {
                         pamType = sc.LookupParameter("Structural Material");
                     }
+                    if (pamType == null)
+                    {
+                        ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        pamType = type.LookupParameter("Material estructural");
+                    }
+                    if (pamType == null)
+                    {
+                        ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        pamType = type.LookupParameter("Structural Material");
+                    }
                     if ((pamType.AsValueString() == data_Droppedbeam["Código"]))
                     {
                         Dictionary<string, string> data = data_Droppedbeam;
@@ -284,6 +314,16 @@ namespace AddinExportCDW
                     if (pamType == null)
                     {
                         pamType = sc.LookupParameter("Structural Material");
+                    }
+                    if (pamType == null)
+                    {
+                        ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        pamType = type.LookupParameter("Material estructural");
+                    }
+                    if (pamType == null)
+                    {
+                        ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        pamType = type.LookupParameter("Structural Material");
                     }
                     if ((pamType.AsValueString() == data_Beamembbeded["Código"]))
                     {
@@ -582,6 +622,14 @@ namespace AddinExportCDW
                     {
                         pamType = type.LookupParameter("Structural Material");
                     }
+                    if (pamType == null)
+                    {
+                        pamType = sc.LookupParameter("Material estructural");
+                    }
+                    if (pamType == null)
+                    {
+                        pamType = sc.LookupParameter("Structural Material");
+                    }
                     if ((pamType.AsValueString() == data_floors_concreto["Código"]))
                     {
                         if (!pasoPorAqui)
@@ -602,6 +650,14 @@ namespace AddinExportCDW
                     if (pamType == null)
                     {
                         pamType = type.LookupParameter("Structural Material");
+                    }
+                    if (pamType == null)
+                    {
+                        pamType = sc.LookupParameter("Material estructural");
+                    }
+                    if (pamType == null)
+                    {
+                        pamType = sc.LookupParameter("Structural Material");
                     }
                     if ((pamType.AsValueString() == data_Cimentaciones["Código"]))
                     {
@@ -654,6 +710,16 @@ namespace AddinExportCDW
                     {
                         pamType = sc.LookupParameter("Structural Material");
                     }
+                    if (pamType == null)
+                    {
+                        ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        pamType = type.LookupParameter("Material estructural");
+                    }
+                    if (pamType == null)
+                    {
+                        ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        pamType = type.LookupParameter("Structural Material");
+                    }
                     if ((pamType.AsValueString() == data_Droppedbeam["Código"]))
                     {
                         lista_Dictionarios.Add(data_Droppedbeam);
@@ -669,6 +735,16 @@ namespace AddinExportCDW
                     if (pamType == null)
                     {
                         pamType = sc.LookupParameter("Structural Material");
+                    }
+                    if (pamType == null)
+                    {
+                        ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        pamType = type.LookupParameter("Material estructural");
+                    }
+                    if (pamType == null)
+                    {
+                        ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        pamType = type.LookupParameter("Structural Material");
                     }
                     if ((pamType.AsValueString() == data_Beamembbeded["Código"]))
                     {
@@ -917,6 +993,14 @@ namespace AddinExportCDW
                     {
                         pamType = type.LookupParameter("Structural Material");
                     }
+                    if (pamType == null)
+                    {
+                        pamType = sc.LookupParameter("Material estructural");
+                    }
+                    if (pamType == null)
+                    {
+                        pamType = sc.LookupParameter("Structural Material");
+                    }
                     if ((pamType.AsValueString() == data_floors_concreto["Código"]))
                     {
                         Dictionary<string, string> data = data_floors_concreto;
@@ -952,6 +1036,14 @@ namespace AddinExportCDW
                     {
                         pamType = type.LookupParameter("Structural Material");
                     }
+                    if (pamType == null)
+                    {
+                        pamType = sc.LookupParameter("Material estructural");
+                    }
+                    if (pamType == null)
+                    {
+                        pamType = sc.LookupParameter("Structural Material");
+                    }
                     if ((pamType.AsValueString() == data_floors_concreto["Código"]))
                     {
                         if (!pasoPorAqui)
@@ -971,6 +1063,14 @@ namespace AddinExportCDW
                     if (pamType == null)
                     {
                         pamType = type.LookupParameter("Structural Material");
+                    }
+                    if (pamType == null)
+                    {
+                        pamType = sc.LookupParameter("Material estructural");
+                    }
+                    if (pamType == null)
+                    {
+                        pamType = sc.LookupParameter("Structural Material");
                     }
                     if ((pamType.AsValueString() == data_Cimentaciones["Código"]))
                     {
@@ -1006,6 +1106,14 @@ namespace AddinExportCDW
                     if (pamType == null)
                     {
                         pamType = type.LookupParameter("Structural Material");
+                    }
+                    if (pamType == null)
+                    {
+                        pamType = sc.LookupParameter("Material estructural");
+                    }
+                    if (pamType == null)
+                    {
+                        pamType = sc.LookupParameter("Structural Material");
                     }
                     if ((pamType.AsValueString() == data_Cimentaciones["Código"]))
                     {
@@ -1077,6 +1185,16 @@ namespace AddinExportCDW
                     {
                         pamType = sc.LookupParameter("Structural Material");
                     }
+                    if (pamType == null)
+                    {
+                        ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        pamType = type.LookupParameter("Material estructural");
+                    }
+                    if (pamType == null)
+                    {
+                        ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        pamType = type.LookupParameter("Structural Material");
+                    }
                     if ((pamType.AsValueString() == data_Droppedbeam["Código"]))
                     {
                         Dictionary<string, string> data = data_Droppedbeam;
@@ -1095,6 +1213,16 @@ namespace AddinExportCDW
                     {
                         pamType = sc.LookupParameter("Structural Material");
                     }
+                    if (pamType == null)
+                    {
+                        ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        pamType = type.LookupParameter("Material estructural");
+                    }
+                    if (pamType == null)
+                    {
+                        ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        pamType = type.LookupParameter("Structural Material");
+                    }
                     if ((pamType.AsValueString() == data_Droppedbeam["Código"]))
                     {
                         lista_desperdicios.Add(desperdicio_Droppedbeam);
@@ -1110,6 +1238,16 @@ namespace AddinExportCDW
                     if (pamType == null)
                     {
                         pamType = sc.LookupParameter("Structural Material");
+                    }
+                    if (pamType == null)
+                    {
+                        ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        pamType = type.LookupParameter("Material estructural");
+                    }
+                    if (pamType == null)
+                    {
+                        ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        pamType = type.LookupParameter("Structural Material");
                     }
                     if ((pamType.AsValueString() == data_Beamembbeded["Código"]))
                     {
@@ -1128,6 +1266,16 @@ namespace AddinExportCDW
                     if (pamType == null)
                     {
                         pamType = sc.LookupParameter("Structural Material");
+                    }
+                    if (pamType == null)
+                    {
+                        ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        pamType = type.LookupParameter("Material estructural");
+                    }
+                    if (pamType == null)
+                    {
+                        ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        pamType = type.LookupParameter("Structural Material");
                     }
                     if ((pamType.AsValueString() == data_Beamembbeded["Código"]))
                     {
@@ -1427,6 +1575,14 @@ namespace AddinExportCDW
                     {
                         pamType = type.LookupParameter("Structural Material");
                     }
+                    if (pamType == null)
+                    {
+                        pamType = sc.LookupParameter("Material estructural");
+                    }
+                    if (pamType == null)
+                    {
+                        pamType = sc.LookupParameter("Structural Material");
+                    }
                     if ((pamType.AsValueString() == data_floors_concreto["Código"]))
                     {
                         Dictionary<string, string> data = data_floors_concreto;
@@ -1449,6 +1605,14 @@ namespace AddinExportCDW
                     if (pamType == null)
                     {
                         pamType = type.LookupParameter("Structural Material");
+                    }
+                    if (pamType == null)
+                    {
+                        pamType = sc.LookupParameter("Material estructural");
+                    }
+                    if (pamType == null)
+                    {
+                        pamType = sc.LookupParameter("Structural Material");
                     }
                     if ((pamType.AsValueString() == data_Cimentaciones["Código"]))
                     {
@@ -1510,6 +1674,16 @@ namespace AddinExportCDW
                     {
                         pamType = sc.LookupParameter("Structural Material");
                     }
+                    if (pamType == null)
+                    {
+                        ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        pamType = type.LookupParameter("Material estructural");
+                    }
+                    if (pamType == null)
+                    {
+                        ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        pamType = type.LookupParameter("Structural Material");
+                    }
                     if ((pamType.AsValueString() == data_Droppedbeam["Código"]))
                     {
                         Dictionary<string, string> data = data_Droppedbeam;
@@ -1531,6 +1705,16 @@ namespace AddinExportCDW
                     if (pamType == null)
                     {
                         pamType = sc.LookupParameter("Structural Material");
+                    }
+                    if (pamType == null)
+                    {
+                        ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        pamType = type.LookupParameter("Material estructural");
+                    }
+                    if (pamType == null)
+                    {
+                        ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        pamType = type.LookupParameter("Structural Material");
                     }
                     if ((pamType.AsValueString() == data_Beamembbeded["Código"]))
                     {
@@ -1884,6 +2068,14 @@ namespace AddinExportCDW
                     {
                         pamType = type.LookupParameter("Structural Material");
                     }
+                    if (pamType == null)
+                    {
+                        pamType = sc.LookupParameter("Material estructural");
+                    }
+                    if (pamType == null)
+                    {
+                        pamType = sc.LookupParameter("Structural Material");
+                    }
                     if ((pamType.AsValueString() == data_floors_concreto["Código"]))
                     {
                         Dictionary<string, string> data = data_floors_concreto;
@@ -1933,6 +2125,14 @@ namespace AddinExportCDW
                     {
                         pamType = type.LookupParameter("Structural Material");
                     }
+                    if (pamType == null)
+                    {
+                        pamType = sc.LookupParameter("Material estructural");
+                    }
+                    if (pamType == null)
+                    {
+                        pamType = sc.LookupParameter("Structural Material");
+                    }
                     if ((pamType.AsValueString() == data_floors_concreto["Código"]))
                     {
                         if (!pasoPorAqui)
@@ -1968,6 +2168,14 @@ namespace AddinExportCDW
                     if (pamType == null)
                     {
                         pamType = type.LookupParameter("Structural Material");
+                    }
+                    if (pamType == null)
+                    {
+                        pamType = sc.LookupParameter("Material estructural");
+                    }
+                    if (pamType == null)
+                    {
+                        pamType = sc.LookupParameter("Structural Material");
                     }
                     if ((pamType.AsValueString() == data_Cimentaciones["Código"]))
                     {
@@ -2025,6 +2233,14 @@ namespace AddinExportCDW
                     if (pamType == null)
                     {
                         pamType = type.LookupParameter("Structural Material");
+                    }
+                    if (pamType == null)
+                    {
+                        pamType = sc.LookupParameter("Material estructural");
+                    }
+                    if (pamType == null)
+                    {
+                        pamType = sc.LookupParameter("Structural Material");
                     }
                     if ((pamType.AsValueString() == data_Cimentaciones["Código"]))
                     {
@@ -2142,6 +2358,16 @@ namespace AddinExportCDW
                     {
                         pamType = sc.LookupParameter("Structural Material");
                     }
+                    if (pamType == null)
+                    {
+                        ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        pamType = type.LookupParameter("Material estructural");
+                    }
+                    if (pamType == null)
+                    {
+                        ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        pamType = type.LookupParameter("Structural Material");
+                    }
                     if ((pamType.AsValueString() == data_Droppedbeam["Código"]))
                     {
                         Dictionary<string, string> data = data_Droppedbeam;
@@ -2173,6 +2399,16 @@ namespace AddinExportCDW
                     if (pamType == null)
                     {
                         pamType = sc.LookupParameter("Structural Material");
+                    }
+                    if (pamType == null)
+                    {
+                        ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        pamType = type.LookupParameter("Material estructural");
+                    }
+                    if (pamType == null)
+                    {
+                        ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        pamType = type.LookupParameter("Structural Material");
                     }
                     if ((pamType.AsValueString() == data_Droppedbeam["Código"]))
                     {
@@ -2206,6 +2442,16 @@ namespace AddinExportCDW
                     {
                         pamType = sc.LookupParameter("Structural Material");
                     }
+                    if (pamType == null)
+                    {
+                        ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        pamType = type.LookupParameter("Material estructural");
+                    }
+                    if (pamType == null)
+                    {
+                        ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        pamType = type.LookupParameter("Structural Material");
+                    }
                     if ((pamType.AsValueString() == data_Beamembbeded["Código"]))
                     {
                         Dictionary<string, string> data = data_Beamembbeded;
@@ -2237,6 +2483,16 @@ namespace AddinExportCDW
                     if (pamType == null)
                     {
                         pamType = sc.LookupParameter("Structural Material");
+                    }
+                    if (pamType == null)
+                    {
+                        ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        pamType = type.LookupParameter("Material estructural");
+                    }
+                    if (pamType == null)
+                    {
+                        ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        pamType = type.LookupParameter("Structural Material");
                     }
                     if ((pamType.AsValueString() == data_Beamembbeded["Código"]))
                     {
