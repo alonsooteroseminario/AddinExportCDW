@@ -451,6 +451,105 @@ namespace AddinExportCDW
                 }
             }
 
+            if (strFoundation.Count() != 0)
+            {
+                foreach (Element sc in strFoundation)
+                {
+                    ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                    Parameter pamType = type.LookupParameter("Material estructural");
+                    if (pamType == null)
+                    {
+                        pamType = type.LookupParameter("Structural Material");
+                    }
+                    if (pamType == null)
+                    {
+                        pamType = sc.LookupParameter("Material estructural");
+                    }
+                    if (pamType == null)
+                    {
+                        pamType = sc.LookupParameter("Structural Material");
+                    }
+                    if ((pamType.AsValueString() == data_foundation["Código"]))
+                    {
+                        Dictionary<string, string> data = data_foundation;
+                        SetValueToParameter.SetVolume(commandData, data, sc, doc);
+                        lista2_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "2"));
+                        lista3_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "3"));
+                        lista4_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "4"));
+                        lista5_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "5"));
+                        lista6_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "6"));
+                        lista7_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "7"));
+                        lista8_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "8"));
+                        lista9_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "9"));
+                        lista10_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "10"));
+                        lista11_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "11"));
+                    }
+                }
+            }
+            if (floors.Count() != 0)
+            {
+                foreach (Element sc in floors)
+                {
+                    ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                    Parameter pamType = type.LookupParameter("Material estructural");
+                    if (pamType == null)
+                    {
+                        pamType = type.LookupParameter("Structural Material");
+                    }
+                    if ((pamType.AsValueString() == data_CollaboratingSheetMetal["Código"]))
+                    {
+                        Dictionary<string, string> data = data_CollaboratingSheetMetal;
+                        SetValueToParameter.SetVolume(commandData, data, sc, doc);
+                        lista2_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "2"));
+                        lista3_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "3"));
+                        lista4_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "4"));
+                        lista5_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "5"));
+                        lista6_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "6"));
+                        lista7_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "7"));
+                        lista8_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "8"));
+                        lista9_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "9"));
+                        lista10_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "10"));
+                        lista11_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "11"));
+                    }
+                }
+            }
+            if (strFramming.Count() != 0)
+            {
+                foreach (Element sc in strFramming)
+                {
+                    Parameter pamType = sc.LookupParameter("Material estructural");
+                    if (pamType == null)
+                    {
+                        pamType = sc.LookupParameter("Structural Material");
+                    }
+                    if (pamType == null)
+                    {
+                        ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        pamType = type.LookupParameter("Material estructural");
+                    }
+                    if (pamType == null)
+                    {
+                        ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        pamType = type.LookupParameter("Structural Material");
+                    }
+                    if ((pamType.AsValueString() == data_Steelbeam["Código"]))
+                    {
+                        Dictionary<string, string> data = data_Steelbeam;
+                        SetValueToParameter.SetVolume(commandData, data, sc, doc);
+                        lista2_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "2"));
+                        lista3_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "3"));
+                        lista4_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "4"));
+                        lista5_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "5"));
+                        lista6_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "6"));
+                        lista7_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "7"));
+                        lista8_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "8"));
+                        lista9_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "9"));
+                        lista10_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "10"));
+                        lista11_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "11"));
+                    }
+                }
+            }
+
             List<double> salida = new List<double>();
 
             #region Suma de todos los valores de las listas
@@ -557,6 +656,10 @@ namespace AddinExportCDW
             Dictionary<string, string> data_walls = Dictionary.Get("data_walls");
             Dictionary<string, string> data_SteelColumns = Dictionary.Get("data_SteelColumns");
             Dictionary<string, string> data_forjado35 = Dictionary.Get("data_forjado35");
+
+            Dictionary<string, string> data_foundation = Dictionary.Get("data_foundation");
+            Dictionary<string, string> data_CollaboratingSheetMetal = Dictionary.Get("data_CollaboratingSheetMetal");
+            Dictionary<string, string> data_Steelbeam = Dictionary.Get("data_Steelbeam");
 
             #endregion Dictionarios
 
@@ -823,6 +926,75 @@ namespace AddinExportCDW
                 }
             }
 
+            if (strFoundation.Count() != 0)
+            {
+                foreach (Element sc in strFoundation)
+                {
+                    ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                    Parameter pamType = type.LookupParameter("Material estructural");
+                    if (pamType == null)
+                    {
+                        pamType = type.LookupParameter("Structural Material");
+                    }
+                    if (pamType == null)
+                    {
+                        pamType = sc.LookupParameter("Material estructural");
+                    }
+                    if (pamType == null)
+                    {
+                        pamType = sc.LookupParameter("Structural Material");
+                    }
+                    if ((pamType.AsValueString() == data_foundation["Código"]))
+                    {
+                        lista_Dictionarios.Add(data_foundation);
+                        break;
+                    }
+                }
+            }
+            if (floors.Count() != 0)
+            {
+                foreach (Element sc in floors)
+                {
+                    ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                    Parameter pamType = type.LookupParameter("Material estructural");
+                    if (pamType == null)
+                    {
+                        pamType = type.LookupParameter("Structural Material");
+                    }
+                    if ((pamType.AsValueString() == data_CollaboratingSheetMetal["Código"]))
+                    {
+                        lista_Dictionarios.Add(data_CollaboratingSheetMetal);
+                        break;
+                    }
+                }
+            }
+            if (strFramming.Count() != 0)
+            {
+                foreach (Element sc in strFramming)
+                {
+                    Parameter pamType = sc.LookupParameter("Material estructural");
+                    if (pamType == null)
+                    {
+                        pamType = sc.LookupParameter("Structural Material");
+                    }
+                    if (pamType == null)
+                    {
+                        ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        pamType = type.LookupParameter("Material estructural");
+                    }
+                    if (pamType == null)
+                    {
+                        ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        pamType = type.LookupParameter("Structural Material");
+                    }
+                    if ((pamType.AsValueString() == data_Steelbeam["Código"]))
+                    {
+                        lista_Dictionarios.Add(data_Steelbeam);
+                        break;
+                    }
+                }
+            }
+
             StepLog.Write(commandData, "GetListDictionary Finish");
 
             return lista_Dictionarios;
@@ -860,6 +1032,10 @@ namespace AddinExportCDW
             Dictionary<string, string> data_SteelColumns = Dictionary.Get("data_SteelColumns");
             Dictionary<string, string> data_forjado35 = Dictionary.Get("data_forjado35");
 
+            Dictionary<string, string> data_foundation = Dictionary.Get("data_foundation");
+            Dictionary<string, string> data_CollaboratingSheetMetal = Dictionary.Get("data_CollaboratingSheetMetal");
+            Dictionary<string, string> data_Steelbeam = Dictionary.Get("data_Steelbeam");
+
             #endregion Dictionarios
 
             #region datos iniciales
@@ -875,6 +1051,10 @@ namespace AddinExportCDW
             List<double> lista_sumaTotal_valor_porArea_walls_Concrete = new List<double>();
             List<double> lista_sumaTotal_valor_porVolumen_data_SteelColumns = new List<double>();
             List<double> lista_sumaTotal_valor_porArea_forjado35 = new List<double>();
+
+            List<double> lista_sumaTotal_valor_porArea_foundation = new List<double>();
+            List<double> lista_sumaTotal_valor_porArea_CollaboratingSheetMetal = new List<double>();
+            List<double> lista_sumaTotal_valor_porArea_Steelbeam = new List<double>();
 
             #endregion datos iniciales
 
@@ -893,6 +1073,10 @@ namespace AddinExportCDW
             double desperdicio_walls_Concrete = 0;
             double desperdicio_SteelColumns = 0;
             double desperdicio_forjado35 = 0;
+
+            double desperdicio_foundation = 0;
+            double desperdicio_CollaboratingSheetMetal = 0;
+            double desperdicio_Steelbeam = 0;
 
             #endregion desperdicios
 
@@ -1430,6 +1614,149 @@ namespace AddinExportCDW
                 }
             }
 
+            if (strFoundation.Count() != 0)
+            {
+                foreach (Element sc in strFoundation)
+                {
+                    ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                    Parameter pamType = type.LookupParameter("Material estructural");
+                    if (pamType == null)
+                    {
+                        pamType = type.LookupParameter("Structural Material");
+                    }
+                    if (pamType == null)
+                    {
+                        pamType = sc.LookupParameter("Material estructural");
+                    }
+                    if (pamType == null)
+                    {
+                        pamType = sc.LookupParameter("Structural Material");
+                    }
+                    if ((pamType.AsValueString() == data_foundation["Código"]))
+                    {
+                        Dictionary<string, string> data = data_foundation;
+                        double sumaTotal_valor_porVolumen = CalcVolume.Get(commandData, data, sc);
+                        lista_sumaTotal_valor_porArea_foundation.Add(sumaTotal_valor_porVolumen);
+                    }
+                }
+                for (int i = 0; i < lista_sumaTotal_valor_porArea_foundation.Count(); i++)
+                {
+                    desperdicio_foundation += lista_sumaTotal_valor_porArea_foundation[i];
+                }
+                foreach (Element sc in strFoundation)
+                {
+                    ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                    Parameter pamType = type.LookupParameter("Material estructural");
+                    if (pamType == null)
+                    {
+                        pamType = type.LookupParameter("Structural Material");
+                    }
+                    if (pamType == null)
+                    {
+                        pamType = sc.LookupParameter("Material estructural");
+                    }
+                    if (pamType == null)
+                    {
+                        pamType = sc.LookupParameter("Structural Material");
+                    }
+                    if ((pamType.AsValueString() == data_foundation["Código"]))
+                    {
+                        lista_desperdicios.Add(desperdicio_foundation);
+                        break;
+                    }
+                }
+            }
+            if (floors.Count() != 0)
+            {
+                foreach (Element sc in floors)
+                {
+                    ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                    Parameter pamType = type.LookupParameter("Material estructural");
+                    if (pamType == null)
+                    {
+                        pamType = type.LookupParameter("Structural Material");
+                    }
+                    if ((pamType.AsValueString() == data_CollaboratingSheetMetal["Código"]))
+                    {
+                        Dictionary<string, string> data = data_CollaboratingSheetMetal;
+                        double sumaTotal_valor_porArea = CalcArea.Get(data, sc);
+                        lista_sumaTotal_valor_porArea_CollaboratingSheetMetal.Add(sumaTotal_valor_porArea);
+                    }
+                }
+                for (int i = 0; i < lista_sumaTotal_valor_porArea_CollaboratingSheetMetal.Count(); i++)
+                {
+                    desperdicio_CollaboratingSheetMetal += lista_sumaTotal_valor_porArea_CollaboratingSheetMetal[i];// para Forjados
+                }
+                foreach (Element sc in floors)
+                {
+                    ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                    Parameter pamType = type.LookupParameter("Material estructural");
+                    if (pamType == null)
+                    {
+                        pamType = type.LookupParameter("Structural Material");
+                    }
+                    if ((pamType.AsValueString() == data_CollaboratingSheetMetal["Código"]))
+                    {
+                        lista_desperdicios.Add(desperdicio_CollaboratingSheetMetal);
+                        break;
+                    }
+                }
+            }
+            if (strFramming.Count() != 0)
+            {
+                foreach (Element sc in strFramming)
+                {
+                    Parameter pamType = sc.LookupParameter("Material estructural");
+                    if (pamType == null)
+                    {
+                        pamType = sc.LookupParameter("Structural Material");
+                    }
+                    if (pamType == null)
+                    {
+                        ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        pamType = type.LookupParameter("Material estructural");
+                    }
+                    if (pamType == null)
+                    {
+                        ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        pamType = type.LookupParameter("Structural Material");
+                    }
+                    if ((pamType.AsValueString() == data_Steelbeam["Código"]))
+                    {
+                        Dictionary<string, string> data = data_Steelbeam;
+                        double sumaTotal_valor_porVolumen = CalcVolume.Get(commandData, data, sc);
+                        lista_sumaTotal_valor_porArea_Steelbeam.Add(sumaTotal_valor_porVolumen);
+                    }
+                }
+                for (int i = 0; i < lista_sumaTotal_valor_porArea_Steelbeam.Count(); i++)
+                {
+                    desperdicio_Steelbeam += lista_sumaTotal_valor_porArea_Steelbeam[i];
+                }
+                foreach (Element sc in strFramming)
+                {
+                    Parameter pamType = sc.LookupParameter("Material estructural");
+                    if (pamType == null)
+                    {
+                        pamType = sc.LookupParameter("Structural Material");
+                    }
+                    if (pamType == null)
+                    {
+                        ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        pamType = type.LookupParameter("Material estructural");
+                    }
+                    if (pamType == null)
+                    {
+                        ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        pamType = type.LookupParameter("Structural Material");
+                    }
+                    if ((pamType.AsValueString() == data_Steelbeam["Código"]))
+                    {
+                        lista_desperdicios.Add(desperdicio_Steelbeam);
+                        break;
+                    }
+                }
+            }
+
             StepLog.Write(commandData, "GetListDesperdicio Finish");
 
             return lista_desperdicios;
@@ -1467,6 +1794,10 @@ namespace AddinExportCDW
             Dictionary<string, string> data_SteelColumns = Dictionary.Get("data_SteelColumns");
             Dictionary<string, string> data_forjado35 = Dictionary.Get("data_forjado35");
 
+            Dictionary<string, string> data_foundation = Dictionary.Get("data_foundation");
+            Dictionary<string, string> data_CollaboratingSheetMetal = Dictionary.Get("data_CollaboratingSheetMetal");
+            Dictionary<string, string> data_Steelbeam = Dictionary.Get("data_Steelbeam");
+
             #endregion Dictionarios
 
             #region datos iniciales
@@ -1482,6 +1813,10 @@ namespace AddinExportCDW
             List<double> lista_sumaTotal_valor_porArea_walls_Concrete = new List<double>();
             List<double> lista_sumaTotal_valor_porVolumen_data_SteelColumns = new List<double>();
             List<double> lista_sumaTotal_valor_porArea_forjado35 = new List<double>();
+
+            List<double> lista_sumaTotal_valor_porArea_foundation = new List<double>();
+            List<double> lista_sumaTotal_valor_porArea_CollaboratingSheetMetal = new List<double>();
+            List<double> lista_sumaTotal_valor_porArea_Steelbeam = new List<double>();
 
             #endregion datos iniciales
 
@@ -1500,6 +1835,10 @@ namespace AddinExportCDW
             double desperdicio_walls_Concrete = 0;
             double desperdicio_SteelColumns = 0;
             double desperdicio_forjado35 = 0;
+
+            double desperdicio_foundation = 0;
+            double desperdicio_CollaboratingSheetMetal = 0;
+            double desperdicio_Steelbeam = 0;
 
             #endregion desperdicios
 
@@ -1822,6 +2161,93 @@ namespace AddinExportCDW
                 lista_desperdicios.Add(desperdicio_forjado35);
             }
 
+            if (strFoundation.Count() != 0)
+            {
+                foreach (Element sc in strFoundation)
+                {
+                    ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                    Parameter pamType = type.LookupParameter("Material estructural");
+                    if (pamType == null)
+                    {
+                        pamType = type.LookupParameter("Structural Material");
+                    }
+                    if (pamType == null)
+                    {
+                        pamType = sc.LookupParameter("Material estructural");
+                    }
+                    if (pamType == null)
+                    {
+                        pamType = sc.LookupParameter("Structural Material");
+                    }
+                    if ((pamType.AsValueString() == data_foundation["Código"]))
+                    {
+                        Dictionary<string, string> data = data_foundation;
+                        double sumaTotal_valor_porVolumen = CalcVolume.Get(commandData, data, sc);
+                        lista_sumaTotal_valor_porArea_foundation.Add(sumaTotal_valor_porVolumen);
+                    }
+                }
+                for (int i = 0; i < lista_sumaTotal_valor_porArea_foundation.Count(); i++)
+                {
+                    desperdicio_foundation += lista_sumaTotal_valor_porArea_foundation[i];
+                }
+                lista_desperdicios.Add(desperdicio_foundation);
+            }
+            if (floors.Count() != 0)
+            {
+                foreach (Element sc in floors)
+                {
+                    ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                    Parameter pamType = type.LookupParameter("Material estructural");
+                    if (pamType == null)
+                    {
+                        pamType = type.LookupParameter("Structural Material");
+                    }
+                    if ((pamType.AsValueString() == data_CollaboratingSheetMetal["Código"]))
+                    {
+                        Dictionary<string, string> data = data_CollaboratingSheetMetal;
+                        double sumaTotal_valor_porArea = CalcArea.Get(data, sc);
+                        lista_sumaTotal_valor_porArea_CollaboratingSheetMetal.Add(sumaTotal_valor_porArea);
+                    }
+                }
+                for (int i = 0; i < lista_sumaTotal_valor_porArea_CollaboratingSheetMetal.Count(); i++)
+                {
+                    desperdicio_CollaboratingSheetMetal += lista_sumaTotal_valor_porArea_CollaboratingSheetMetal[i];// para Forjados
+                }
+                lista_desperdicios.Add(desperdicio_CollaboratingSheetMetal);
+            }
+            if (strFramming.Count() != 0)
+            {
+                foreach (Element sc in strFramming)
+                {
+                    Parameter pamType = sc.LookupParameter("Material estructural");
+                    if (pamType == null)
+                    {
+                        pamType = sc.LookupParameter("Structural Material");
+                    }
+                    if (pamType == null)
+                    {
+                        ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        pamType = type.LookupParameter("Material estructural");
+                    }
+                    if (pamType == null)
+                    {
+                        ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        pamType = type.LookupParameter("Structural Material");
+                    }
+                    if ((pamType.AsValueString() == data_Steelbeam["Código"]))
+                    {
+                        Dictionary<string, string> data = data_Steelbeam;
+                        double sumaTotal_valor_porVolumen = CalcVolume.Get(commandData, data, sc);
+                        lista_sumaTotal_valor_porArea_Steelbeam.Add(sumaTotal_valor_porVolumen);
+                    }
+                }
+                for (int i = 0; i < lista_sumaTotal_valor_porArea_Steelbeam.Count(); i++)
+                {
+                    desperdicio_Steelbeam += lista_sumaTotal_valor_porArea_Steelbeam[i];// para Concreto
+                }
+                lista_desperdicios.Add(desperdicio_Steelbeam);
+            }
+
             #region Desperdicio Total
 
             // Desperdicio total
@@ -1870,6 +2296,10 @@ namespace AddinExportCDW
             Dictionary<string, string> data_SteelColumns = Dictionary.Get("data_SteelColumns");
             Dictionary<string, string> data_forjado35 = Dictionary.Get("data_forjado35");
 
+            Dictionary<string, string> data_foundation = Dictionary.Get("data_foundation");
+            Dictionary<string, string> data_CollaboratingSheetMetal = Dictionary.Get("data_CollaboratingSheetMetal");
+            Dictionary<string, string> data_Steelbeam = Dictionary.Get("data_Steelbeam");
+
             #endregion Dictionarios
 
             StepLog.Write(commandData, "GetListValoresSeparaadaPorDataElemento Start");
@@ -1887,6 +2317,10 @@ namespace AddinExportCDW
             List<List<double>> salida_data_walls = new List<List<double>>();
             List<List<double>> salida_data_SteelColumns = new List<List<double>>();
             List<List<double>> salida_data_forjado35 = new List<List<double>>();
+
+            List<List<double>> salida_data_foundation = new List<List<double>>();
+            List<List<double>> salida_data_CollaboratingSheetMetal = new List<List<double>>();
+            List<List<double>> salida_data_Steelbeam = new List<List<double>>();
 
             if (floors.Count() != 0)
             {
@@ -2762,6 +3196,241 @@ namespace AddinExportCDW
                     if ((pamType.AsValueString() == data_forjado35["Código"]))
                     {
                         salida.Add(salida_data_forjado35);
+                        break;
+                    }
+                }
+            }
+
+            if (strFoundation.Count() != 0)
+            {
+                #region listas de valores
+
+                // listas de valores
+                List<double> lista2_valor = new List<double>();
+                List<double> lista3_valor = new List<double>();
+                List<double> lista4_valor = new List<double>();
+                List<double> lista5_valor = new List<double>();
+                List<double> lista6_valor = new List<double>();
+                List<double> lista7_valor = new List<double>();
+                List<double> lista8_valor = new List<double>();
+                List<double> lista9_valor = new List<double>();
+                List<double> lista10_valor = new List<double>();
+                List<double> lista11_valor = new List<double>();
+
+                #endregion listas de valores
+
+                foreach (Element sc in strFoundation)
+                {
+                    ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                    Parameter pamType = type.LookupParameter("Material estructural");
+                    if (pamType == null)
+                    {
+                        pamType = type.LookupParameter("Structural Material");
+                    }
+                    if (pamType == null)
+                    {
+                        pamType = sc.LookupParameter("Material estructural");
+                    }
+                    if (pamType == null)
+                    {
+                        pamType = sc.LookupParameter("Structural Material");
+                    }
+                    if ((pamType.AsValueString() == data_foundation["Código"]))
+                    {
+                        Dictionary<string, string> data = data_foundation;
+                        lista2_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "2"));
+                        lista3_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "3"));
+                        lista4_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "4"));
+                        lista5_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "5"));
+                        lista6_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "6"));
+                        lista7_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "7"));
+                        lista8_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "8"));
+                        lista9_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "9"));
+                        lista10_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "10"));
+                        lista11_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "11"));
+                    }
+                }
+
+                salida_data_foundation.Add(lista2_valor);
+                salida_data_foundation.Add(lista3_valor);
+                salida_data_foundation.Add(lista4_valor);
+                salida_data_foundation.Add(lista5_valor);
+                salida_data_foundation.Add(lista6_valor);
+                salida_data_foundation.Add(lista7_valor);
+                salida_data_foundation.Add(lista8_valor);
+                salida_data_foundation.Add(lista9_valor);
+                salida_data_foundation.Add(lista10_valor);
+                salida_data_foundation.Add(lista11_valor);
+
+                foreach (Element sc in strFoundation)
+                {
+                    ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                    Parameter pamType = type.LookupParameter("Material estructural");
+                    if (pamType == null)
+                    {
+                        pamType = type.LookupParameter("Structural Material");
+                    }
+                    if (pamType == null)
+                    {
+                        pamType = sc.LookupParameter("Material estructural");
+                    }
+                    if (pamType == null)
+                    {
+                        pamType = sc.LookupParameter("Structural Material");
+                    }
+                    if ((pamType.AsValueString() == data_foundation["Código"]))
+                    {
+                        salida.Add(salida_data_foundation);
+                        break;
+                    }
+                }
+            }
+            if (floors.Count() != 0)
+            {
+                #region listas de valores
+
+                // listas de valores
+                List<double> lista2_valor = new List<double>();
+                List<double> lista3_valor = new List<double>();
+                List<double> lista4_valor = new List<double>();
+                List<double> lista5_valor = new List<double>();
+                List<double> lista6_valor = new List<double>();
+                List<double> lista7_valor = new List<double>();
+                List<double> lista8_valor = new List<double>();
+                List<double> lista9_valor = new List<double>();
+                List<double> lista10_valor = new List<double>();
+                List<double> lista11_valor = new List<double>();
+
+                #endregion listas de valores
+
+                foreach (Element sc in floors)
+                {
+                    ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                    Parameter pamType = type.LookupParameter("Material estructural");
+                    if (pamType == null)
+                    {
+                        pamType = type.LookupParameter("Structural Material");
+                    }
+                    if ((pamType.AsValueString() == data_CollaboratingSheetMetal["Código"]))
+                    {
+                        Dictionary<string, string> data = data_CollaboratingSheetMetal;
+                        lista2_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "2"));
+                        lista3_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "3"));
+                        lista4_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "4"));
+                        lista5_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "5"));
+                        lista6_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "6"));
+                        lista7_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "7"));
+                        lista8_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "8"));
+                        lista9_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "9"));
+                        lista10_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "10"));
+                        lista11_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "11"));
+                    }
+                }
+                salida_data_CollaboratingSheetMetal.Add(lista2_valor);
+                salida_data_CollaboratingSheetMetal.Add(lista3_valor);
+                salida_data_CollaboratingSheetMetal.Add(lista4_valor);
+                salida_data_CollaboratingSheetMetal.Add(lista5_valor);
+                salida_data_CollaboratingSheetMetal.Add(lista6_valor);
+                salida_data_CollaboratingSheetMetal.Add(lista7_valor);
+                salida_data_CollaboratingSheetMetal.Add(lista8_valor);
+                salida_data_CollaboratingSheetMetal.Add(lista9_valor);
+                salida_data_CollaboratingSheetMetal.Add(lista10_valor);
+                salida_data_CollaboratingSheetMetal.Add(lista11_valor);
+                foreach (Element sc in floors)
+                {
+                    ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                    Parameter pamType = type.LookupParameter("Material estructural");
+                    if (pamType == null)
+                    {
+                        pamType = type.LookupParameter("Structural Material");
+                    }
+                    if ((pamType.AsValueString() == data_CollaboratingSheetMetal["Código"]))
+                    {
+                        salida.Add(salida_data_CollaboratingSheetMetal);
+                        break;
+                    }
+                }
+            }
+            if (strFramming.Count() != 0)
+            {
+                #region listas de valores
+
+                // listas de valores
+                List<double> lista2_valor = new List<double>();
+                List<double> lista3_valor = new List<double>();
+                List<double> lista4_valor = new List<double>();
+                List<double> lista5_valor = new List<double>();
+                List<double> lista6_valor = new List<double>();
+                List<double> lista7_valor = new List<double>();
+                List<double> lista8_valor = new List<double>();
+                List<double> lista9_valor = new List<double>();
+                List<double> lista10_valor = new List<double>();
+                List<double> lista11_valor = new List<double>();
+
+                #endregion listas de valores
+
+                foreach (Element sc in strFramming)
+                {
+                    Parameter pamType = sc.LookupParameter("Material estructural");
+                    if (pamType == null)
+                    {
+                        pamType = sc.LookupParameter("Structural Material");
+                    }
+                    if (pamType == null)
+                    {
+                        ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        pamType = type.LookupParameter("Material estructural");
+                    }
+                    if (pamType == null)
+                    {
+                        ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        pamType = type.LookupParameter("Structural Material");
+                    }
+                    if ((pamType.AsValueString() == data_Steelbeam["Código"]))
+                    {
+                        Dictionary<string, string> data = data_Steelbeam;
+                        lista2_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "2"));
+                        lista3_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "3"));
+                        lista4_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "4"));
+                        lista5_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "5"));
+                        lista6_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "6"));
+                        lista7_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "7"));
+                        lista8_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "8"));
+                        lista9_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "9"));
+                        lista10_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "10"));
+                        lista11_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "11"));
+                    }
+                }
+                salida_data_Steelbeam.Add(lista2_valor);
+                salida_data_Steelbeam.Add(lista3_valor);
+                salida_data_Steelbeam.Add(lista4_valor);
+                salida_data_Steelbeam.Add(lista5_valor);
+                salida_data_Steelbeam.Add(lista6_valor);
+                salida_data_Steelbeam.Add(lista7_valor);
+                salida_data_Steelbeam.Add(lista8_valor);
+                salida_data_Steelbeam.Add(lista9_valor);
+                salida_data_Steelbeam.Add(lista10_valor);
+                salida_data_Steelbeam.Add(lista11_valor);
+                foreach (Element sc in strFramming)
+                {
+                    Parameter pamType = sc.LookupParameter("Material estructural");
+                    if (pamType == null)
+                    {
+                        pamType = sc.LookupParameter("Structural Material");
+                    }
+                    if (pamType == null)
+                    {
+                        ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        pamType = type.LookupParameter("Material estructural");
+                    }
+                    if (pamType == null)
+                    {
+                        ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        pamType = type.LookupParameter("Structural Material");
+                    }
+                    if ((pamType.AsValueString() == data_Steelbeam["Código"]))
+                    {
+                        salida.Add(salida_data_Steelbeam);
                         break;
                     }
                 }

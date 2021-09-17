@@ -5,7 +5,6 @@ using Autodesk.Revit.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Excel = Microsoft.Office.Interop.Excel;
 
 namespace AddinExportCDW
 {
