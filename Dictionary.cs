@@ -163,6 +163,65 @@ namespace AddinExportCDW
                 {"17 09 04 mixed", "0,000105"},//
             };
 
+            Dictionary<string, string> data_foundation = new Dictionary<string, string>(){
+                {"Structural element", "Foundation"},
+                {"Código", "03HRZ80010"},
+                {"07 07 01 aqueous washing liquids", "0"},
+                {"15 01 02 plastic packaging", "0"},
+                {"15 01 03 wooden packaging", "0"},
+                {"15 01 04 metallic packaging", "0"},
+                {"15 01 06 mixed packaging", "0"},
+                {"17 01 01 concrete", "0,022"},
+                {"17 02 01 wood", "0"},
+                {"17 02 03 plastic", "0"},
+                {"17 04 05 iron and steel", "0,00005"},
+                {"17 09 04 mixed", "0,000221"},
+            };
+            Dictionary<string, string> data_CollaboratingSheetMetal = new Dictionary<string, string>(){
+                {"Structural element", "Collaborating sheet metal"},
+                //{"Código", "05FWW90100"},
+                {"Código", "05FWW90003"},
+                {"07 07 01 aqueous washing liquids", "0,000049"},
+                {"15 01 02 plastic packaging", "0"},
+                {"15 01 03 wooden packaging", "0"},
+                {"15 01 04 metallic packaging", "0,002867"},
+                {"15 01 06 mixed packaging", "0,000029"},
+                {"17 01 01 concrete", "0,022000"},
+                {"17 02 01 wood", "0,008330"},
+                {"17 02 03 plastic", "0"},
+                {"17 04 05 iron and steel", "0,000378"},
+                {"17 09 04 mixed", "0,000308"},
+            };
+            Dictionary<string, string> data_Steelbeam = new Dictionary<string, string>(){
+                {"Structural element", "Steel beam"},
+                {"Código", "05ACJ00040"},
+                {"07 07 01 aqueous washing liquids", "0"},
+                {"15 01 02 plastic packaging", "0"},
+                {"15 01 03 wooden packaging", "0"},
+                {"15 01 04 metallic packaging", "0"},
+                {"15 01 06 mixed packaging", "0"},
+                {"17 01 01 concrete", "0"},
+                {"17 02 01 wood", "0"},
+                {"17 02 03 plastic", "0"},
+                {"17 04 05 iron and steel", "0,000001"},
+                {"17 09 04 mixed", "0"},
+            };
+
+            Dictionary<string, string> data_Steelbeam_2 = new Dictionary<string, string>(){
+                {"Structural element", "Steel beam"},
+                {"Código", "05ACS00000"},
+                {"07 07 01 aqueous washing liquids", "0"},
+                {"15 01 02 plastic packaging", "0"},
+                {"15 01 03 wooden packaging", "0"},
+                {"15 01 04 metallic packaging", "0"},
+                {"15 01 06 mixed packaging", "0"},
+                {"17 01 01 concrete", "0"},
+                {"17 02 01 wood", "0"},
+                {"17 02 03 plastic", "0"},
+                {"17 04 05 iron and steel", "0,000001"},
+                {"17 09 04 mixed", "0"},
+            };
+
             #endregion Dictionarios
 
             Dictionary<string, string> DictionaryOutPut = new Dictionary<string, string>();
@@ -209,6 +268,22 @@ namespace AddinExportCDW
             if (elementName == "data_forjado35")
             {
                 DictionaryOutPut = data_forjado35;
+            }
+            if (elementName == "data_foundation")
+            {
+                DictionaryOutPut = data_foundation;
+            }
+            if (elementName == "data_CollaboratingSheetMetal")
+            {
+                DictionaryOutPut = data_CollaboratingSheetMetal;
+            }
+            if (elementName == "data_Steelbeam")
+            {
+                DictionaryOutPut = data_Steelbeam;
+            }
+            if (elementName == "data_Steelbeam_2")
+            {
+                DictionaryOutPut = data_Steelbeam_2;
             }
             return DictionaryOutPut;
         }
