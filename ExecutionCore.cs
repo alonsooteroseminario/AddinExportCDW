@@ -539,17 +539,28 @@ namespace AddinExportCDW
                     if ((pamType.AsValueString() == data_CollaboratingSheetMetal["Código"]))
                     {
                         Dictionary<string, string> data = data_CollaboratingSheetMetal;
-                        SetValueToParameter.SetVolume(commandData, data, sc, doc);
-                        lista2_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "2"));
-                        lista3_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "3"));
-                        lista4_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "4"));
-                        lista5_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "5"));
-                        lista6_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "6"));
-                        lista7_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "7"));
-                        lista8_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "8"));
-                        lista9_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "9"));
-                        lista10_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "10"));
-                        lista11_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "11"));
+                        //SetValueToParameter.SetVolume(commandData, data, sc, doc);
+                        //lista2_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "2"));
+                        //lista3_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "3"));
+                        //lista4_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "4"));
+                        //lista5_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "5"));
+                        //lista6_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "6"));
+                        //lista7_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "7"));
+                        //lista8_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "8"));
+                        //lista9_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "9"));
+                        //lista10_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "10"));
+                        //lista11_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "11"));
+                        SetValueToParameter.SetArea(data, sc, doc);
+                        lista2_valor.Add(CalcArea.GetByValueOfKey(data, sc, "2"));
+                        lista3_valor.Add(CalcArea.GetByValueOfKey(data, sc, "3"));
+                        lista4_valor.Add(CalcArea.GetByValueOfKey(data, sc, "4"));
+                        lista5_valor.Add(CalcArea.GetByValueOfKey(data, sc, "5"));
+                        lista6_valor.Add(CalcArea.GetByValueOfKey(data, sc, "6"));
+                        lista7_valor.Add(CalcArea.GetByValueOfKey(data, sc, "7"));
+                        lista8_valor.Add(CalcArea.GetByValueOfKey(data, sc, "8"));
+                        lista9_valor.Add(CalcArea.GetByValueOfKey(data, sc, "9"));
+                        lista10_valor.Add(CalcArea.GetByValueOfKey(data, sc, "10"));
+                        lista11_valor.Add(CalcArea.GetByValueOfKey(data, sc, "11"));
                     }
                 }
             }
@@ -613,16 +624,16 @@ namespace AddinExportCDW
                     {
                         Dictionary<string, string> data = data_Steelbeam_2;
                         SetValueToParameter.SetVolume(commandData, data, sc, doc);
-                        lista2_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "2"));
-                        lista3_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "3"));
-                        lista4_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "4"));
-                        lista5_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "5"));
-                        lista6_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "6"));
-                        lista7_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "7"));
-                        lista8_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "8"));
-                        lista9_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "9"));
-                        lista10_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "10"));
-                        lista11_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "11"));
+                        lista2_valor.Add(CalcVolume.GetByValueOfKey_SteelBeamSpecialCommand(commandData, data, sc, "2"));
+                        lista3_valor.Add(CalcVolume.GetByValueOfKey_SteelBeamSpecialCommand(commandData, data, sc, "3"));
+                        lista4_valor.Add(CalcVolume.GetByValueOfKey_SteelBeamSpecialCommand(commandData, data, sc, "4"));
+                        lista5_valor.Add(CalcVolume.GetByValueOfKey_SteelBeamSpecialCommand(commandData, data, sc, "5"));
+                        lista6_valor.Add(CalcVolume.GetByValueOfKey_SteelBeamSpecialCommand(commandData, data, sc, "6"));
+                        lista7_valor.Add(CalcVolume.GetByValueOfKey_SteelBeamSpecialCommand(commandData, data, sc, "7"));
+                        lista8_valor.Add(CalcVolume.GetByValueOfKey_SteelBeamSpecialCommand(commandData, data, sc, "8"));
+                        lista9_valor.Add(CalcVolume.GetByValueOfKey_SteelBeamSpecialCommand(commandData, data, sc, "9"));
+                        lista10_valor.Add(CalcVolume.GetByValueOfKey_SteelBeamSpecialCommand(commandData, data, sc, "10"));
+                        lista11_valor.Add(CalcVolume.GetByValueOfKey_SteelBeamSpecialCommand(commandData, data, sc, "11"));
                     }
                 }
             }
@@ -1977,7 +1988,7 @@ namespace AddinExportCDW
                     if ((pamType.AsValueString() == data_Steelbeam_2["Código"]))
                     {
                         Dictionary<string, string> data = data_Steelbeam_2;
-                        double sumaTotal_valor_porVolumen = CalcVolume.Get(commandData, data, sc);
+                        double sumaTotal_valor_porVolumen = CalcVolume.Get_SteelBeamSpecialCommand(commandData, data, sc);
                         lista_sumaTotal_valor_porArea_Steelbeam_2.Add(sumaTotal_valor_porVolumen);
                     }
                 }
@@ -2563,7 +2574,7 @@ namespace AddinExportCDW
                     if ((pamType.AsValueString() == data_Steelbeam_2["Código"]))
                     {
                         Dictionary<string, string> data = data_Steelbeam_2;
-                        double sumaTotal_valor_porVolumen = CalcVolume.Get(commandData, data, sc);
+                        double sumaTotal_valor_porVolumen = CalcVolume.Get_SteelBeamSpecialCommand(commandData, data, sc);
                         lista_sumaTotal_valor_porArea_Steelbeam_2.Add(sumaTotal_valor_porVolumen);
                     }
                 }
@@ -3891,16 +3902,16 @@ namespace AddinExportCDW
                     if ((pamType.AsValueString() == data_Steelbeam_2["Código"]))
                     {
                         Dictionary<string, string> data = data_Steelbeam_2;
-                        lista2_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "2"));
-                        lista3_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "3"));
-                        lista4_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "4"));
-                        lista5_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "5"));
-                        lista6_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "6"));
-                        lista7_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "7"));
-                        lista8_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "8"));
-                        lista9_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "9"));
-                        lista10_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "10"));
-                        lista11_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "11"));
+                        lista2_valor.Add(CalcVolume.GetByValueOfKey_SteelBeamSpecialCommand(commandData, data, sc, "2"));
+                        lista3_valor.Add(CalcVolume.GetByValueOfKey_SteelBeamSpecialCommand(commandData, data, sc, "3"));
+                        lista4_valor.Add(CalcVolume.GetByValueOfKey_SteelBeamSpecialCommand(commandData, data, sc, "4"));
+                        lista5_valor.Add(CalcVolume.GetByValueOfKey_SteelBeamSpecialCommand(commandData, data, sc, "5"));
+                        lista6_valor.Add(CalcVolume.GetByValueOfKey_SteelBeamSpecialCommand(commandData, data, sc, "6"));
+                        lista7_valor.Add(CalcVolume.GetByValueOfKey_SteelBeamSpecialCommand(commandData, data, sc, "7"));
+                        lista8_valor.Add(CalcVolume.GetByValueOfKey_SteelBeamSpecialCommand(commandData, data, sc, "8"));
+                        lista9_valor.Add(CalcVolume.GetByValueOfKey_SteelBeamSpecialCommand(commandData, data, sc, "9"));
+                        lista10_valor.Add(CalcVolume.GetByValueOfKey_SteelBeamSpecialCommand(commandData, data, sc, "10"));
+                        lista11_valor.Add(CalcVolume.GetByValueOfKey_SteelBeamSpecialCommand(commandData, data, sc, "11"));
                     }
                 }
                 salida_data_Steelbeam_2.Add(lista2_valor);
