@@ -149,7 +149,14 @@ namespace AddinExportCDW
 
                 #region mensaje en Pantalla
 
-                double count = lista_SelectElements.Count();
+                //double count = lista_SelectElements.Count();
+
+                double count = floors.Count()
+                            + structuralColumns.Count()
+                            + strFoundation.Count()
+                            + strFramming.Count()
+                            + walls.Count()
+                            + columns.Count();
 
                 WindowMensaje MainMensaje = new WindowMensaje(count,
                                                               commandData,
