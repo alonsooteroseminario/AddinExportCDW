@@ -34,6 +34,16 @@ namespace AddinExportCDW
                 IList<Element> floors = CollectorElement.Get(doc, "floors");
                 IList<Element> structuralColumns = CollectorElement.Get(doc, "structuralColumns");
                 IList<Element> strFoundation = CollectorElement.Get(doc, "strFoundation");
+                IList<Element> strFoundation_FamilyInstance = CollectorElement.Get(doc, "strFoundation_FamilyInstance");
+                IList<Element> strFounsationJoined = new List<Element>();
+                foreach (var item in strFoundation)
+                {
+                    strFounsationJoined.Add(item);
+                }
+                foreach (var item in strFoundation_FamilyInstance)
+                {
+                    strFounsationJoined.Add(item);
+                }
                 IList<Element> strFramming = CollectorElement.Get(doc, "strFramming");
                 IList<Element> walls = CollectorElement.Get(doc, "walls");
                 IList<Element> columns = CollectorElement.Get(doc, "columns");
@@ -64,35 +74,35 @@ namespace AddinExportCDW
                 List<double> listaN_valor = Core.GetListValores(commandData,
                                                                     floors,
                                                                     structuralColumns,
-                                                                    strFoundation,
+                                                                    strFounsationJoined,
                                                                     strFramming,
                                                                     walls,
                                                                     columns);
                 List<Dictionary<string, string>> lista_Dictionarios = Core.GetListDictionary(commandData,
                                                         floors,
                                                         structuralColumns,
-                                                        strFoundation,
+                                                        strFounsationJoined,
                                                         strFramming,
                                                         walls,
                                                         columns);
                 List<double> lista_desperdicios = Core.GetListDesperdicio(commandData,
                                                         floors,
                                                         structuralColumns,
-                                                        strFoundation,
+                                                        strFounsationJoined,
                                                         strFramming,
                                                         walls,
                                                         columns);
                 double desperdicioTotal = Core.GetDesperdicioTotal(commandData,
                                                         floors,
                                                         structuralColumns,
-                                                        strFoundation,
+                                                        strFounsationJoined,
                                                         strFramming,
                                                         walls,
                                                         columns);
                 List<List<List<double>>> listaDe_listaN_valorSeparaadaPorDataElemento = Core.GetListValoresSeparaadaPorDataElemento(commandData,
                                                         floors,
                                                         structuralColumns,
-                                                        strFoundation,
+                                                        strFounsationJoined,
                                                         strFramming,
                                                         walls,
                                                         columns);
@@ -101,7 +111,7 @@ namespace AddinExportCDW
 
                 double count = floors.Count()
                             + structuralColumns.Count()
-                            + strFoundation.Count()
+                            + strFounsationJoined.Count()
                             + strFramming.Count()
                             + walls.Count()
                             + columns.Count();
