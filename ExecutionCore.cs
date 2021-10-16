@@ -425,7 +425,6 @@ namespace AddinExportCDW
                     }
                 }
             }
-
             if (structuralColumns.Count() != 0)
             {
                 foreach (Element sc in structuralColumns)
@@ -462,7 +461,6 @@ namespace AddinExportCDW
                     }
                 }
             }
-
             if (floors.Count() != 0)
             {
                 foreach (Element sc in floors)
@@ -490,7 +488,6 @@ namespace AddinExportCDW
                     }
                 }
             }
-
             if (strFoundation.Count() != 0)
             {
                 foreach (Element sc in strFoundation)
@@ -539,17 +536,6 @@ namespace AddinExportCDW
                     if ((pamType.AsValueString() == data_CollaboratingSheetMetal["Código"]))
                     {
                         Dictionary<string, string> data = data_CollaboratingSheetMetal;
-                        //SetValueToParameter.SetVolume(commandData, data, sc, doc);
-                        //lista2_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "2"));
-                        //lista3_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "3"));
-                        //lista4_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "4"));
-                        //lista5_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "5"));
-                        //lista6_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "6"));
-                        //lista7_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "7"));
-                        //lista8_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "8"));
-                        //lista9_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "9"));
-                        //lista10_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "10"));
-                        //lista11_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "11"));
                         SetValueToParameter.SetArea(data, sc, doc);
                         lista2_valor.Add(CalcArea.GetByValueOfKey(data, sc, "2"));
                         lista3_valor.Add(CalcArea.GetByValueOfKey(data, sc, "3"));
@@ -600,7 +586,6 @@ namespace AddinExportCDW
                     }
                 }
             }
-
             if (strFramming.Count() != 0)
             {
                 foreach (Element sc in strFramming)
@@ -998,7 +983,6 @@ namespace AddinExportCDW
                     }
                 }
             }
-
             if (structuralColumns.Count() != 0)
             {
                 foreach (Element sc in structuralColumns)
@@ -1026,7 +1010,6 @@ namespace AddinExportCDW
                     }
                 }
             }
-
             if (floors.Count() != 0)
             {
                 foreach (Element sc in floors)
@@ -1044,7 +1027,6 @@ namespace AddinExportCDW
                     }
                 }
             }
-
             if (strFoundation.Count() != 0)
             {
                 foreach (Element sc in strFoundation)
@@ -1113,7 +1095,6 @@ namespace AddinExportCDW
                     }
                 }
             }
-
             if (strFramming.Count() != 0)
             {
                 foreach (Element sc in strFramming)
@@ -1729,7 +1710,6 @@ namespace AddinExportCDW
                     }
                 }
             }
-
             if (structuralColumns.Count() != 0)
             {
                 foreach (Element sc in structuralColumns)
@@ -1785,7 +1765,6 @@ namespace AddinExportCDW
                     }
                 }
             }
-
             if (floors.Count() != 0)
             {
                 foreach (Element sc in floors)
@@ -1822,7 +1801,6 @@ namespace AddinExportCDW
                     }
                 }
             }
-
             if (strFoundation.Count() != 0)
             {
                 foreach (Element sc in strFoundation)
@@ -1965,7 +1943,6 @@ namespace AddinExportCDW
                     }
                 }
             }
-
             if (strFramming.Count() != 0)
             {
                 foreach (Element sc in strFramming)
@@ -2103,11 +2080,9 @@ namespace AddinExportCDW
             double desperdicio_walls_Concrete = 0;
             double desperdicio_SteelColumns = 0;
             double desperdicio_forjado35 = 0;
-
             double desperdicio_foundation = 0;
             double desperdicio_CollaboratingSheetMetal = 0;
             double desperdicio_Steelbeam = 0;
-
             double desperdicio_Steelbeam_2 = 0;
 
             #endregion desperdicios
@@ -2407,7 +2382,6 @@ namespace AddinExportCDW
                 }
                 lista_desperdicios.Add(desperdicio_SteelColumns);
             }
-
             if (structuralColumns.Count() != 0)
             {
                 foreach (Element sc in structuralColumns)
@@ -2440,7 +2414,6 @@ namespace AddinExportCDW
                 }
                 lista_desperdicios.Add(desperdicio_SteelColumns);
             }
-
             if (floors.Count() != 0)
             {
                 foreach (Element sc in floors)
@@ -2464,7 +2437,6 @@ namespace AddinExportCDW
                 }
                 lista_desperdicios.Add(desperdicio_forjado35);
             }
-
             if (strFoundation.Count() != 0)
             {
                 foreach (Element sc in strFoundation)
@@ -2551,7 +2523,6 @@ namespace AddinExportCDW
                 }
                 lista_desperdicios.Add(desperdicio_Steelbeam);
             }
-
             if (strFramming.Count() != 0)
             {
                 foreach (Element sc in strFramming)
@@ -2656,11 +2627,9 @@ namespace AddinExportCDW
             List<List<double>> salida_data_walls = new List<List<double>>();
             List<List<double>> salida_data_SteelColumns = new List<List<double>>();
             List<List<double>> salida_data_forjado35 = new List<List<double>>();
-
             List<List<double>> salida_data_foundation = new List<List<double>>();
             List<List<double>> salida_data_CollaboratingSheetMetal = new List<List<double>>();
             List<List<double>> salida_data_Steelbeam = new List<List<double>>();
-
             List<List<double>> salida_data_Steelbeam_2 = new List<List<double>>();
 
             if (floors.Count() != 0)
@@ -3475,7 +3444,6 @@ namespace AddinExportCDW
                     }
                 }
             }
-
             if (structuralColumns.Count() != 0)
             {
                 #region listas de valores
@@ -3561,7 +3529,6 @@ namespace AddinExportCDW
                     }
                 }
             }
-
             if (floors.Count() != 0)
             {
                 #region listas de valores
@@ -3628,7 +3595,6 @@ namespace AddinExportCDW
                     }
                 }
             }
-
             if (strFoundation.Count() != 0)
             {
                 #region listas de valores
@@ -3863,7 +3829,6 @@ namespace AddinExportCDW
                     }
                 }
             }
-
             if (strFramming.Count() != 0)
             {
                 #region listas de valores
