@@ -19,7 +19,8 @@ namespace AddinExportCDW
                                 IList<Element> strFoundation,
                                 IList<Element> strFramming,
                                 IList<Element> walls,
-                                IList<Element> columns)
+                                IList<Element> columns,
+                                IList<Element> stairs)
         {
             #region Comandos entrada
 
@@ -623,6 +624,44 @@ namespace AddinExportCDW
                 }
             }
 
+            if(stairs.Count() != 0)
+            {
+                foreach (Element sc in stairs)
+                {
+                    Parameter pamType = sc.LookupParameter("Material estructural");
+                    if (pamType == null)
+                    {
+                        ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        pamType = type.LookupParameter("Material estructural");
+                    }
+                    if (pamType == null)
+                    {
+                        pamType = sc.LookupParameter("Structural Material");
+                    }
+                    if (pamType == null)
+                    {
+                        ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        pamType = type.LookupParameter("Structural Material");
+                    }
+                    if ((pamType.AsValueString() == data_ConcreteInclinedSlab["Código"]))
+                    {
+                        Dictionary<string, string> data = data_ConcreteInclinedSlab;
+                        SetValueToParameter.SetVolume(commandData, data, sc, doc);
+                        lista2_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "2"));
+                        lista3_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "3"));
+                        lista4_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "4"));
+                        lista5_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "5"));
+                        lista6_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "6"));
+                        lista7_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "7"));
+                        lista8_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "8"));
+                        lista9_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "9"));
+                        lista10_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "10"));
+                        lista11_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "11"));
+                    }
+                }
+            }
+
+
             List<double> salida = new List<double>();
 
             #region Suma de todos los valores de las listas
@@ -702,7 +741,8 @@ namespace AddinExportCDW
                                 IList<Element> strFoundation,
                                 IList<Element> strFramming,
                                 IList<Element> walls,
-                                IList<Element> columns)
+                                IList<Element> columns,
+                                IList<Element> stairs)
         {
             #region Comandos entrada
 
@@ -1122,6 +1162,33 @@ namespace AddinExportCDW
                 }
             }
 
+            if (stairs.Count() != 0)
+            {
+                foreach (Element sc in stairs)
+                {
+                    Parameter pamType = sc.LookupParameter("Material estructural");
+                    if (pamType == null)
+                    {
+                        pamType = sc.LookupParameter("Structural Material");
+                    }
+                    if (pamType == null)
+                    {
+                        ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        pamType = type.LookupParameter("Material estructural");
+                    }
+                    if (pamType == null)
+                    {
+                        ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        pamType = type.LookupParameter("Structural Material");
+                    }
+                    if ((pamType.AsValueString() == data_ConcreteInclinedSlab["Código"]))
+                    {
+                        lista_Dictionarios.Add(data_ConcreteInclinedSlab);
+                        break;
+                    }
+                }
+            }
+
             StepLog.Write(commandData, "GetListDictionary Finish");
 
             return lista_Dictionarios;
@@ -1133,7 +1200,8 @@ namespace AddinExportCDW
                                 IList<Element> strFoundation,
                                 IList<Element> strFramming,
                                 IList<Element> walls,
-                                IList<Element> columns)
+                                IList<Element> columns,
+                                IList<Element> stairs)
         {
             #region Comandos entrada
 
@@ -1998,6 +2066,61 @@ namespace AddinExportCDW
                 }
             }
 
+            if (stairs.Count() != 0)
+            {
+                foreach (Element sc in stairs)
+                {
+                    Parameter pamType = sc.LookupParameter("Material estructural");
+                    if (pamType == null)
+                    {
+                        pamType = sc.LookupParameter("Structural Material");
+                    }
+                    if (pamType == null)
+                    {
+                        ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        pamType = type.LookupParameter("Material estructural");
+                    }
+                    if (pamType == null)
+                    {
+                        ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        pamType = type.LookupParameter("Structural Material");
+                    }
+                    if ((pamType.AsValueString() == data_ConcreteInclinedSlab["Código"]))
+                    {
+                        Dictionary<string, string> data = data_ConcreteInclinedSlab;
+                        double sumaTotal_valor_porVolumen = CalcVolume.Get(commandData, data, sc);
+                        lista_sumaTotal_valor_porArea_ConcreteInclinedSlab.Add(sumaTotal_valor_porVolumen);
+                    }
+                }
+                for (int i = 0; i < lista_sumaTotal_valor_porArea_ConcreteInclinedSlab.Count(); i++)
+                {
+                    desperdicio_ConcreteInclinedSlab += lista_sumaTotal_valor_porArea_ConcreteInclinedSlab[i];
+                }
+                foreach (Element sc in stairs)
+                {
+                    Parameter pamType = sc.LookupParameter("Material estructural");
+                    if (pamType == null)
+                    {
+                        pamType = sc.LookupParameter("Structural Material");
+                    }
+                    if (pamType == null)
+                    {
+                        ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        pamType = type.LookupParameter("Material estructural");
+                    }
+                    if (pamType == null)
+                    {
+                        ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        pamType = type.LookupParameter("Structural Material");
+                    }
+                    if ((pamType.AsValueString() == data_ConcreteInclinedSlab["Código"]))
+                    {
+                        lista_desperdicios.Add(desperdicio_ConcreteInclinedSlab);
+                        break;
+                    }
+                }
+            }
+
             StepLog.Write(commandData, "GetListDesperdicio Finish");
 
             return lista_desperdicios;
@@ -2009,7 +2132,8 @@ namespace AddinExportCDW
                         IList<Element> strFoundation,
                         IList<Element> strFramming,
                         IList<Element> walls,
-                        IList<Element> columns)
+                        IList<Element> columns,
+                        IList<Element> stairs)
         {
             #region Comandos entrada
 
@@ -2556,6 +2680,39 @@ namespace AddinExportCDW
                 lista_desperdicios.Add(desperdicio_Steelbeam_2);
             }
 
+            if (stairs.Count() != 0)
+            {
+                foreach (Element sc in stairs)
+                {
+                    Parameter pamType = sc.LookupParameter("Material estructural");
+                    if (pamType == null)
+                    {
+                        pamType = sc.LookupParameter("Structural Material");
+                    }
+                    if (pamType == null)
+                    {
+                        ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        pamType = type.LookupParameter("Material estructural");
+                    }
+                    if (pamType == null)
+                    {
+                        ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        pamType = type.LookupParameter("Structural Material");
+                    }
+                    if ((pamType.AsValueString() == data_ConcreteInclinedSlab["Código"]))
+                    {
+                        Dictionary<string, string> data = data_ConcreteInclinedSlab;
+                        double sumaTotal_valor_porVolumen = CalcVolume.Get(commandData, data, sc);
+                        lista_sumaTotal_valor_porArea_ConcreteInclinedSlab.Add(sumaTotal_valor_porVolumen);
+                    }
+                }
+                for (int i = 0; i < lista_sumaTotal_valor_porArea_ConcreteInclinedSlab.Count(); i++)
+                {
+                    desperdicio_ConcreteInclinedSlab += lista_sumaTotal_valor_porArea_ConcreteInclinedSlab[i];// para Concreto
+                }
+                lista_desperdicios.Add(desperdicio_ConcreteInclinedSlab);
+            }
+
             #region Desperdicio Total
 
             // Desperdicio total
@@ -2578,7 +2735,8 @@ namespace AddinExportCDW
                         IList<Element> strFoundation,
                         IList<Element> strFramming,
                         IList<Element> walls,
-                        IList<Element> columns)
+                        IList<Element> columns,
+                        IList<Element> stairs)
         {
             #region Comandos entrada
 
@@ -3909,6 +4067,91 @@ namespace AddinExportCDW
                     if ((pamType.AsValueString() == data_Steelbeam_2["Código"]))
                     {
                         salida.Add(salida_data_Steelbeam_2);
+                        break;
+                    }
+                }
+            }
+
+            if (stairs.Count() != 0)
+            {
+                #region listas de valores
+
+                // listas de valores
+                List<double> lista2_valor = new List<double>();
+                List<double> lista3_valor = new List<double>();
+                List<double> lista4_valor = new List<double>();
+                List<double> lista5_valor = new List<double>();
+                List<double> lista6_valor = new List<double>();
+                List<double> lista7_valor = new List<double>();
+                List<double> lista8_valor = new List<double>();
+                List<double> lista9_valor = new List<double>();
+                List<double> lista10_valor = new List<double>();
+                List<double> lista11_valor = new List<double>();
+
+                #endregion listas de valores
+
+                foreach (Element sc in stairs)
+                {
+                    Parameter pamType = sc.LookupParameter("Material estructural");
+                    if (pamType == null)
+                    {
+                        pamType = sc.LookupParameter("Structural Material");
+                    }
+                    if (pamType == null)
+                    {
+                        ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        pamType = type.LookupParameter("Material estructural");
+                    }
+                    if (pamType == null)
+                    {
+                        ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        pamType = type.LookupParameter("Structural Material");
+                    }
+                    if ((pamType.AsValueString() == data_ConcreteInclinedSlab["Código"]))
+                    {
+                        Dictionary<string, string> data = data_ConcreteInclinedSlab;
+                        lista2_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "2"));
+                        lista3_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "3"));
+                        lista4_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "4"));
+                        lista5_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "5"));
+                        lista6_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "6"));
+                        lista7_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "7"));
+                        lista8_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "8"));
+                        lista9_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "9"));
+                        lista10_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "10"));
+                        lista11_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "11"));
+                    }
+                }
+                salida_data_ConcreteInclinedSlab.Add(lista2_valor);
+                salida_data_ConcreteInclinedSlab.Add(lista3_valor);
+                salida_data_ConcreteInclinedSlab.Add(lista4_valor);
+                salida_data_ConcreteInclinedSlab.Add(lista5_valor);
+                salida_data_ConcreteInclinedSlab.Add(lista6_valor);
+                salida_data_ConcreteInclinedSlab.Add(lista7_valor);
+                salida_data_ConcreteInclinedSlab.Add(lista8_valor);
+                salida_data_ConcreteInclinedSlab.Add(lista9_valor);
+                salida_data_ConcreteInclinedSlab.Add(lista10_valor);
+                salida_data_ConcreteInclinedSlab.Add(lista11_valor);
+                foreach (Element sc in stairs)
+                {
+                    Parameter pamType = sc.LookupParameter("Material estructural");
+                    if (pamType == null)
+                    {
+                        pamType = sc.LookupParameter("Structural Material");
+                    }
+                    if (pamType == null)
+                    {
+                        ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        pamType = type.LookupParameter("Material estructural");
+                    }
+                    if (pamType == null)
+                    {
+                        ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        pamType = type.LookupParameter("Structural Material");
+                    }
+                    if ((pamType.AsValueString() == data_ConcreteInclinedSlab["Código"]))
+                    {
+                        salida.Add(salida_data_ConcreteInclinedSlab);
                         break;
                     }
                 }
