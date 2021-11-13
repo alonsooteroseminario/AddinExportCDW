@@ -643,7 +643,16 @@ namespace AddinExportCDW
                         ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
                         pamType = type.LookupParameter("Structural Material");
                     }
-                    if ((pamType.AsValueString() == data_ConcreteInclinedSlab["Código"]))
+                    if (pamType == null)
+                    {
+                        //ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        //Parameter runType = type.LookupParameter("Run Type");
+
+                        pamType = sc.LookupParameter("Comments");
+
+                    }
+
+                    if ((pamType.AsString() == data_ConcreteInclinedSlab["Código"]))
                     {
                         Dictionary<string, string> data = data_ConcreteInclinedSlab;
                         SetValueToParameter.SetVolume(commandData, data, sc, doc);
@@ -1181,7 +1190,16 @@ namespace AddinExportCDW
                         ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
                         pamType = type.LookupParameter("Structural Material");
                     }
-                    if ((pamType.AsValueString() == data_ConcreteInclinedSlab["Código"]))
+                    if (pamType == null)
+                    {
+                        //ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        //Parameter runType = type.LookupParameter("Run Type");
+
+                        pamType = sc.LookupParameter("Comments");
+
+                    }
+
+                    if ((pamType.AsString() == data_ConcreteInclinedSlab["Código"]))
                     {
                         lista_Dictionarios.Add(data_ConcreteInclinedSlab);
                         break;
@@ -2085,7 +2103,15 @@ namespace AddinExportCDW
                         ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
                         pamType = type.LookupParameter("Structural Material");
                     }
-                    if ((pamType.AsValueString() == data_ConcreteInclinedSlab["Código"]))
+                    if (pamType == null)
+                    {
+                        //ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        //Parameter runType = type.LookupParameter("Run Type");
+
+                        pamType = sc.LookupParameter("Comments");
+
+                    }
+                    if ((pamType.AsString() == data_ConcreteInclinedSlab["Código"]))
                     {
                         Dictionary<string, string> data = data_ConcreteInclinedSlab;
                         double sumaTotal_valor_porVolumen = CalcVolume.Get(commandData, data, sc);
@@ -2113,7 +2139,15 @@ namespace AddinExportCDW
                         ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
                         pamType = type.LookupParameter("Structural Material");
                     }
-                    if ((pamType.AsValueString() == data_ConcreteInclinedSlab["Código"]))
+                    if (pamType == null)
+                    {
+                        //ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        //Parameter runType = type.LookupParameter("Run Type");
+
+                        pamType = sc.LookupParameter("Comments");
+
+                    }
+                    if ((pamType.AsString() == data_ConcreteInclinedSlab["Código"]))
                     {
                         lista_desperdicios.Add(desperdicio_ConcreteInclinedSlab);
                         break;
@@ -2699,7 +2733,15 @@ namespace AddinExportCDW
                         ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
                         pamType = type.LookupParameter("Structural Material");
                     }
-                    if ((pamType.AsValueString() == data_ConcreteInclinedSlab["Código"]))
+                    if (pamType == null)
+                    {
+                        //ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        //Parameter runType = type.LookupParameter("Run Type");
+
+                        pamType = sc.LookupParameter("Comments");
+
+                    }
+                    if ((pamType.AsString() == data_ConcreteInclinedSlab["Código"]))
                     {
                         Dictionary<string, string> data = data_ConcreteInclinedSlab;
                         double sumaTotal_valor_porVolumen = CalcVolume.Get(commandData, data, sc);
@@ -4107,7 +4149,15 @@ namespace AddinExportCDW
                         ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
                         pamType = type.LookupParameter("Structural Material");
                     }
-                    if ((pamType.AsValueString() == data_ConcreteInclinedSlab["Código"]))
+                    if (pamType == null)
+                    {
+                        //ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        //Parameter runType = type.LookupParameter("Run Type");
+
+                        pamType = sc.LookupParameter("Comments");
+
+                    }
+                    if ((pamType.AsString() == data_ConcreteInclinedSlab["Código"]))
                     {
                         Dictionary<string, string> data = data_ConcreteInclinedSlab;
                         lista2_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "2"));
@@ -4149,7 +4199,15 @@ namespace AddinExportCDW
                         ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
                         pamType = type.LookupParameter("Structural Material");
                     }
-                    if ((pamType.AsValueString() == data_ConcreteInclinedSlab["Código"]))
+                    if (pamType == null)
+                    {
+                        //ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        //Parameter runType = type.LookupParameter("Run Type");
+
+                        pamType = sc.LookupParameter("Comments");
+
+                    }
+                    if ((pamType.AsString() == data_ConcreteInclinedSlab["Código"]))
                     {
                         salida.Add(salida_data_ConcreteInclinedSlab);
                         break;
