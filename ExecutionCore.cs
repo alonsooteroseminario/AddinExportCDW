@@ -51,6 +51,7 @@ namespace AddinExportCDW
             Dictionary<string, string> data_Steelbeam = Dictionary.Get("data_Steelbeam");
 
             Dictionary<string, string> data_Steelbeam_2 = Dictionary.Get("data_Steelbeam_2");
+            Dictionary<string, string> data_SteelStairs = Dictionary.Get("data_SteelStairs");
 
             #endregion Dictionarios
 
@@ -643,16 +644,20 @@ namespace AddinExportCDW
                         ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
                         pamType = type.LookupParameter("Structural Material");
                     }
+                    string nombre = "";
                     if (pamType == null)
                     {
-                        //ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
-                        //Parameter runType = type.LookupParameter("Run Type");
-
+                        foreach (ElementId id in sc.GetMaterialIds(false))
+                        {
+                            Material material = doc.GetElement(id) as Material;
+                            if(material.Name == data_ConcreteInclinedSlab["Código"])
+                            {
+                                nombre = material.Name;
+                            }
+                        }
                         pamType = sc.LookupParameter("Comments");
-
                     }
-
-                    if ((pamType.AsString() == data_ConcreteInclinedSlab["Código"]))
+                    if ((nombre == data_ConcreteInclinedSlab["Código"]) || (pamType.AsString() == data_ConcreteInclinedSlab["Código"]))
                     {
                         Dictionary<string, string> data = data_ConcreteInclinedSlab;
                         SetValueToParameter.SetVolume(commandData, data, sc, doc);
@@ -666,6 +671,56 @@ namespace AddinExportCDW
                         lista9_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "9"));
                         lista10_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "10"));
                         lista11_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "11"));
+                    }
+                }
+            }
+            if (stairs.Count() != 0)
+            {
+                foreach (Element sc in stairs)
+                {
+                    Parameter pamType = sc.LookupParameter("Material estructural");
+                    if (pamType == null)
+                    {
+                        ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        pamType = type.LookupParameter("Material estructural");
+                    }
+                    if (pamType == null)
+                    {
+                        pamType = sc.LookupParameter("Structural Material");
+                    }
+                    if (pamType == null)
+                    {
+                        ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        pamType = type.LookupParameter("Structural Material");
+                    }
+                    string nombre = "";
+                    if (pamType == null)
+                    {
+                        foreach (ElementId id in sc.GetMaterialIds(false))
+                        {
+                            Material material = doc.GetElement(id) as Material;
+                            if (material.Name == data_SteelStairs["Código"])
+                            {
+                                nombre = material.Name;
+                            }
+                        }
+                        pamType = sc.LookupParameter("Comments");
+                    }
+
+                    if ((nombre == data_SteelStairs["Código"]) || (pamType.AsString() == data_SteelStairs["Código"]))
+                    {
+                        Dictionary<string, string> data = data_SteelStairs;
+                        SetValueToParameter.SetVolume(commandData, data, sc, doc);
+                        lista2_valor.Add(CalcVolume.GetByValueOfKey_StairsSpecialCommand(commandData, data, sc, "2"));
+                        lista3_valor.Add(CalcVolume.GetByValueOfKey_StairsSpecialCommand(commandData, data, sc, "3"));
+                        lista4_valor.Add(CalcVolume.GetByValueOfKey_StairsSpecialCommand(commandData, data, sc, "4"));
+                        lista5_valor.Add(CalcVolume.GetByValueOfKey_StairsSpecialCommand(commandData, data, sc, "5"));
+                        lista6_valor.Add(CalcVolume.GetByValueOfKey_StairsSpecialCommand(commandData, data, sc, "6"));
+                        lista7_valor.Add(CalcVolume.GetByValueOfKey_StairsSpecialCommand(commandData, data, sc, "7"));
+                        lista8_valor.Add(CalcVolume.GetByValueOfKey_StairsSpecialCommand(commandData, data, sc, "8"));
+                        lista9_valor.Add(CalcVolume.GetByValueOfKey_StairsSpecialCommand(commandData, data, sc, "9"));
+                        lista10_valor.Add(CalcVolume.GetByValueOfKey_StairsSpecialCommand(commandData, data, sc, "10"));
+                        lista11_valor.Add(CalcVolume.GetByValueOfKey_StairsSpecialCommand(commandData, data, sc, "11"));
                     }
                 }
             }
@@ -784,6 +839,7 @@ namespace AddinExportCDW
             Dictionary<string, string> data_Steelbeam = Dictionary.Get("data_Steelbeam");
 
             Dictionary<string, string> data_Steelbeam_2 = Dictionary.Get("data_Steelbeam_2");
+            Dictionary<string, string> data_SteelStairs = Dictionary.Get("data_SteelStairs");
 
             #endregion Dictionarios
 
@@ -1190,18 +1246,61 @@ namespace AddinExportCDW
                         ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
                         pamType = type.LookupParameter("Structural Material");
                     }
+                    string nombre = "";
                     if (pamType == null)
                     {
-                        //ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
-                        //Parameter runType = type.LookupParameter("Run Type");
-
+                        foreach (ElementId id in sc.GetMaterialIds(false))
+                        {
+                            Material material = doc.GetElement(id) as Material;
+                            if (material.Name == data_ConcreteInclinedSlab["Código"])
+                            {
+                                nombre = material.Name;
+                            }
+                        }
                         pamType = sc.LookupParameter("Comments");
-
                     }
-
-                    if ((pamType.AsString() == data_ConcreteInclinedSlab["Código"]))
+                    if ((nombre == data_ConcreteInclinedSlab["Código"]) || (pamType.AsString() == data_ConcreteInclinedSlab["Código"]))
                     {
                         lista_Dictionarios.Add(data_ConcreteInclinedSlab);
+                        break;
+                    }
+                }
+            }
+            if (stairs.Count() != 0)
+            {
+                foreach (Element sc in stairs)
+                {
+                    Parameter pamType = sc.LookupParameter("Material estructural");
+                    if (pamType == null)
+                    {
+                        pamType = sc.LookupParameter("Structural Material");
+                    }
+                    if (pamType == null)
+                    {
+                        ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        pamType = type.LookupParameter("Material estructural");
+                    }
+                    if (pamType == null)
+                    {
+                        ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        pamType = type.LookupParameter("Structural Material");
+                    }
+                    string nombre = "";
+                    if (pamType == null)
+                    {
+                        foreach (ElementId id in sc.GetMaterialIds(false))
+                        {
+                            Material material = doc.GetElement(id) as Material;
+                            if (material.Name == data_SteelStairs["Código"])
+                            {
+                                nombre = material.Name;
+                            }
+                        }
+                        pamType = sc.LookupParameter("Comments");
+                    }
+                    if ((nombre == data_SteelStairs["Código"]) || (pamType.AsString() == data_SteelStairs["Código"]))
+                    {
+                        lista_Dictionarios.Add(data_SteelStairs);
                         break;
                     }
                 }
@@ -1250,6 +1349,7 @@ namespace AddinExportCDW
             Dictionary<string, string> data_Steelbeam = Dictionary.Get("data_Steelbeam");
 
             Dictionary<string, string> data_Steelbeam_2 = Dictionary.Get("data_Steelbeam_2");
+            Dictionary<string, string> data_SteelStairs = Dictionary.Get("data_SteelStairs");
 
             #endregion Dictionarios
 
@@ -1272,6 +1372,7 @@ namespace AddinExportCDW
             List<double> lista_sumaTotal_valor_porArea_Steelbeam = new List<double>();
 
             List<double> lista_sumaTotal_valor_porArea_Steelbeam_2 = new List<double>();
+            List<double> lista_sumaTotal_valor_porArea_SteelStairs = new List<double>(); 
 
             #endregion datos iniciales
 
@@ -1296,6 +1397,7 @@ namespace AddinExportCDW
             double desperdicio_Steelbeam = 0;
 
             double desperdicio_Steelbeam_2 = 0;
+            double desperdicio_SteelStairs = 0;
 
             #endregion desperdicios
 
@@ -2103,15 +2205,20 @@ namespace AddinExportCDW
                         ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
                         pamType = type.LookupParameter("Structural Material");
                     }
+                    string nombre = "";
                     if (pamType == null)
                     {
-                        //ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
-                        //Parameter runType = type.LookupParameter("Run Type");
-
+                        foreach (ElementId id in sc.GetMaterialIds(false))
+                        {
+                            Material material = doc.GetElement(id) as Material;
+                            if (material.Name == data_ConcreteInclinedSlab["Código"])
+                            {
+                                nombre = material.Name;
+                            }
+                        }
                         pamType = sc.LookupParameter("Comments");
-
                     }
-                    if ((pamType.AsString() == data_ConcreteInclinedSlab["Código"]))
+                    if ((nombre == data_ConcreteInclinedSlab["Código"]) || (pamType.AsString() == data_ConcreteInclinedSlab["Código"]))
                     {
                         Dictionary<string, string> data = data_ConcreteInclinedSlab;
                         double sumaTotal_valor_porVolumen = CalcVolume.Get(commandData, data, sc);
@@ -2139,17 +2246,102 @@ namespace AddinExportCDW
                         ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
                         pamType = type.LookupParameter("Structural Material");
                     }
+                    string nombre = "";
                     if (pamType == null)
                     {
-                        //ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
-                        //Parameter runType = type.LookupParameter("Run Type");
-
+                        foreach (ElementId id in sc.GetMaterialIds(false))
+                        {
+                            Material material = doc.GetElement(id) as Material;
+                            if (material.Name == data_ConcreteInclinedSlab["Código"])
+                            {
+                                nombre = material.Name;
+                            }
+                        }
                         pamType = sc.LookupParameter("Comments");
-
                     }
-                    if ((pamType.AsString() == data_ConcreteInclinedSlab["Código"]))
+                    if ((nombre == data_ConcreteInclinedSlab["Código"]) || (pamType.AsString() == data_ConcreteInclinedSlab["Código"]))
                     {
                         lista_desperdicios.Add(desperdicio_ConcreteInclinedSlab);
+                        break;
+                    }
+                }
+            }
+            if (stairs.Count() != 0)
+            {
+                foreach (Element sc in stairs)
+                {
+                    Parameter pamType = sc.LookupParameter("Material estructural");
+                    if (pamType == null)
+                    {
+                        pamType = sc.LookupParameter("Structural Material");
+                    }
+                    if (pamType == null)
+                    {
+                        ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        pamType = type.LookupParameter("Material estructural");
+                    }
+                    if (pamType == null)
+                    {
+                        ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        pamType = type.LookupParameter("Structural Material");
+                    }
+                    string nombre = "";
+                    if (pamType == null)
+                    {
+                        foreach (ElementId id in sc.GetMaterialIds(false))
+                        {
+                            Material material = doc.GetElement(id) as Material;
+                            if (material.Name == data_SteelStairs["Código"])
+                            {
+                                nombre = material.Name;
+                            }
+                        }
+                        pamType = sc.LookupParameter("Comments");
+                    }
+                    if ((nombre == data_SteelStairs["Código"]) || (pamType.AsString() == data_SteelStairs["Código"]))
+                    {
+                        Dictionary<string, string> data = data_SteelStairs;
+                        double sumaTotal_valor_porVolumen = CalcVolume.Get_StairsSpecialCommand(commandData, data, sc);
+                        lista_sumaTotal_valor_porArea_SteelStairs.Add(sumaTotal_valor_porVolumen);
+                    }
+                }
+                for (int i = 0; i < lista_sumaTotal_valor_porArea_SteelStairs.Count(); i++)
+                {
+                    desperdicio_SteelStairs += lista_sumaTotal_valor_porArea_SteelStairs[i];
+                }
+                foreach (Element sc in stairs)
+                {
+                    Parameter pamType = sc.LookupParameter("Material estructural");
+                    if (pamType == null)
+                    {
+                        pamType = sc.LookupParameter("Structural Material");
+                    }
+                    if (pamType == null)
+                    {
+                        ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        pamType = type.LookupParameter("Material estructural");
+                    }
+                    if (pamType == null)
+                    {
+                        ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        pamType = type.LookupParameter("Structural Material");
+                    }
+                    string nombre = "";
+                    if (pamType == null)
+                    {
+                        foreach (ElementId id in sc.GetMaterialIds(false))
+                        {
+                            Material material = doc.GetElement(id) as Material;
+                            if (material.Name == data_SteelStairs["Código"])
+                            {
+                                nombre = material.Name;
+                            }
+                        }
+                        pamType = sc.LookupParameter("Comments");
+                    }
+                    if ((nombre == data_SteelStairs["Código"]) || (pamType.AsString() == data_SteelStairs["Código"]))
+                    {
+                        lista_desperdicios.Add(desperdicio_SteelStairs);
                         break;
                     }
                 }
@@ -2198,6 +2390,7 @@ namespace AddinExportCDW
             Dictionary<string, string> data_Steelbeam = Dictionary.Get("data_Steelbeam");
 
             Dictionary<string, string> data_Steelbeam_2 = Dictionary.Get("data_Steelbeam_2");
+            Dictionary<string, string> data_SteelStairs = Dictionary.Get("data_SteelStairs");
 
             #endregion Dictionarios
 
@@ -2220,6 +2413,7 @@ namespace AddinExportCDW
             List<double> lista_sumaTotal_valor_porArea_Steelbeam = new List<double>();
 
             List<double> lista_sumaTotal_valor_porArea_Steelbeam_2 = new List<double>();
+            List<double> lista_sumaTotal_valor_porArea_SteelStairs = new List<double>();
 
             #endregion datos iniciales
 
@@ -2242,6 +2436,7 @@ namespace AddinExportCDW
             double desperdicio_CollaboratingSheetMetal = 0;
             double desperdicio_Steelbeam = 0;
             double desperdicio_Steelbeam_2 = 0;
+            double desperdicio_SteelStairs = 0;
 
             #endregion desperdicios
 
@@ -2733,15 +2928,20 @@ namespace AddinExportCDW
                         ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
                         pamType = type.LookupParameter("Structural Material");
                     }
+                    string nombre = "";
                     if (pamType == null)
                     {
-                        //ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
-                        //Parameter runType = type.LookupParameter("Run Type");
-
+                        foreach (ElementId id in sc.GetMaterialIds(false))
+                        {
+                            Material material = doc.GetElement(id) as Material;
+                            if (material.Name == data_ConcreteInclinedSlab["Código"])
+                            {
+                                nombre = material.Name;
+                            }
+                        }
                         pamType = sc.LookupParameter("Comments");
-
                     }
-                    if ((pamType.AsString() == data_ConcreteInclinedSlab["Código"]))
+                    if ((nombre == data_ConcreteInclinedSlab["Código"]) || (pamType.AsString() == data_ConcreteInclinedSlab["Código"]))
                     {
                         Dictionary<string, string> data = data_ConcreteInclinedSlab;
                         double sumaTotal_valor_porVolumen = CalcVolume.Get(commandData, data, sc);
@@ -2753,6 +2953,51 @@ namespace AddinExportCDW
                     desperdicio_ConcreteInclinedSlab += lista_sumaTotal_valor_porArea_ConcreteInclinedSlab[i];// para Concreto
                 }
                 lista_desperdicios.Add(desperdicio_ConcreteInclinedSlab);
+            }
+            if (stairs.Count() != 0)
+            {
+                foreach (Element sc in stairs)
+                {
+                    Parameter pamType = sc.LookupParameter("Material estructural");
+                    if (pamType == null)
+                    {
+                        pamType = sc.LookupParameter("Structural Material");
+                    }
+                    if (pamType == null)
+                    {
+                        ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        pamType = type.LookupParameter("Material estructural");
+                    }
+                    if (pamType == null)
+                    {
+                        ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        pamType = type.LookupParameter("Structural Material");
+                    }
+                    string nombre = "";
+                    if (pamType == null)
+                    {
+                        foreach (ElementId id in sc.GetMaterialIds(false))
+                        {
+                            Material material = doc.GetElement(id) as Material;
+                            if (material.Name == data_SteelStairs["Código"])
+                            {
+                                nombre = material.Name;
+                            }
+                        }
+                        pamType = sc.LookupParameter("Comments");
+                    }
+                    if ((nombre == data_SteelStairs["Código"]) || (pamType.AsString() == data_SteelStairs["Código"]))
+                    {
+                        Dictionary<string, string> data = data_SteelStairs;
+                        double sumaTotal_valor_porVolumen = CalcVolume.Get_StairsSpecialCommand(commandData, data, sc);
+                        lista_sumaTotal_valor_porArea_SteelStairs.Add(sumaTotal_valor_porVolumen);
+                    }
+                }
+                for (int i = 0; i < lista_sumaTotal_valor_porArea_SteelStairs.Count(); i++)
+                {
+                    desperdicio_SteelStairs += lista_sumaTotal_valor_porArea_SteelStairs[i];// para Concreto
+                }
+                lista_desperdicios.Add(desperdicio_SteelStairs);
             }
 
             #region Desperdicio Total
@@ -2809,6 +3054,7 @@ namespace AddinExportCDW
             Dictionary<string, string> data_Steelbeam = Dictionary.Get("data_Steelbeam");
 
             Dictionary<string, string> data_Steelbeam_2 = Dictionary.Get("data_Steelbeam_2");
+            Dictionary<string, string> data_SteelStairs = Dictionary.Get("data_SteelStairs");
 
             #endregion Dictionarios
 
@@ -2831,6 +3077,7 @@ namespace AddinExportCDW
             List<List<double>> salida_data_CollaboratingSheetMetal = new List<List<double>>();
             List<List<double>> salida_data_Steelbeam = new List<List<double>>();
             List<List<double>> salida_data_Steelbeam_2 = new List<List<double>>();
+            List<List<double>> salida_data_SteelStairs = new List<List<double>>();
 
             if (floors.Count() != 0)
             {
@@ -4149,15 +4396,20 @@ namespace AddinExportCDW
                         ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
                         pamType = type.LookupParameter("Structural Material");
                     }
+                    string nombre = "";
                     if (pamType == null)
                     {
-                        //ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
-                        //Parameter runType = type.LookupParameter("Run Type");
-
+                        foreach (ElementId id in sc.GetMaterialIds(false))
+                        {
+                            Material material = doc.GetElement(id) as Material;
+                            if (material.Name == data_ConcreteInclinedSlab["Código"])
+                            {
+                                nombre = material.Name;
+                            }
+                        }
                         pamType = sc.LookupParameter("Comments");
-
                     }
-                    if ((pamType.AsString() == data_ConcreteInclinedSlab["Código"]))
+                    if ((nombre == data_ConcreteInclinedSlab["Código"]) || (pamType.AsString() == data_ConcreteInclinedSlab["Código"]))
                     {
                         Dictionary<string, string> data = data_ConcreteInclinedSlab;
                         lista2_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "2"));
@@ -4199,17 +4451,135 @@ namespace AddinExportCDW
                         ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
                         pamType = type.LookupParameter("Structural Material");
                     }
+                    string nombre = "";
                     if (pamType == null)
                     {
-                        //ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
-                        //Parameter runType = type.LookupParameter("Run Type");
-
+                        foreach (ElementId id in sc.GetMaterialIds(false))
+                        {
+                            Material material = doc.GetElement(id) as Material;
+                            if (material.Name == data_ConcreteInclinedSlab["Código"])
+                            {
+                                nombre = material.Name;
+                            }
+                        }
                         pamType = sc.LookupParameter("Comments");
 
                     }
-                    if ((pamType.AsString() == data_ConcreteInclinedSlab["Código"]))
+                    if ((nombre == data_ConcreteInclinedSlab["Código"]) || (pamType.AsString() == data_ConcreteInclinedSlab["Código"]))
                     {
                         salida.Add(salida_data_ConcreteInclinedSlab);
+                        break;
+                    }
+                }
+            }
+            if (stairs.Count() != 0)
+            {
+                #region listas de valores
+
+                // listas de valores
+                List<double> lista2_valor = new List<double>();
+                List<double> lista3_valor = new List<double>();
+                List<double> lista4_valor = new List<double>();
+                List<double> lista5_valor = new List<double>();
+                List<double> lista6_valor = new List<double>();
+                List<double> lista7_valor = new List<double>();
+                List<double> lista8_valor = new List<double>();
+                List<double> lista9_valor = new List<double>();
+                List<double> lista10_valor = new List<double>();
+                List<double> lista11_valor = new List<double>();
+
+                #endregion listas de valores
+
+                foreach (Element sc in stairs)
+                {
+                    Parameter pamType = sc.LookupParameter("Material estructural");
+                    if (pamType == null)
+                    {
+                        pamType = sc.LookupParameter("Structural Material");
+                    }
+                    if (pamType == null)
+                    {
+                        ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        pamType = type.LookupParameter("Material estructural");
+                    }
+                    if (pamType == null)
+                    {
+                        ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        pamType = type.LookupParameter("Structural Material");
+                    }
+                    string nombre = "";
+                    if (pamType == null)
+                    {
+                        foreach (ElementId id in sc.GetMaterialIds(false))
+                        {
+                            Material material = doc.GetElement(id) as Material;
+                            if (material.Name == data_SteelStairs["Código"])
+                            {
+                                nombre = material.Name;
+                            }
+                        }
+                        pamType = sc.LookupParameter("Comments");
+
+                    }
+                    if ((nombre == data_SteelStairs["Código"]) || (pamType.AsString() == data_SteelStairs["Código"]))
+                    {
+                        Dictionary<string, string> data = data_SteelStairs;
+                        lista2_valor.Add(CalcVolume.GetByValueOfKey_StairsSpecialCommand(commandData, data, sc, "2"));
+                        lista3_valor.Add(CalcVolume.GetByValueOfKey_StairsSpecialCommand(commandData, data, sc, "3"));
+                        lista4_valor.Add(CalcVolume.GetByValueOfKey_StairsSpecialCommand(commandData, data, sc, "4"));
+                        lista5_valor.Add(CalcVolume.GetByValueOfKey_StairsSpecialCommand(commandData, data, sc, "5"));
+                        lista6_valor.Add(CalcVolume.GetByValueOfKey_StairsSpecialCommand(commandData, data, sc, "6"));
+                        lista7_valor.Add(CalcVolume.GetByValueOfKey_StairsSpecialCommand(commandData, data, sc, "7"));
+                        lista8_valor.Add(CalcVolume.GetByValueOfKey_StairsSpecialCommand(commandData, data, sc, "8"));
+                        lista9_valor.Add(CalcVolume.GetByValueOfKey_StairsSpecialCommand(commandData, data, sc, "9"));
+                        lista10_valor.Add(CalcVolume.GetByValueOfKey_StairsSpecialCommand(commandData, data, sc, "10"));
+                        lista11_valor.Add(CalcVolume.GetByValueOfKey_StairsSpecialCommand(commandData, data, sc, "11"));
+                    }
+                }
+                salida_data_SteelStairs.Add(lista2_valor);
+                salida_data_SteelStairs.Add(lista3_valor);
+                salida_data_SteelStairs.Add(lista4_valor);
+                salida_data_SteelStairs.Add(lista5_valor);
+                salida_data_SteelStairs.Add(lista6_valor);
+                salida_data_SteelStairs.Add(lista7_valor);
+                salida_data_SteelStairs.Add(lista8_valor);
+                salida_data_SteelStairs.Add(lista9_valor);
+                salida_data_SteelStairs.Add(lista10_valor);
+                salida_data_SteelStairs.Add(lista11_valor);
+                foreach (Element sc in stairs)
+                {
+                    Parameter pamType = sc.LookupParameter("Material estructural");
+                    if (pamType == null)
+                    {
+                        pamType = sc.LookupParameter("Structural Material");
+                    }
+                    if (pamType == null)
+                    {
+                        ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        pamType = type.LookupParameter("Material estructural");
+                    }
+                    if (pamType == null)
+                    {
+                        ElementType type = doc.GetElement(sc.GetTypeId()) as ElementType;
+                        pamType = type.LookupParameter("Structural Material");
+                    }
+                    string nombre = "";
+                    if (pamType == null)
+                    {
+                        foreach (ElementId id in sc.GetMaterialIds(false))
+                        {
+                            Material material = doc.GetElement(id) as Material;
+                            if (material.Name == data_SteelStairs["Código"])
+                            {
+                                nombre = material.Name;
+                            }
+                        }
+                        pamType = sc.LookupParameter("Comments");
+
+                    }
+                    if ((nombre == data_SteelStairs["Código"]) || (pamType.AsString() == data_SteelStairs["Código"]))
+                    {
+                        salida.Add(salida_data_SteelStairs);
                         break;
                     }
                 }
