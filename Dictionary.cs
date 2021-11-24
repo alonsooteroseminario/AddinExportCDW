@@ -146,7 +146,7 @@ namespace AddinExportCDW
                 {"17 02 01 wood", "0"},
                 {"17 02 03 plastic", "0"},
                 {"17 04 05 iron and steel", "0.000001"},//
-                {"17 09 04 mixed", "0.00000001"},//
+                {"17 09 04 mixed", "0"},//
             };
             Dictionary<string, string> data_forjado35 = new Dictionary<string, string>(){
                 {"Structural element", "Concrete waffle slab (30+5) cm"},
@@ -179,18 +179,17 @@ namespace AddinExportCDW
             };
             Dictionary<string, string> data_CollaboratingSheetMetal = new Dictionary<string, string>(){
                 {"Structural element", "Collaborating sheet metal"},
-                //{"Código", "05FWW90100"},
                 {"Código", "05FWW90003"},
-                {"07 07 01 aqueous washing liquids", "0.000049"},
+                {"07 07 01 aqueous washing liquids", "0"},
                 {"15 01 02 plastic packaging", "0"},
                 {"15 01 03 wooden packaging", "0"},
-                {"15 01 04 metallic packaging", "0.002867"},
-                {"15 01 06 mixed packaging", "0.000029"},
-                {"17 01 01 concrete", "0.022000"},
-                {"17 02 01 wood", "0.008330"},
+                {"15 01 04 metallic packaging", "0"},
+                {"15 01 06 mixed packaging", "0"},
+                {"17 01 01 concrete", "0.004528"},
+                {"17 02 01 wood", "0"},
                 {"17 02 03 plastic", "0"},
-                {"17 04 05 iron and steel", "0.000378"},
-                {"17 09 04 mixed", "0.000308"},
+                {"17 04 05 iron and steel", "0.000837"},
+                {"17 09 04 mixed", "0.000054"},
             };
             Dictionary<string, string> data_Steelbeam = new Dictionary<string, string>(){
                 {"Structural element", "Steel beam"},
@@ -219,7 +218,7 @@ namespace AddinExportCDW
                 {"17 02 01 wood", "0"},
                 {"17 02 03 plastic", "0"},
                 {"17 04 05 iron and steel", "0.000001"},
-                {"17 09 04 mixed", "0.00000001"},
+                {"17 09 04 mixed", "0"},
             };
 
             Dictionary<string, string> data_SteelStairs = new Dictionary<string, string>(){
@@ -234,7 +233,7 @@ namespace AddinExportCDW
                 {"17 02 01 wood", "0"},
                 {"17 02 03 plastic", "0"},
                 {"17 04 05 iron and steel", "0.000001"},//
-                {"17 09 04 mixed", "0.00000001"},//
+                {"17 09 04 mixed", "0"},//
             };
 
             #endregion Dictionarios

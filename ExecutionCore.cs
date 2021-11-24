@@ -73,6 +73,26 @@ namespace AddinExportCDW
 
             StepLog.Write(commandData, "GetListValores Start");
 
+            bool cdw_forjado = true;
+            bool cdw_pilar_hormigon = true;
+            bool cdw_floors_concretoo = true;
+            bool cdw_Cimentaciones = true;
+            bool cdw_ConcretoDeck = true;
+            bool cdw_Droppedbeam = true;
+            bool cdw_Beamembbeded = true;
+            bool cdw_ConcreteInclinedSlab = true;
+            bool cdw_walls = true;
+            bool cdw_SteelColumns = true;
+            bool cdw_forjado35 = true;
+            bool cdw_foundation = true;
+            bool cdw_CollaboratingSheetMetal = true;
+            bool cdw_Steelbeam = true;
+            bool cdw_Steelbeam_2 = true;
+            bool cdw_Stairs = true;
+            bool cdw_SteelStairs = true;
+
+            List<string> lista_codigo_noFound = new List<string>();
+
             if (floors.Count() != 0)
             {
                 foreach (Element sc in floors)
@@ -97,6 +117,14 @@ namespace AddinExportCDW
                         lista9_valor.Add(CalcArea.GetByValueOfKey(data, sc, "9"));
                         lista10_valor.Add(CalcArea.GetByValueOfKey(data, sc, "10"));
                         lista11_valor.Add(CalcArea.GetByValueOfKey(data, sc, "11"));
+                    }
+                    if ((pamType.AsValueString() == null))
+                    {
+                        if (cdw_forjado)
+                        {
+                            cdw_forjado = false;
+                            lista_codigo_noFound.Add(data_forjado["Código"] + " of " + sc.Category.Name.ToString());
+                        }
                     }
                 }
             }
@@ -123,6 +151,14 @@ namespace AddinExportCDW
                         lista9_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "9"));
                         lista10_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "10"));
                         lista11_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "11"));
+                    }
+                    if ((pamType.AsValueString() == null))
+                    {
+                        if (cdw_pilar_hormigon)
+                        {
+                            cdw_pilar_hormigon = false;
+                            lista_codigo_noFound.Add(data_pilar_hormigon["Código"] + " of " + sc.Category.Name.ToString());
+                        }
                     }
                 }
             }
@@ -151,6 +187,14 @@ namespace AddinExportCDW
                         lista9_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "9"));
                         lista10_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "10"));
                         lista11_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "11"));
+                    }
+                    if ((pamType.AsValueString() == null))
+                    {
+                        if (cdw_floors_concretoo)
+                        {
+                            cdw_floors_concretoo = false;
+                            lista_codigo_noFound.Add(data_floors_concreto["Código"] + " of " + sc.Category.Name.ToString());
+                        }
                     }
                 }
                 foreach (Element sc in strFoundation)
@@ -184,6 +228,14 @@ namespace AddinExportCDW
                         lista9_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "9"));
                         lista10_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "10"));
                         lista11_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "11"));
+                    }
+                    if ((pamType.AsValueString() == null))
+                    {
+                        if (cdw_floors_concretoo)
+                        {
+                            cdw_floors_concretoo = false;
+                            lista_codigo_noFound.Add(data_floors_concreto["Código"] + " of " + sc.Category.Name.ToString());
+                        }
                     }
                 }
             }
@@ -220,6 +272,14 @@ namespace AddinExportCDW
                         lista10_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "10"));
                         lista11_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "11"));
                     }
+                    if ((pamType.AsValueString() == null))
+                    {
+                        if (cdw_Cimentaciones)
+                        {
+                            cdw_Cimentaciones = false;
+                            lista_codigo_noFound.Add(data_Cimentaciones["Código"] + " of " + sc.Category.Name.ToString());
+                        }
+                    }
                 }
                 foreach (Element sc in walls)
                 {
@@ -243,6 +303,14 @@ namespace AddinExportCDW
                         lista9_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "9"));
                         lista10_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "10"));
                         lista11_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "11"));
+                    }
+                    if ((pamType.AsValueString() == null))
+                    {
+                        if (cdw_Cimentaciones)
+                        {
+                            cdw_Cimentaciones = false;
+                            lista_codigo_noFound.Add(data_Cimentaciones["Código"] + " of " + sc.Category.Name.ToString());
+                        }
                     }
                 }
             }
@@ -271,6 +339,14 @@ namespace AddinExportCDW
                         lista9_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "9"));
                         lista10_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "10"));
                         lista11_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "11"));
+                    }
+                    if ((pamType.AsValueString() == null))
+                    {
+                        if (cdw_ConcretoDeck)
+                        {
+                            cdw_ConcretoDeck = false;
+                            lista_codigo_noFound.Add(data_ConcretoDeck["Código"] + " of " + sc.Category.Name.ToString());
+                        }
                     }
                 }
             }
@@ -308,6 +384,14 @@ namespace AddinExportCDW
                         lista10_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "10"));
                         lista11_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "11"));
                     }
+                    if ((pamType.AsValueString() == null))
+                    {
+                        if (cdw_Droppedbeam)
+                        {
+                            cdw_Droppedbeam = false;
+                            lista_codigo_noFound.Add(data_Droppedbeam["Código"] + " of " + sc.Category.Name.ToString());
+                        }
+                    }
                 }
             }
             if (strFramming.Count() != 0)
@@ -344,6 +428,14 @@ namespace AddinExportCDW
                         lista10_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "10"));
                         lista11_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "11"));
                     }
+                    if ((pamType.AsValueString() == null))
+                    {
+                        if (cdw_Beamembbeded)
+                        {
+                            cdw_Beamembbeded = false;
+                            lista_codigo_noFound.Add(data_Beamembbeded["Código"] + " of " + sc.Category.Name.ToString());
+                        }
+                    }
                 }
             }
             if (floors.Count() != 0)//m3 volumen
@@ -370,6 +462,14 @@ namespace AddinExportCDW
                         lista9_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "9"));
                         lista10_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "10"));
                         lista11_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "11"));
+                    }
+                    if ((pamType.AsValueString() == null))
+                    {
+                        if (cdw_ConcreteInclinedSlab)
+                        {
+                            cdw_ConcreteInclinedSlab = false;
+                            lista_codigo_noFound.Add(data_ConcreteInclinedSlab["Código"] + " of " + sc.Category.Name.ToString());
+                        }
                     }
                 }
             }
@@ -398,6 +498,14 @@ namespace AddinExportCDW
                         lista10_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "10"));
                         lista11_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "11"));
                     }
+                    if ((pamType.AsValueString() == null))
+                    {
+                        if (cdw_walls)
+                        {
+                            cdw_walls = false;
+                            lista_codigo_noFound.Add(data_walls["Código"] + " of " + sc.Category.Name.ToString());
+                        }
+                    }
                 }
             }
             if (columns.Count() != 0)
@@ -424,6 +532,14 @@ namespace AddinExportCDW
                         lista9_valor.Add(CalcVolume.GetByValueOfKey_SteelColumnSpecialCommand(commandData, data, sc, "9"));
                         lista10_valor.Add(CalcVolume.GetByValueOfKey_SteelColumnSpecialCommand(commandData, data, sc, "10"));
                         lista11_valor.Add(CalcVolume.GetByValueOfKey_SteelColumnSpecialCommand(commandData, data, sc, "11"));
+                    }
+                    if ((pamType.AsValueString() == null))
+                    {
+                        if (cdw_SteelColumns)
+                        {
+                            cdw_SteelColumns = false;
+                            lista_codigo_noFound.Add(data_SteelColumns["Código"] + " of " + sc.Category.Name.ToString());
+                        }
                     }
                 }
             }
@@ -461,6 +577,14 @@ namespace AddinExportCDW
                         lista10_valor.Add(CalcVolume.GetByValueOfKey_SteelColumnSpecialCommand(commandData, data, sc, "10"));
                         lista11_valor.Add(CalcVolume.GetByValueOfKey_SteelColumnSpecialCommand(commandData, data, sc, "11"));
                     }
+                    if ((pamType.AsValueString() == null))
+                    {
+                        if (cdw_SteelColumns)
+                        {
+                            cdw_SteelColumns = false;
+                            lista_codigo_noFound.Add(data_SteelColumns["Código"] + " of " + sc.Category.Name.ToString());
+                        }
+                    }
                 }
             }
             if (floors.Count() != 0)
@@ -487,6 +611,14 @@ namespace AddinExportCDW
                         lista9_valor.Add(CalcArea.GetByValueOfKey(data, sc, "9"));
                         lista10_valor.Add(CalcArea.GetByValueOfKey(data, sc, "10"));
                         lista11_valor.Add(CalcArea.GetByValueOfKey(data, sc, "11"));
+                    }
+                    if ((pamType.AsValueString() == null))
+                    {
+                        if (cdw_forjado35)
+                        {
+                            cdw_forjado35 = false;
+                            lista_codigo_noFound.Add(data_forjado35["Código"] + " of " + sc.Category.Name.ToString());
+                        }
                     }
                 }
             }
@@ -523,6 +655,14 @@ namespace AddinExportCDW
                         lista10_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "10"));
                         lista11_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "11"));
                     }
+                    if ((pamType.AsValueString() == null))
+                    {
+                        if (cdw_foundation)
+                        {
+                            cdw_foundation = false;
+                            lista_codigo_noFound.Add(data_foundation["Código"] + " of " + sc.Category.Name.ToString());
+                        }
+                    }
                 }
             }
             if (floors.Count() != 0)
@@ -549,6 +689,14 @@ namespace AddinExportCDW
                         lista9_valor.Add(CalcArea.GetByValueOfKey(data, sc, "9"));
                         lista10_valor.Add(CalcArea.GetByValueOfKey(data, sc, "10"));
                         lista11_valor.Add(CalcArea.GetByValueOfKey(data, sc, "11"));
+                    }
+                    if ((pamType.AsValueString() == null))
+                    {
+                        if (cdw_CollaboratingSheetMetal)
+                        {
+                            cdw_CollaboratingSheetMetal = false;
+                            lista_codigo_noFound.Add(data_CollaboratingSheetMetal["Código"] + " of " + sc.Category.Name.ToString());
+                        }
                     }
                 }
             }
@@ -586,6 +734,14 @@ namespace AddinExportCDW
                         lista10_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "10"));
                         lista11_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "11"));
                     }
+                    if ((pamType.AsValueString() == null))
+                    {
+                        if (cdw_Steelbeam)
+                        {
+                            cdw_Steelbeam = false;
+                            lista_codigo_noFound.Add(data_Steelbeam["Código"] + " of " + sc.Category.Name.ToString());
+                        }
+                    }
                 }
             }
             if (strFramming.Count() != 0)
@@ -622,10 +778,18 @@ namespace AddinExportCDW
                         lista10_valor.Add(CalcVolume.GetByValueOfKey_SteelBeamSpecialCommand(commandData, data, sc, "10"));
                         lista11_valor.Add(CalcVolume.GetByValueOfKey_SteelBeamSpecialCommand(commandData, data, sc, "11"));
                     }
+                    if ((pamType.AsValueString() == null))
+                    {
+                        if (cdw_Steelbeam_2)
+                        {
+                            cdw_Steelbeam_2 = false;
+                            lista_codigo_noFound.Add(data_Steelbeam_2["Código"] + " of " + sc.Category.Name.ToString());
+                        }
+                    }
                 }
             }
 
-            if(stairs.Count() != 0)
+            if (stairs.Count() != 0)
             {
                 foreach (Element sc in stairs)
                 {
@@ -650,7 +814,7 @@ namespace AddinExportCDW
                         foreach (ElementId id in sc.GetMaterialIds(false))
                         {
                             Material material = doc.GetElement(id) as Material;
-                            if(material.Name == data_ConcreteInclinedSlab["Código"])
+                            if (material.Name == data_ConcreteInclinedSlab["Código"])
                             {
                                 nombre = material.Name;
                             }
@@ -671,6 +835,14 @@ namespace AddinExportCDW
                         lista9_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "9"));
                         lista10_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "10"));
                         lista11_valor.Add(CalcVolume.GetByValueOfKey(commandData, data, sc, "11"));
+                    }
+                    if ((nombre == null) || (pamType.AsString() == null))
+                    {
+                        if (cdw_Stairs)
+                        {
+                            cdw_Stairs = false;
+                            lista_codigo_noFound.Add(data_ConcreteInclinedSlab["Código"] + " of " + sc.Category.Name.ToString());
+                        }
                     }
                 }
             }
@@ -706,7 +878,6 @@ namespace AddinExportCDW
                         }
                         pamType = sc.LookupParameter("Comments");
                     }
-
                     if ((nombre == data_SteelStairs["Código"]) || (pamType.AsString() == data_SteelStairs["Código"]))
                     {
                         Dictionary<string, string> data = data_SteelStairs;
@@ -722,9 +893,28 @@ namespace AddinExportCDW
                         lista10_valor.Add(CalcVolume.GetByValueOfKey_StairsSpecialCommand(commandData, data, sc, "10"));
                         lista11_valor.Add(CalcVolume.GetByValueOfKey_StairsSpecialCommand(commandData, data, sc, "11"));
                     }
+                    if ((nombre == null) || (pamType.AsString() == null))
+                    {
+                        if (cdw_SteelStairs)
+                        {
+                            cdw_SteelStairs = false;
+                            lista_codigo_noFound.Add(data_SteelStairs["Código"] + " of " + sc.Category.Name.ToString());
+                        }
+                    }
                 }
             }
 
+            if (lista_codigo_noFound.Count() != 0)
+            {
+                string codigosCDW = "";
+                foreach (string cod in lista_codigo_noFound)
+                {
+                    codigosCDW = codigosCDW + "\n" + "- " + cod;
+                }
+                TaskDialog.Show("The construction element has no material assigned.", 
+                    "List of materials not found : \n\n " +
+                    codigosCDW);
+            }
 
             List<double> salida = new List<double>();
 
@@ -1372,7 +1562,7 @@ namespace AddinExportCDW
             List<double> lista_sumaTotal_valor_porArea_Steelbeam = new List<double>();
 
             List<double> lista_sumaTotal_valor_porArea_Steelbeam_2 = new List<double>();
-            List<double> lista_sumaTotal_valor_porArea_SteelStairs = new List<double>(); 
+            List<double> lista_sumaTotal_valor_porArea_SteelStairs = new List<double>();
 
             #endregion datos iniciales
 

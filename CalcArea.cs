@@ -35,7 +35,8 @@ namespace AddinExportCDW
             {
                 string valor = c;
                 string key = dictionary.FirstOrDefault(x => x.Value == valor).Key;
-                double valor_porArea = double.Parse(valor) * Math.Round(param.AsDouble() / 10.7639, 8);
+                //double valor_porArea = double.Parse(valor) * Math.Round(param.AsDouble() / 10.7639, 8);
+                double valor_porArea = double.Parse(valor) * (param.AsDouble() / 10.7639);
                 sumaTotal_valor_porArea += valor_porArea;
             }
             return sumaTotal_valor_porArea;
@@ -59,7 +60,8 @@ namespace AddinExportCDW
                 if (numeroKey == lista_keys[i])
                 {
                     string valor = entrada[i];
-                    salida = double.Parse(valor) * Math.Round(param.AsDouble() / 10.7639, 8);//convertimos "param" de pies a metros (1 m2 = 10,7639 pies2)
+                    //salida = double.Parse(valor) * Math.Round(param.AsDouble() / 10.7639, 8);//convertimos "param" de pies a metros (1 m2 = 10,7639 pies2)
+                    salida = double.Parse(valor) * (param.AsDouble() / 10.7639);//convertimos "param" de pies a metros (1 m2 = 10,7639 pies2)
                 }
             }
             return salida;
