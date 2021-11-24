@@ -85,6 +85,7 @@ namespace AddinExportCDW
                     BuiltInCategory.OST_Walls,
                     BuiltInCategory.OST_StructuralFoundation,
                     BuiltInCategory.OST_Columns,
+                    BuiltInCategory.OST_Stairs,
             };
             foreach (BuiltInCategory bic in bics)
             {
@@ -179,6 +180,7 @@ namespace AddinExportCDW
                     BuiltInCategory.OST_Walls,
                     BuiltInCategory.OST_StructuralFoundation,
                     BuiltInCategory.OST_Columns,
+                    BuiltInCategory.OST_Stairs
             };
             foreach (BuiltInCategory bic in bics)
             {
@@ -335,6 +337,7 @@ namespace AddinExportCDW
                     BuiltInCategory.OST_Walls,
                     BuiltInCategory.OST_StructuralFoundation,
                     BuiltInCategory.OST_Columns,
+                    BuiltInCategory.OST_Stairs
             };
             DeleteSchedules(commandData);
             foreach (BuiltInCategory bic in bics)

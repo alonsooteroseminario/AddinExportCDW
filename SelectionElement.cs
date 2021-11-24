@@ -56,6 +56,7 @@ namespace AddinExportCDW
                 List<Element> strFramming = new List<Element>();
                 List<Element> walls = new List<Element>();
                 List<Element> columns = new List<Element>();
+                List<Element> stairs = new List<Element>();
 
                 foreach (Element sc in lista_SelectElements)
                 {
@@ -85,6 +86,10 @@ namespace AddinExportCDW
                     if (builtCategory == BuiltInCategory.OST_Columns)
                     {
                         columns.Add(sc);
+                    }
+                    if (builtCategory == BuiltInCategory.OST_Stairs)
+                    {
+                        stairs.Add(sc);
                     }
                 }
 
@@ -117,35 +122,40 @@ namespace AddinExportCDW
                                                                     strFoundation,
                                                                     strFramming,
                                                                     walls,
-                                                                    columns);
+                                                                    columns,
+                                                                    stairs);
                 List<Dictionary<string, string>> lista_Dictionarios = Core.GetListDictionary(commandData,
                                                         floors,
                                                         structuralColumns,
                                                         strFoundation,
                                                         strFramming,
                                                         walls,
-                                                        columns);
+                                                        columns,
+                                                        stairs);
                 List<double> lista_desperdicios = Core.GetListDesperdicio(commandData,
                                                         floors,
                                                         structuralColumns,
                                                         strFoundation,
                                                         strFramming,
                                                         walls,
-                                                        columns);
+                                                        columns,
+                                                        stairs);
                 double desperdicioTotal = Core.GetDesperdicioTotal(commandData,
                                                         floors,
                                                         structuralColumns,
                                                         strFoundation,
                                                         strFramming,
                                                         walls,
-                                                        columns);
+                                                        columns,
+                                                        stairs);
                 List<List<List<double>>> listaDe_listaN_valorSeparaadaPorDataElemento = Core.GetListValoresSeparaadaPorDataElemento(commandData,
                                                         floors,
                                                         structuralColumns,
                                                         strFoundation,
                                                         strFramming,
                                                         walls,
-                                                        columns);
+                                                        columns,
+                                                        stairs);
 
                 #region mensaje en Pantalla
 
@@ -156,7 +166,8 @@ namespace AddinExportCDW
                             + strFoundation.Count()
                             + strFramming.Count()
                             + walls.Count()
-                            + columns.Count();
+                            + columns.Count()
+                            + stairs.Count();
 
                 WindowMensaje MainMensaje = new WindowMensaje(count,
                                                               commandData,

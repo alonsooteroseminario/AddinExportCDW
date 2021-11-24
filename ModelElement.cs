@@ -47,6 +47,7 @@ namespace AddinExportCDW
                 IList<Element> strFramming = CollectorElement.Get(doc, "strFramming");
                 IList<Element> walls = CollectorElement.Get(doc, "walls");
                 IList<Element> columns = CollectorElement.Get(doc, "columns");
+                IList<Element> stairs = CollectorElement.Get(doc, "stairs");
 
                 #endregion Collector de Elementos
 
@@ -77,35 +78,40 @@ namespace AddinExportCDW
                                                                     strFounsationJoined,
                                                                     strFramming,
                                                                     walls,
-                                                                    columns);
+                                                                    columns,
+                                                                    stairs);
                 List<Dictionary<string, string>> lista_Dictionarios = Core.GetListDictionary(commandData,
                                                         floors,
                                                         structuralColumns,
                                                         strFounsationJoined,
                                                         strFramming,
                                                         walls,
-                                                        columns);
+                                                        columns,
+                                                        stairs);
                 List<double> lista_desperdicios = Core.GetListDesperdicio(commandData,
                                                         floors,
                                                         structuralColumns,
                                                         strFounsationJoined,
                                                         strFramming,
                                                         walls,
-                                                        columns);
+                                                        columns,
+                                                        stairs);
                 double desperdicioTotal = Core.GetDesperdicioTotal(commandData,
                                                         floors,
                                                         structuralColumns,
                                                         strFounsationJoined,
                                                         strFramming,
                                                         walls,
-                                                        columns);
+                                                        columns,
+                                                        stairs);
                 List<List<List<double>>> listaDe_listaN_valorSeparaadaPorDataElemento = Core.GetListValoresSeparaadaPorDataElemento(commandData,
                                                         floors,
                                                         structuralColumns,
                                                         strFounsationJoined,
                                                         strFramming,
                                                         walls,
-                                                        columns);
+                                                        columns,
+                                                        stairs);
 
                 #region mensaje en Pantalla
 
@@ -114,7 +120,8 @@ namespace AddinExportCDW
                             + strFounsationJoined.Count()
                             + strFramming.Count()
                             + walls.Count()
-                            + columns.Count();
+                            + columns.Count()
+                            + stairs.Count();
 
                 WindowMensaje MainMensaje = new WindowMensaje(count,
                                                               commandData,

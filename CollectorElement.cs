@@ -61,7 +61,6 @@ namespace AddinExportCDW
             ElementClassFilter elemFilter_floor = new ElementClassFilter(typeof(Floor));
             ElementClassFilter elemFilter_familyInstance = new ElementClassFilter(typeof(FamilyInstance));
             ElementClassFilter elemFilter_walls = new ElementClassFilter(typeof(Wall));
-            //ElementClassFilter elemFilter_foundations = new ElementClassFilter(typeof(WallFoundation));
 
             ElementCategoryFilter Categoryfilter_floors = new ElementCategoryFilter(BuiltInCategory.OST_Floors);
             ElementCategoryFilter Categoryfilter_strColumns = new ElementCategoryFilter(BuiltInCategory.OST_StructuralColumns);
@@ -69,6 +68,7 @@ namespace AddinExportCDW
             ElementCategoryFilter Categoryfilter_strFramming = new ElementCategoryFilter(BuiltInCategory.OST_StructuralFraming);
             ElementCategoryFilter Categoryfilter_walls = new ElementCategoryFilter(BuiltInCategory.OST_Walls);
             ElementCategoryFilter Categoryfilter_Columns = new ElementCategoryFilter(BuiltInCategory.OST_Columns);
+            ElementCategoryFilter Categoryfilter_Stairs = new ElementCategoryFilter(BuiltInCategory.OST_Stairs);
 
             LogicalAndFilter DUInstancesFilter_floors = new LogicalAndFilter(elemFilter_floor, Categoryfilter_floors);
             LogicalAndFilter DUInstancesFilter_strColumns = new LogicalAndFilter(elemFilter_familyInstance, Categoryfilter_strColumns);
@@ -77,6 +77,7 @@ namespace AddinExportCDW
             LogicalAndFilter DUInstancesFilter_strFramming = new LogicalAndFilter(elemFilter_familyInstance, Categoryfilter_strFramming);
             LogicalAndFilter DUInstancesFilter_walls = new LogicalAndFilter(elemFilter_walls, Categoryfilter_walls);
             LogicalAndFilter DUInstancesFilter_Columns = new LogicalAndFilter(elemFilter_familyInstance, Categoryfilter_Columns);
+            LogicalAndFilter DUInstancesFilter_Stairs = new LogicalAndFilter(elemFilter_familyInstance, Categoryfilter_Stairs);
 
             FilteredElementCollector DUcoll = new FilteredElementCollector(doc);
             IList<Element> floors = DUcoll.WherePasses(DUInstancesFilter_floors).ToElements();
@@ -92,15 +93,10 @@ namespace AddinExportCDW
             IList<Element> walls = DUcoll5.WherePasses(DUInstancesFilter_walls).ToElements();
             FilteredElementCollector DUcoll6 = new FilteredElementCollector(doc);
             IList<Element> columns = DUcoll6.WherePasses(DUInstancesFilter_Columns).ToElements();
+            FilteredElementCollector DUcoll7 = new FilteredElementCollector(doc);
+            IList<Element> stairs = DUcoll7.WherePasses(DUInstancesFilter_Stairs).ToElements();
 
             #endregion Colectores de Elementos
-
-            //List<Element> floors = new List<Element>();
-            //List<Element> strFoundation = new List<Element>();
-            //List<Element> strColumns = new List<Element>();
-            //List<Element> strFramming = new List<Element>();
-            //List<Element> walls = new List<Element>();
-            //List<Element> columns = new List<Element>();
 
             if (categoryElement == "floors")
             {
@@ -129,6 +125,10 @@ namespace AddinExportCDW
             if (categoryElement == "columns")
             {
                 return columns;
+            }
+            if (categoryElement == "stairs")
+            {
+                return stairs;
             }
             return null;
         }
@@ -173,6 +173,10 @@ namespace AddinExportCDW
                     salida.Add(sc);
                 }
                 if (builtCategory == BuiltInCategory.OST_Columns)
+                {
+                    salida.Add(sc);
+                }
+                if (builtCategory == BuiltInCategory.OST_Stairs)
                 {
                     salida.Add(sc);
                 }
