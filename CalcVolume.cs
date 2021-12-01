@@ -2,6 +2,7 @@
 using Autodesk.Revit.UI;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace AddinExportCDW
@@ -34,12 +35,14 @@ namespace AddinExportCDW
 
             List<string> entrada = DictionaryListValues(dictionary);
             double sumaTotal_valor_porVolumen = 0;
+            NumberStyles style = NumberStyles.AllowDecimalPoint | NumberStyles.AllowThousands;
+            CultureInfo provider = new CultureInfo("fr-FR");
             foreach (string c in entrada)
             {
-                string valor = c;
+                string valor = c.Replace('.', ',');
                 string key = dictionary.FirstOrDefault(x => x.Value == valor).Key;
                 //double valor_porVolumen = double.Parse(valor) * Math.Round(volume / 35.3147, 8);
-                double valor_porVolumen = double.Parse(valor) * (volume / 35.3147);
+                double valor_porVolumen = double.Parse(valor, style, provider) * (volume / 35.3147);
                 sumaTotal_valor_porVolumen += valor_porVolumen;
                 StepLog.Write(commandData, sumaTotal_valor_porVolumen.ToString());
             }
@@ -65,13 +68,15 @@ namespace AddinExportCDW
                 "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"
             };
             List<string> entrada = DictionaryListValues(dictionary);
+            NumberStyles style = NumberStyles.AllowDecimalPoint | NumberStyles.AllowThousands;
+            CultureInfo provider = new CultureInfo("fr-FR");
             for (int i = 0; i < lista_keys.Count(); i++)
             {
                 if (numeroKey == lista_keys[i])
                 {
-                    string valor = entrada[i];
+                    string valor = entrada[i].Replace('.', ',');
                     //salida = double.Parse(valor) * Math.Round(volume / 35.3147, 8);
-                    salida = double.Parse(valor) * (volume / 35.3147);
+                    salida = double.Parse(valor, style, provider) * (volume / 35.3147);
                     StepLog.Write(commandData, salida.ToString());
                 }
             }
@@ -94,12 +99,14 @@ namespace AddinExportCDW
 
             List<string> entrada = DictionaryListValues(dictionary);
             double sumaTotal_valor_porVolumen = 0;
+            NumberStyles style = NumberStyles.AllowDecimalPoint | NumberStyles.AllowThousands;
+            CultureInfo provider = new CultureInfo("fr-FR");
             foreach (string c in entrada)
             {
-                string valor = c;
+                string valor = c.Replace('.', ',');
                 string key = dictionary.FirstOrDefault(x => x.Value == valor).Key;
                 //double valor_porVolumen = double.Parse(valor) * Math.Round(volume / 35.3147, 8) * (7850);
-                double valor_porVolumen = double.Parse(valor) * (volume / 35.3147) * (7850);
+                double valor_porVolumen = double.Parse(valor, style, provider) * (volume / 35.3147) * (7850);
                 sumaTotal_valor_porVolumen += valor_porVolumen;
                 StepLog.Write(commandData, sumaTotal_valor_porVolumen.ToString());
             }
@@ -125,13 +132,15 @@ namespace AddinExportCDW
                 "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"
             };
             List<string> entrada = DictionaryListValues(dictionary);
+            NumberStyles style = NumberStyles.AllowDecimalPoint | NumberStyles.AllowThousands;
+            CultureInfo provider = new CultureInfo("fr-FR");
             for (int i = 0; i < lista_keys.Count(); i++)
             {
                 if (numeroKey == lista_keys[i])
                 {
-                    string valor = entrada[i];
+                    string valor = entrada[i].Replace('.', ',');
                     //salida = double.Parse(valor) * Math.Round((volume / 35.3147), 8) * (7850);
-                    salida = double.Parse(valor) * ((volume / 35.3147)) * (7850);
+                    salida = double.Parse(valor, style, provider) * ((volume / 35.3147)) * (7850);
                     StepLog.Write(commandData, salida.ToString());
                 }
             }
@@ -154,10 +163,13 @@ namespace AddinExportCDW
 
             List<string> entrada = DictionaryListValues(dictionary);
             double sumaTotal_valor_porVolumen = 0;
-            foreach (string valor in entrada)
+            NumberStyles style = NumberStyles.AllowDecimalPoint | NumberStyles.AllowThousands;
+            CultureInfo provider = new CultureInfo("fr-FR");
+            foreach (string c in entrada)
             {
+                string valor = c.Replace('.', ',');
                 //double valor_porVolumen = double.Parse(valor) * Math.Round((volume / 35.3147), 8) * (7850);
-                double valor_porVolumen = double.Parse(valor) * ((volume / 35.3147)) * (7850);
+                double valor_porVolumen = double.Parse(valor, style, provider) * ((volume / 35.3147)) * (7850);
                 sumaTotal_valor_porVolumen += valor_porVolumen;
                 StepLog.Write(commandData, sumaTotal_valor_porVolumen.ToString());
             }
@@ -185,13 +197,15 @@ namespace AddinExportCDW
                 "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"
             };
             List<string> entrada = DictionaryListValues(dictionary);
+            NumberStyles style = NumberStyles.AllowDecimalPoint | NumberStyles.AllowThousands;
+            CultureInfo provider = new CultureInfo("fr-FR");
             for (int i = 0; i < lista_keys.Count(); i++)
             {
                 if (numeroKey == lista_keys[i])
                 {
-                    string valor = entrada[i];
+                    string valor = entrada[i].Replace('.', ',');
                     //salida = double.Parse(valor) * Math.Round((volume / 35.3147), 8) * (7850);
-                    salida = double.Parse(valor) * ((volume / 35.3147)) * (7850);
+                    salida = double.Parse(valor, style, provider) * ((volume / 35.3147)) * (7850);
                     StepLog.Write(commandData, salida.ToString());
                 }
             }
@@ -218,13 +232,15 @@ namespace AddinExportCDW
                 "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"
             };
             List<string> entrada = DictionaryListValues(dictionary);
+            NumberStyles style = NumberStyles.AllowDecimalPoint | NumberStyles.AllowThousands;
+            CultureInfo provider = new CultureInfo("fr-FR");
             for (int i = 0; i < lista_keys.Count(); i++)
             {
                 if (numeroKey == lista_keys[i])
                 {
-                    string valor = entrada[i];
+                    string valor = entrada[i].Replace('.', ',');
                     //salida = double.Parse(valor) * Math.Round((volume / 35.3147), 8) * (7850);
-                    salida = double.Parse(valor) * ((volume / 35.3147)) * (7850);
+                    salida = double.Parse(valor, style, provider) * ((volume / 35.3147)) * (7850);
                     StepLog.Write(commandData, salida.ToString());
                 }
             }
@@ -245,10 +261,13 @@ namespace AddinExportCDW
 
             List<string> entrada = DictionaryListValues(dictionary);
             double sumaTotal_valor_porVolumen = 0;
-            foreach (string valor in entrada)
+            NumberStyles style = NumberStyles.AllowDecimalPoint | NumberStyles.AllowThousands;
+            CultureInfo provider = new CultureInfo("fr-FR");
+            foreach (string c in entrada)
             {
+                string valor = c.Replace('.', ',');
                 //double valor_porVolumen = double.Parse(valor) * Math.Round((volume / 35.3147), 8) * (7850);
-                double valor_porVolumen = double.Parse(valor) * ((volume / 35.3147)) * (7850);
+                double valor_porVolumen = double.Parse(valor, style, provider) * ((volume / 35.3147)) * (7850);
                 sumaTotal_valor_porVolumen += valor_porVolumen;
                 StepLog.Write(commandData, sumaTotal_valor_porVolumen.ToString());
             }

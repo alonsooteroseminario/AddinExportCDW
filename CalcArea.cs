@@ -1,6 +1,7 @@
 ﻿using Autodesk.Revit.DB;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace AddinExportCDW
@@ -31,12 +32,14 @@ namespace AddinExportCDW
             }
             List<string> entrada = DictionaryListValues(dictionary);
             double sumaTotal_valor_porArea = 0;
+            NumberStyles style = NumberStyles.AllowDecimalPoint | NumberStyles.AllowThousands;
+            CultureInfo provider = new CultureInfo("fr-FR");
             foreach (string c in entrada)
             {
-                string valor = c;
+                string valor = c.Replace('.', ',');
                 string key = dictionary.FirstOrDefault(x => x.Value == valor).Key;
                 //double valor_porArea = double.Parse(valor) * Math.Round(param.AsDouble() / 10.7639, 8);
-                double valor_porArea = double.Parse(valor) * (param.AsDouble() / 10.7639);
+                double valor_porArea = double.Parse(valor, style, provider) * (param.AsDouble() / 10.7639);
                 sumaTotal_valor_porArea += valor_porArea;
             }
             return sumaTotal_valor_porArea;
@@ -55,13 +58,15 @@ namespace AddinExportCDW
                 "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"
             };
             List<string> entrada = DictionaryListValues(dictionary);
+            NumberStyles style = NumberStyles.AllowDecimalPoint | NumberStyles.AllowThousands;
+            CultureInfo provider = new CultureInfo("fr-FR");
             for (int i = 0; i < lista_keys.Count(); i++)
             {
                 if (numeroKey == lista_keys[i])
                 {
-                    string valor = entrada[i];
+                    string valor = entrada[i].Replace('.', ',');
                     //salida = double.Parse(valor) * Math.Round(param.AsDouble() / 10.7639, 8);//convertimos "param" de pies a metros (1 m2 = 10,7639 pies2)
-                    salida = double.Parse(valor) * (param.AsDouble() / 10.7639);//convertimos "param" de pies a metros (1 m2 = 10,7639 pies2)
+                    salida = double.Parse(valor, style, provider) * (param.AsDouble() / 10.7639);//convertimos "param" de pies a metros (1 m2 = 10,7639 pies2)
                 }
             }
             return salida;
