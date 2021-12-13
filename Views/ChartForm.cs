@@ -76,7 +76,8 @@ namespace AddinExportCDW.Views
                     cartesianChart1.AxisX.Add(new Axis
                     {
                         Title = "Quantity",
-                        LabelFormatter = value => (value).ToString("N") + " m3"
+                        //LabelFormatter = value => (value).ToString() + " m3",
+                        LabelFormatter = value => string.Format("{0} m3", Math.Round(value, 6)),
                     });
                     var tooltip = new DefaultTooltip
                     {

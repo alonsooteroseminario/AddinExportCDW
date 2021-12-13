@@ -2,6 +2,7 @@
 using Autodesk.Revit.UI;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace AddinExportCDW
@@ -34,11 +35,14 @@ namespace AddinExportCDW
 
             List<string> entrada = DictionaryListValues(dictionary);
             double sumaTotal_valor_porVolumen = 0;
+            NumberStyles style = NumberStyles.AllowDecimalPoint | NumberStyles.AllowThousands;
+            CultureInfo provider = new CultureInfo("fr-FR");
             foreach (string c in entrada)
             {
-                string valor = c;
+                string valor = c.Replace('.', ',');
                 string key = dictionary.FirstOrDefault(x => x.Value == valor).Key;
-                double valor_porVolumen = double.Parse(valor) * Math.Round(volume / 35.3147, 8);
+                //double valor_porVolumen = double.Parse(valor) * Math.Round(volume / 35.3147, 8);
+                double valor_porVolumen = double.Parse(valor, style, provider) * (volume / 35.3147);
                 sumaTotal_valor_porVolumen += valor_porVolumen;
                 StepLog.Write(commandData, sumaTotal_valor_porVolumen.ToString());
             }
@@ -64,17 +68,85 @@ namespace AddinExportCDW
                 "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"
             };
             List<string> entrada = DictionaryListValues(dictionary);
+            NumberStyles style = NumberStyles.AllowDecimalPoint | NumberStyles.AllowThousands;
+            CultureInfo provider = new CultureInfo("fr-FR");
             for (int i = 0; i < lista_keys.Count(); i++)
             {
                 if (numeroKey == lista_keys[i])
                 {
-                    string valor = entrada[i];
-                    salida = double.Parse(valor) * Math.Round(volume / 35.3147, 8);
+                    string valor = entrada[i].Replace('.', ',');
+                    //salida = double.Parse(valor) * Math.Round(volume / 35.3147, 8);
+                    salida = double.Parse(valor, style, provider) * (volume / 35.3147);
                     StepLog.Write(commandData, salida.ToString());
                 }
             }
             return salida;
         }
+
+
+        public static double Get_SteelBeamSpecialCommand(ExternalCommandData commandData,
+                 Dictionary<string, string> dictionary,
+                 Element element)
+        {
+            Document doc = commandData.Application.ActiveUIDocument.Document;
+            double volume = 0;
+            foreach (ElementId id in element.GetMaterialIds(false))
+            {
+                Material material = doc.GetElement(id) as Material;
+                volume = element.GetMaterialVolume(material.Id);
+                StepLog.Write(commandData, volume.ToString());
+            }
+
+            List<string> entrada = DictionaryListValues(dictionary);
+            double sumaTotal_valor_porVolumen = 0;
+            NumberStyles style = NumberStyles.AllowDecimalPoint | NumberStyles.AllowThousands;
+            CultureInfo provider = new CultureInfo("fr-FR");
+            foreach (string c in entrada)
+            {
+                string valor = c.Replace('.', ',');
+                string key = dictionary.FirstOrDefault(x => x.Value == valor).Key;
+                //double valor_porVolumen = double.Parse(valor) * Math.Round(volume / 35.3147, 8) * (7850);
+                double valor_porVolumen = double.Parse(valor, style, provider) * (volume / 35.3147) * (7850);
+                sumaTotal_valor_porVolumen += valor_porVolumen;
+                StepLog.Write(commandData, sumaTotal_valor_porVolumen.ToString());
+            }
+            return sumaTotal_valor_porVolumen;
+        }
+
+        public static double GetByValueOfKey_SteelBeamSpecialCommand(ExternalCommandData commandData,
+                                    Dictionary<string, string> dictionary,
+                                    Element element,
+                                    string numeroKey)
+        {
+            double salida = 0;
+            Document doc = commandData.Application.ActiveUIDocument.Document;
+            double volume = 0;
+            foreach (ElementId id in element.GetMaterialIds(false))
+            {
+                Material material = doc.GetElement(id) as Material;
+                volume = element.GetMaterialVolume(material.Id);
+                StepLog.Write(commandData, volume.ToString());
+            }
+            List<string> lista_keys = new List<string>()
+            {
+                "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"
+            };
+            List<string> entrada = DictionaryListValues(dictionary);
+            NumberStyles style = NumberStyles.AllowDecimalPoint | NumberStyles.AllowThousands;
+            CultureInfo provider = new CultureInfo("fr-FR");
+            for (int i = 0; i < lista_keys.Count(); i++)
+            {
+                if (numeroKey == lista_keys[i])
+                {
+                    string valor = entrada[i].Replace('.', ',');
+                    //salida = double.Parse(valor) * Math.Round((volume / 35.3147), 8) * (7850);
+                    salida = double.Parse(valor, style, provider) * ((volume / 35.3147)) * (7850);
+                    StepLog.Write(commandData, salida.ToString());
+                }
+            }
+            return salida;
+        }
+
 
         public static double Get_SteelColumnSpecialCommand(ExternalCommandData commandData,
                                                             Dictionary<string, string> dictionary,
@@ -91,9 +163,13 @@ namespace AddinExportCDW
 
             List<string> entrada = DictionaryListValues(dictionary);
             double sumaTotal_valor_porVolumen = 0;
-            foreach (string valor in entrada)
+            NumberStyles style = NumberStyles.AllowDecimalPoint | NumberStyles.AllowThousands;
+            CultureInfo provider = new CultureInfo("fr-FR");
+            foreach (string c in entrada)
             {
-                double valor_porVolumen = double.Parse(valor) * Math.Round((volume / 35.3147), 8) * (7850);
+                string valor = c.Replace('.', ',');
+                //double valor_porVolumen = double.Parse(valor) * Math.Round((volume / 35.3147), 8) * (7850);
+                double valor_porVolumen = double.Parse(valor, style, provider) * ((volume / 35.3147)) * (7850);
                 sumaTotal_valor_porVolumen += valor_porVolumen;
                 StepLog.Write(commandData, sumaTotal_valor_porVolumen.ToString());
             }
@@ -121,16 +197,81 @@ namespace AddinExportCDW
                 "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"
             };
             List<string> entrada = DictionaryListValues(dictionary);
+            NumberStyles style = NumberStyles.AllowDecimalPoint | NumberStyles.AllowThousands;
+            CultureInfo provider = new CultureInfo("fr-FR");
             for (int i = 0; i < lista_keys.Count(); i++)
             {
                 if (numeroKey == lista_keys[i])
                 {
-                    string valor = entrada[i];
-                    salida = double.Parse(valor) * Math.Round((volume / 35.3147), 8) * (7850);
+                    string valor = entrada[i].Replace('.', ',');
+                    //salida = double.Parse(valor) * Math.Round((volume / 35.3147), 8) * (7850);
+                    salida = double.Parse(valor, style, provider) * ((volume / 35.3147)) * (7850);
                     StepLog.Write(commandData, salida.ToString());
                 }
             }
             return salida;
+        }
+        public static double GetByValueOfKey_StairsSpecialCommand(ExternalCommandData commandData,
+                                                                Dictionary<string,
+                                                                string> dictionary,
+                                                                Element element,
+                                                                string numeroKey)
+        {
+            double salida = 0;
+            Document doc = commandData.Application.ActiveUIDocument.Document;
+            double volume = 0;
+            foreach (ElementId id in element.GetMaterialIds(false))
+            {
+                Material material = doc.GetElement(id) as Material;
+                volume = element.GetMaterialVolume(material.Id);
+                StepLog.Write(commandData, volume.ToString());
+            }
+
+            List<string> lista_keys = new List<string>()
+            {
+                "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"
+            };
+            List<string> entrada = DictionaryListValues(dictionary);
+            NumberStyles style = NumberStyles.AllowDecimalPoint | NumberStyles.AllowThousands;
+            CultureInfo provider = new CultureInfo("fr-FR");
+            for (int i = 0; i < lista_keys.Count(); i++)
+            {
+                if (numeroKey == lista_keys[i])
+                {
+                    string valor = entrada[i].Replace('.', ',');
+                    //salida = double.Parse(valor) * Math.Round((volume / 35.3147), 8) * (7850);
+                    salida = double.Parse(valor, style, provider) * ((volume / 35.3147)) * (7850);
+                    StepLog.Write(commandData, salida.ToString());
+                }
+            }
+            return salida;
+        }
+        public static double Get_StairsSpecialCommand(ExternalCommandData commandData,
+                                                    Dictionary<string, string> dictionary,
+                                                    Element element)
+        {
+            Document doc = commandData.Application.ActiveUIDocument.Document;
+            double volume = 0;
+            foreach (ElementId id in element.GetMaterialIds(false))
+            {
+                Material material = doc.GetElement(id) as Material;
+                volume = element.GetMaterialVolume(material.Id);
+                StepLog.Write(commandData, volume.ToString());
+            }
+
+            List<string> entrada = DictionaryListValues(dictionary);
+            double sumaTotal_valor_porVolumen = 0;
+            NumberStyles style = NumberStyles.AllowDecimalPoint | NumberStyles.AllowThousands;
+            CultureInfo provider = new CultureInfo("fr-FR");
+            foreach (string c in entrada)
+            {
+                string valor = c.Replace('.', ',');
+                //double valor_porVolumen = double.Parse(valor) * Math.Round((volume / 35.3147), 8) * (7850);
+                double valor_porVolumen = double.Parse(valor, style, provider) * ((volume / 35.3147)) * (7850);
+                sumaTotal_valor_porVolumen += valor_porVolumen;
+                StepLog.Write(commandData, sumaTotal_valor_porVolumen.ToString());
+            }
+            return sumaTotal_valor_porVolumen;
         }
     }
 }

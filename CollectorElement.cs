@@ -68,26 +68,33 @@ namespace AddinExportCDW
             ElementCategoryFilter Categoryfilter_strFramming = new ElementCategoryFilter(BuiltInCategory.OST_StructuralFraming);
             ElementCategoryFilter Categoryfilter_walls = new ElementCategoryFilter(BuiltInCategory.OST_Walls);
             ElementCategoryFilter Categoryfilter_Columns = new ElementCategoryFilter(BuiltInCategory.OST_Columns);
+            ElementCategoryFilter Categoryfilter_Stairs = new ElementCategoryFilter(BuiltInCategory.OST_Stairs);
 
             LogicalAndFilter DUInstancesFilter_floors = new LogicalAndFilter(elemFilter_floor, Categoryfilter_floors);
             LogicalAndFilter DUInstancesFilter_strColumns = new LogicalAndFilter(elemFilter_familyInstance, Categoryfilter_strColumns);
             LogicalAndFilter DUInstancesFilter_strFoundation = new LogicalAndFilter(elemFilter_floor, Categoryfilter_strFoundation);
+            LogicalAndFilter DUInstancesFilter_strFoundation_FamilyInstance = new LogicalAndFilter(elemFilter_familyInstance, Categoryfilter_strFoundation);
             LogicalAndFilter DUInstancesFilter_strFramming = new LogicalAndFilter(elemFilter_familyInstance, Categoryfilter_strFramming);
             LogicalAndFilter DUInstancesFilter_walls = new LogicalAndFilter(elemFilter_walls, Categoryfilter_walls);
             LogicalAndFilter DUInstancesFilter_Columns = new LogicalAndFilter(elemFilter_familyInstance, Categoryfilter_Columns);
+            LogicalAndFilter DUInstancesFilter_Stairs = new LogicalAndFilter(elemFilter_familyInstance, Categoryfilter_Stairs);
 
             FilteredElementCollector DUcoll = new FilteredElementCollector(doc);
             IList<Element> floors = DUcoll.WherePasses(DUInstancesFilter_floors).ToElements();
             FilteredElementCollector DUcoll2 = new FilteredElementCollector(doc);
-            IList<Element> structuralColumns = DUcoll2.WherePasses(DUInstancesFilter_strColumns).ToElements();
+            IList<Element> strColumns = DUcoll2.WherePasses(DUInstancesFilter_strColumns).ToElements();
             FilteredElementCollector DUcoll3 = new FilteredElementCollector(doc);
             IList<Element> strFoundation = DUcoll3.WherePasses(DUInstancesFilter_strFoundation).ToElements();
+            FilteredElementCollector DUcoll3_FamilyInstance = new FilteredElementCollector(doc);
+            IList<Element> strFoundation_FamilyInstance = DUcoll3_FamilyInstance.WherePasses(DUInstancesFilter_strFoundation_FamilyInstance).ToElements();
             FilteredElementCollector DUcoll4 = new FilteredElementCollector(doc);
             IList<Element> strFramming = DUcoll4.WherePasses(DUInstancesFilter_strFramming).ToElements();
             FilteredElementCollector DUcoll5 = new FilteredElementCollector(doc);
             IList<Element> walls = DUcoll5.WherePasses(DUInstancesFilter_walls).ToElements();
             FilteredElementCollector DUcoll6 = new FilteredElementCollector(doc);
             IList<Element> columns = DUcoll6.WherePasses(DUInstancesFilter_Columns).ToElements();
+            FilteredElementCollector DUcoll7 = new FilteredElementCollector(doc);
+            IList<Element> stairs = DUcoll7.WherePasses(DUInstancesFilter_Stairs).ToElements();
 
             #endregion Colectores de Elementos
 
@@ -97,11 +104,15 @@ namespace AddinExportCDW
             }
             if (categoryElement == "structuralColumns")
             {
-                return structuralColumns;
+                return strColumns;
             }
             if (categoryElement == "strFoundation")
             {
                 return strFoundation;
+            }
+            if (categoryElement == "strFoundation_FamilyInstance")
+            {
+                return strFoundation_FamilyInstance;
             }
             if (categoryElement == "strFramming")
             {
@@ -114,6 +125,10 @@ namespace AddinExportCDW
             if (categoryElement == "columns")
             {
                 return columns;
+            }
+            if (categoryElement == "stairs")
+            {
+                return stairs;
             }
             return null;
         }
@@ -158,6 +173,10 @@ namespace AddinExportCDW
                     salida.Add(sc);
                 }
                 if (builtCategory == BuiltInCategory.OST_Columns)
+                {
+                    salida.Add(sc);
+                }
+                if (builtCategory == BuiltInCategory.OST_Stairs)
                 {
                     salida.Add(sc);
                 }

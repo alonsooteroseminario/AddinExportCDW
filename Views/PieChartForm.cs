@@ -19,7 +19,7 @@ namespace AddinExportCDW.Views
 
         private void PieChartForm_Load(object sender, EventArgs e)
         {
-            string labelPoint(ChartPoint chartPoint) => string.Format("{0} m3   ({1:P})", Math.Round(chartPoint.Y, 2), chartPoint.Participation);
+            string labelPoint(ChartPoint chartPoint) => string.Format("{0} m3   ({1:P})", Math.Round(chartPoint.Y, 6), chartPoint.Participation);
 
             pieChart1.InnerRadius = 75;
 
